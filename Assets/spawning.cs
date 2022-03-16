@@ -21,13 +21,12 @@ public class spawning : MonoBehaviour
     {
         while (count < 20)
         {
-            xPos = Random.Range(-10f, 10f);
-            zPos = Random.Range(-10f, 10f);
+            xPos = Random.Range(-5f, 5f);
+            zPos = Random.Range(-5f, 5f);
             int npcs_Index = Random.Range(0, npcs.Length);
-            Collider[] Collision = Physics.OverlapSphere(npc_transform.position, 1f, LayerMask.GetMask("npc"));
-            if (Collision.Length == 0)
+            if ((!Physics.CheckSphere(new Vector3(xPos, 0.5f, zPos), 1f, LayerMask.GetMask("npc"))))
             {
-                Instantiate(npcs[npcs_Index], new Vector3(xPos, 0f, zPos), Quaternion.identity);
+                Instantiate(npcs[npcs_Index], new Vector3(xPos, 0.5f, zPos), Quaternion.identity);
                 Debug.Log("No Collision");
                 count++;
             }
