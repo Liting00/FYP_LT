@@ -17,4 +17,14 @@ public class bullet : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.layer == 6)
+        {
+            Destroy(other.gameObject);
+            Destroy(gameObject);
+        }
+
+    }
 }
