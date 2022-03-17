@@ -20,13 +20,13 @@ public class spawning : MonoBehaviour
 
     IEnumerator SpawnCount()
     {
-        while (count < 20)
+        while (count < 50)
         {
-            xPos = Random.Range(-1f, 1f);
-            zPos = Random.Range(-1f, 1f);
-            time = Random.Range(1f, 10f);
+            xPos = Random.Range(-9f, 9f);
+            zPos = Random.Range(-9f, 9f);
+            time = Random.Range(1f, 5f);
             int npcs_Index = Random.Range(0, npcs.Length);
-            if ((!Physics.CheckCapsule(new Vector3(xPos, 0.5f, zPos), new Vector3(xPos, 0.5f, zPos), 1f, LayerMask.GetMask("npc"))))
+            if(!Physics.CheckSphere(new Vector3(xPos, 0.5f, zPos),0.6f, LayerMask.GetMask("npc")))
             {
                 Instantiate(npcs[npcs_Index], new Vector3(xPos, 0.5f, zPos), Quaternion.identity);
                 Debug.Log("No Collision");
