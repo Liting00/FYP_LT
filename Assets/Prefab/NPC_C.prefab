@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 7608035761734538656}
   - component: {fileID: 3516651746711323218}
   - component: {fileID: 937200300469590322}
-  - component: {fileID: 7320839332551165786}
+  - component: {fileID: 7295155405398009473}
+  - component: {fileID: 3088670746666952263}
   m_Layer: 6
   m_Name: NPC_C
   m_TagString: npc
@@ -28,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6293373926139062098}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 0}
@@ -97,7 +98,7 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7320839332551165786
+--- !u!114 &7295155405398009473
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -106,8 +107,31 @@ MonoBehaviour:
   m_GameObject: {fileID: 6293373926139062098}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5486eae45ee414b4088f514e17117461, type: 3}
+  m_Script: {fileID: 11500000, guid: 12cab6460e7915547bd825e2d675e45a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 3
-  rotSpeed: 100
+  agent: {fileID: 0}
+  speed: 1
+  walkRadius: 25
+--- !u!195 &3088670746666952263
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6293373926139062098}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 1
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 1
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
