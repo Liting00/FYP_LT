@@ -5,12 +5,16 @@ using UnityEngine;
 public class TargetController : MonoBehaviour
 {
     private string target = "HostileNPC";
-    // Start is called before the first frame update
+
+    public Transform aim;
+    public float range = 15f;
+
     void UpdateTarget()
     {
         GameObject[] hostileNPCS = GameObject.FindGameObjectsWithTag(target);
         float shortestDistance = Mathf.Infinity;
-        GameObject nearestEnemy = null;
+        GameObject nearestEnemy;
+        float npcPosX, npcPosZ;
 
         foreach (GameObject npc in hostileNPCS)
         {
@@ -18,9 +22,10 @@ public class TargetController : MonoBehaviour
             if (distanceToEnemy < shortestDistance)
             {
                 shortestDistance = distanceToEnemy;
-                nearestEnemy = npc;
-                Debug.Log(nearestEnemy);
+                npcPosX = npc.transform.position.x;
+                npcPosZ = npc.transform.position.z;
             }
+            
         }
 
     }
