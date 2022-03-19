@@ -29,7 +29,7 @@ public class GridManager : MonoBehaviour
         {
             for (int z = 0; z < _height; z++)
             {
-                var spawnedTile = Instantiate(_titlePrefab, new Vector3(x, 0.01f, z), Quaternion.identity);
+                var spawnedTile = Instantiate(_titlePrefab, new Vector3(x, 0.02f, z), Quaternion.identity);
                 spawnedTile.name = $"Tile {x} {z}";
 
                 //even and odd colouring
