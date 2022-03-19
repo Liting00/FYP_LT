@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1521441938112161391
+--- !u!1 &6293373926139062098
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,48 +8,48 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4799430495129248530}
-  - component: {fileID: 2756758291495423606}
-  - component: {fileID: 8266291368435333828}
-  - component: {fileID: -5570515645986700568}
-  - component: {fileID: 7043184333354353004}
-  - component: {fileID: 2950412123053136056}
+  - component: {fileID: 7449512754510134310}
+  - component: {fileID: 7608035761734538656}
+  - component: {fileID: 3516651746711323218}
+  - component: {fileID: 937200300469590322}
+  - component: {fileID: 7295155405398009473}
+  - component: {fileID: 3088670746666952263}
   m_Layer: 6
-  m_Name: NPC_E
+  m_Name: NPC_C
   m_TagString: npc
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4799430495129248530
+--- !u!4 &7449512754510134310
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1521441938112161391}
+  m_GameObject: {fileID: 6293373926139062098}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &2756758291495423606
+--- !u!33 &7608035761734538656
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1521441938112161391}
+  m_GameObject: {fileID: 6293373926139062098}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &8266291368435333828
+--- !u!23 &3516651746711323218
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1521441938112161391}
+  m_GameObject: {fileID: 6293373926139062098}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ac9b8a615ec64c948a5d837f46103984, type: 2}
+  - {fileID: 2100000, guid: 50d4afcaa6d37644487861af16191279, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -84,13 +84,13 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &-5570515645986700568
+--- !u!136 &937200300469590322
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1521441938112161391}
+  m_GameObject: {fileID: 6293373926139062098}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
@@ -98,28 +98,28 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7043184333354353004
+--- !u!114 &7295155405398009473
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1521441938112161391}
+  m_GameObject: {fileID: 6293373926139062098}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 12cab6460e7915547bd825e2d675e45a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agent: {fileID: 0}
+  agent: {fileID: 3088670746666952263}
   speed: 1
-  walkRadius: 125
---- !u!195 &2950412123053136056
+  walkRadius: 25
+--- !u!195 &3088670746666952263
 NavMeshAgent:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1521441938112161391}
+  m_GameObject: {fileID: 6293373926139062098}
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5

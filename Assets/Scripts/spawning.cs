@@ -15,7 +15,7 @@ public class spawning : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(SpawnCount());
+        //StartCoroutine(SpawnCount());
     }
 
     IEnumerator SpawnCount()
