@@ -34,7 +34,7 @@ public class HostileNPC : BasedNPC
                 {
                     //chances of infection
                     float chances = Random.Range(0.0000f, 1f);
-                    if (chances <= 0.010f)
+                    if (chances <= 0.110f)
                     {
                         Vector3 spanLoc = o.transform.position;
                         Quaternion spawnRot = o.transform.rotation;

@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 4799430495129248530}
   - component: {fileID: 2756758291495423606}
   - component: {fileID: 8266291368435333828}
+  - component: {fileID: 3390574650490168093}
+  - component: {fileID: 4786797418599468710}
   - component: {fileID: -5570515645986700568}
-  - component: {fileID: 7043184333354353004}
   - component: {fileID: 2950412123053136056}
   m_Layer: 6
   m_Name: NonHostileNPC
@@ -84,6 +85,35 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &3390574650490168093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1521441938112161391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a438fa27fa83e764087853f0b44964ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 0.25
+  rotSpeed: 100
+--- !u!114 &4786797418599468710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1521441938112161391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12cab6460e7915547bd825e2d675e45a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agent: {fileID: 0}
+  speed: 0.25
+  walkRadius: 125
 --- !u!136 &-5570515645986700568
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -98,21 +128,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7043184333354353004
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1521441938112161391}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12cab6460e7915547bd825e2d675e45a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  agent: {fileID: 2950412123053136056}
-  speed: 0.2
-  walkRadius: 125
 --- !u!195 &2950412123053136056
 NavMeshAgent:
   m_ObjectHideFlags: 0

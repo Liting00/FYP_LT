@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3516651746711323218}
   - component: {fileID: 937200300469590322}
   - component: {fileID: -3513248472201431239}
-  - component: {fileID: 7295155405398009473}
+  - component: {fileID: 3077482549083413706}
   - component: {fileID: 3088670746666952263}
   m_Layer: 6
   m_Name: HostileNPC
@@ -111,8 +111,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ace478858b2e6ce459358ea34b23d73a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveSpeed: 0.25
+  rotSpeed: 100
   objToSpawn: {fileID: 6293373926139062098}
---- !u!114 &7295155405398009473
+--- !u!114 &3077482549083413706
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
