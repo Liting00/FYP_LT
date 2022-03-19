@@ -33,7 +33,7 @@ public class Tile : MonoBehaviour
         float currentZ = _highlight.transform.position.z - 0.5f;
 
         //Debug.Log("Vector X: " + currentX + " Vector Z: " + currentZ);
-        foreach (GameObject o in GameObject.FindGameObjectsWithTag("npc"))
+        foreach (GameObject o in GameObject.FindGameObjectsWithTag("HostileNPC"))
         {
             //Debug.Log("Vector X: " + o.transform.position.x);
             //Debug.Log("Vector Y: " + o.transform.position.y);
@@ -43,7 +43,7 @@ public class Tile : MonoBehaviour
             }
 
         }
-        foreach (GameObject o in GameObject.FindGameObjectsWithTag("npc"))
+        foreach (GameObject o in GameObject.FindGameObjectsWithTag("NonHostileNPC"))
         {
             //Debug.Log("Vector X: " + o.transform.position.x);
             //Debug.Log("Vector Y: " + o.transform.position.y);

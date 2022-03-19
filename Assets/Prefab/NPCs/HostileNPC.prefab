@@ -12,11 +12,12 @@ GameObject:
   - component: {fileID: 7608035761734538656}
   - component: {fileID: 3516651746711323218}
   - component: {fileID: 937200300469590322}
+  - component: {fileID: -3513248472201431239}
   - component: {fileID: 7295155405398009473}
   - component: {fileID: 3088670746666952263}
   m_Layer: 6
-  m_Name: NPC_C
-  m_TagString: npc
+  m_Name: HostileNPC
+  m_TagString: HostileNPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 6293373926139062098}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -98,6 +99,19 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-3513248472201431239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6293373926139062098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ace478858b2e6ce459358ea34b23d73a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objToSpawn: {fileID: 6293373926139062098}
 --- !u!114 &7295155405398009473
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,7 +125,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 3088670746666952263}
-  speed: 1
+  speed: 0.2
   walkRadius: 25
 --- !u!195 &3088670746666952263
 NavMeshAgent:

@@ -16,9 +16,6 @@ public class SpawnManager : MonoBehaviour
 
     public List<ScriptableNPC> _npcs;
 
-    private float checkRadius = 0.09f;
-
-
 
     private void Awake()
     {
