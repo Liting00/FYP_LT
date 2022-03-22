@@ -35,11 +35,11 @@ public class HostileNPC : BasedNPC
 
         foreach (GameObject o in GameObject.FindGameObjectsWithTag("NonHostileNPC"))
         {
-            if (o.transform.position.x >= pos.x && o.transform.position.x <= pos.x + 1f && o.transform.position.z >= pos.z && o.transform.position.z <= pos.z + 1f)
+            if (o.transform.position.x >= pos.x -0.5f && o.transform.position.x <= pos.x + 0.5f && o.transform.position.z >= pos.z - 0.5f && o.transform.position.z <= pos.z + 0.5f)
             {
                 //chances of infection
                 float chances = Random.Range(0.0000f, 1f);
-                if (chances <= 0.110f)
+                if (chances <= 0.100f)
                 {
                     Vector3 spanLoc = o.transform.position;
                     Quaternion spawnRot = o.transform.rotation;
@@ -55,6 +55,7 @@ public class HostileNPC : BasedNPC
     //time for it takes to do the next infection
     float nextUpdate()
     {
-        return Random.Range(5.0f, 15.0f);
+        return Random.Range(5.0f, 10.0f);
     }
+
 }

@@ -259,8 +259,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _width: 16
   _height: 9
-  NonhostileNPCSpawn: 20
-  hostileNPCSpawn: 5
+  NonhostileNPCSpawn: 200
+  hostileNPCSpawn: 1
   spawnPool:
   - {fileID: 1521441938112161391, guid: ac98f9307840bbe4b8d70946c3b024ab, type: 3}
   - {fileID: 6293373926139062098, guid: b410890e8403ee84cb4daceecb9ed17b, type: 3}
