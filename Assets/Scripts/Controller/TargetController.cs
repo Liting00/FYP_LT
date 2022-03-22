@@ -10,6 +10,8 @@ public class TargetController : MonoBehaviour
     private GameObject[] tiles;
     private GameObject[] highlighted;
 
+    private List<GameObject> hostileNPCs = new List<GameObject>();
+
     //Color32 objColor;
 
     public float range = 15f;
@@ -18,8 +20,6 @@ public class TargetController : MonoBehaviour
     private float nextUpdatedTime = 0.01f;
 
     [SerializeField] internal Tile tileScript;
-    
-
     void UpdateTarget()
     {
         //Debug.Log("Start Target");

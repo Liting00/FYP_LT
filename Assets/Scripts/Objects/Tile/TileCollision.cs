@@ -6,6 +6,7 @@ public class TileCollision : MonoBehaviour
 {
     //script
     [SerializeField] Tile tileScript;
+    private List<GameObject> hostileNPCs = new List<GameObject>();
 
     private void OnMouseEnter()
     {
@@ -20,6 +21,7 @@ public class TileCollision : MonoBehaviour
         if (collision.collider.tag == "HostileNPC")
         {
             Debug.Log(collision.gameObject.name + " hit!");
+            hostileNPCs.Add(collision.gameObject);
             //myCube = collision.gameObject;
         }
     }
