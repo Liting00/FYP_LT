@@ -4,21 +4,31 @@ using UnityEngine;
 
 public class TileCollision : MonoBehaviour
 {
+    //script
     [SerializeField] Tile tileScript;
-    public void OnMouseEnter()
+
+    private void OnMouseEnter()
     {
-        tileScript.highlight.SetActive(true);
+        tileScript.onHighlight(true);
     }
-    public void OnMouseExit()
+    private void OnMouseExit()
     {
-        tileScript.highlight.SetActive(false);
+        tileScript.onHighlight(false);
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.tag == "HostileNPC")
+        {
+            Debug.Log(collision.gameObject.name + " hit!");
+            //myCube = collision.gameObject;
+        }
     }
     public void OnMouseDown()
     {
-        float currentX = tileScript.highlight.transform.position.x - 0.5f;
-        float currentZ = tileScript.highlight.transform.position.z - 0.5f;
+        float currentX = tileScript._highlight.transform.position.x - 0.5f;
+        float currentZ = tileScript._highlight.transform.position.z - 0.5f;
 
-        //Debug.Log("Vector X: " + currentX + " Vector Z: " + currentZ);
+        Debug.Log("Vector X: " + currentX + " Vector Z: " + currentZ);
         foreach (GameObject o in GameObject.FindGameObjectsWithTag("HostileNPC"))
         {
             //Debug.Log("Vector X: " + o.transform.position.x);

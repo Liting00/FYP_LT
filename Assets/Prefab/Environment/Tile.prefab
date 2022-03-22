@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: -2665386383841270115}
   m_Layer: 0
   m_Name: Tile
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -48,10 +48,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9911b5c60fb7d8b4aabebbeaf0f04919, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _baseColor: {r: 0.103773594, g: 0.103773594, b: 0.103773594, a: 1}
-  _offsetColor: {r: 0.101960786, g: 0.101960786, b: 0.101960786, a: 1}
+  _baseColor: {r: 0.21960786, g: 0.21960786, b: 0.21960786, a: 1}
+  _offsetColor: {r: 0.21960784, g: 0.21960784, b: 0.21960784, a: 1}
   _renderer: {fileID: -2665386383841270115}
-  highlight: {fileID: 7165960591852914825}
+  _highlight: {fileID: 7165960591852914825}
   tileCollisionScript: {fileID: 5063877841079358571}
 --- !u!114 &5063877841079358571
 MonoBehaviour:
@@ -74,7 +74,7 @@ MeshCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3068607382238777087}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 4
   m_Convex: 1
@@ -143,7 +143,7 @@ GameObject:
   - component: {fileID: 4251718458161108028}
   m_Layer: 0
   m_Name: Highlight
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

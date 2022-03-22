@@ -11,7 +11,8 @@ public class SpawnManager : MonoBehaviour
 
     [SerializeField] private float _width, _height;
 
-    public int numberToSpawn;
+    public int NonhostileNPCSpawn;
+    public int hostileNPCSpawn;
     public List<GameObject> spawnPool;
 
     public List<ScriptableNPC> _npcs;
@@ -21,7 +22,7 @@ public class SpawnManager : MonoBehaviour
     {
         Instance = this;
 
-        _npcs = Resources.LoadAll<ScriptableNPC>("NPCS").ToList();
+        //_npcs = Resources.LoadAll<ScriptableNPC>("NPCS").ToList();
     }
 
     void Start()
@@ -30,27 +31,11 @@ public class SpawnManager : MonoBehaviour
     }
     public void spawnObject()
     {
-        //destroyObject();
-        //int randomItem = 0;
-        GameObject toSpawn;
-
         float screenX, screenZ;
         Vector3 pos;
-        int redNPCSpawnThreshold = numberToSpawn / 10;
 
-
-        for(int i = 0; i < numberToSpawn; i++)
+        for(int i = 0; i < NonhostileNPCSpawn; i++)
         {
-            //randomItem = Random.Range(0, spawnPool.Count);
-            //toSpawn = spawnPool[randomItem];
-            if (redNPCSpawnThreshold > 0)
-            {
-                redNPCSpawnThreshold--;
-                toSpawn = spawnPool[1];
-            }
-            else
-                toSpawn = spawnPool[0];
-
             //offset -3 to move to the right
             screenX = Random.Range((float)0.0000, _width - 3 - 1);
             screenZ = Random.Range((float)0.0000, _height - 1);
@@ -59,8 +44,8 @@ public class SpawnManager : MonoBehaviour
             //add collison
             if (!Physics.CheckSphere(pos, 0.6f, LayerMask.GetMask("NPC")))
             {
-                Debug.Log("Collision");
-                Instantiate(toSpawn, pos, Quaternion.identity);
+                //Debug.Log("Collision");
+                Instantiate(spawnPool[0], pos, Quaternion.identity);
             }
             /*Collider2D Collision = Physics2D.OverlapCircle(pos, checkRadius, LayerMask.GetMask("NPC"));
             if (Collision == false)
@@ -68,8 +53,17 @@ public class SpawnManager : MonoBehaviour
                 Instantiate(toSpawn, pos, toSpawn.transform.rotation);
             }*/
         }
-        //GameManager.Instance.ChangeState(GameState.SpawnRedNPC);
+        for (int i = 0; i < hostileNPCSpawn; i++)
+        {
+            screenX = Random.Range((float)0.0000, _width - 3 - 1);
+            screenZ = Random.Range((float)0.0000, _height - 1);
+            pos = new Vector3(screenX, 0.1f, screenZ);
+
+            if (!Physics.CheckSphere(pos, 0.6f, LayerMask.GetMask("NPC")))
+            {
+                //Debug.Log("Collision");
+                Instantiate(spawnPool[1], pos, Quaternion.identity);
+            }
+        }
     }
 }
-
-// to avoid collision 

@@ -27,7 +27,7 @@ public class HostileNPC : BasedNPC
     }
     void infection()
     {
-        Debug.Log("Start Infection");
+        //Debug.Log("Start Infection");
         nextUpdatedTime = nextUpdate();
         update = 0.0f;
         Vector3 pos = transform.position;

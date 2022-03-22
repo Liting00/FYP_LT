@@ -259,7 +259,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _width: 16
   _height: 9
-  numberToSpawn: 200
+  NonhostileNPCSpawn: 20
+  hostileNPCSpawn: 5
   spawnPool:
   - {fileID: 1521441938112161391, guid: ac98f9307840bbe4b8d70946c3b024ab, type: 3}
   - {fileID: 6293373926139062098, guid: b410890e8403ee84cb4daceecb9ed17b, type: 3}
@@ -571,8 +572,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ffe328f46b631141b7f7f4b60048018, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aim: {fileID: 0}
   range: 15
+  tileScript: {fileID: 0}
 --- !u!4 &1367454836
 Transform:
   m_ObjectHideFlags: 0

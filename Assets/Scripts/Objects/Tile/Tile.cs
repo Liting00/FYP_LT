@@ -4,23 +4,21 @@ using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
-    [SerializeField] private Color _baseColor, _offsetColor;
+    [SerializeField] internal Color _baseColor, _offsetColor;
     [SerializeField] protected MeshRenderer _renderer;
-    [SerializeField] internal GameObject highlight;
+    [SerializeField] internal GameObject _highlight;
 
+    //script
     [SerializeField] internal TileCollision tileCollisionScript;
 
     private void Awake()
     {
 
     }
-
     public void Init(bool isOffset)
     {
         _renderer.material.color = isOffset ? _offsetColor : _baseColor;
     }
-
-    
         //Vector3 p = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         //Debug.Log(p);
 
@@ -45,5 +43,11 @@ public class Tile : MonoBehaviour
     {
 
     }
-
+    public void onHighlight(bool onHighlight)
+    {
+        if (onHighlight == true)
+            _highlight.SetActive(true);
+        else
+            _highlight.SetActive(false);
+    }
 }
