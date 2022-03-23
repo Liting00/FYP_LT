@@ -10,6 +10,7 @@ public class Tile : MonoBehaviour
 
     //script
     [SerializeField] internal TileCollision tileCollisionScript;
+    [SerializeField] internal TargetController targetControllerScript;
 
     private void Awake()
     {

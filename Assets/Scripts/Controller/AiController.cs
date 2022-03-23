@@ -25,6 +25,7 @@ public class AiController : MonoBehaviour
         Vector3 finalPosition = Vector3.zero;
         Vector3 randomPosition = Random.insideUnitSphere * walkRadius;
         randomPosition += transform.position;
+        randomPosition.y = 0f;
         if (NavMesh.SamplePosition(randomPosition, out NavMeshHit hit, walkRadius, 1))
         {
             finalPosition = hit.position;

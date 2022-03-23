@@ -10,16 +10,12 @@ public class TargetController : MonoBehaviour
     private GameObject[] tiles;
     private GameObject[] highlighted;
 
-    private List<GameObject> hostileNPCs = new List<GameObject>();
-
-    //Color32 objColor;
+    internal List<GameObject> collidedTile = new List<GameObject>();
 
     public float range = 15f;
 
     private float update;
     private float nextUpdatedTime = 0.01f;
-
-    [SerializeField] internal Tile tileScript;
     void UpdateTarget()
     {
         //Debug.Log("Start Target");
@@ -66,6 +62,8 @@ public class TargetController : MonoBehaviour
     }
     void Start()
     {
+        Debug.ClearDeveloperConsole();
+
         //objColor = tiles[0].GetComponent<MeshRenderer>().material.color;
         //print(objColor.r + " " + objColor.g + " " + objColor.b + " " + objColor.a + " ");
     }
@@ -75,7 +73,15 @@ public class TargetController : MonoBehaviour
         update += Time.deltaTime;
         if (update > nextUpdatedTime)
         {
-            UpdateTarget();
+            //Debug.Log(collidedTile.Count);
+            /*if (!hostileNPCs.Count.Equals(0))
+            {
+                for (int i=0; i< hostileNPCS.Length; i++)
+                {
+                    Debug.Log(hostileNPCS[i].name);
+                }
+            }*/
+            //UpdateTarget();
         }
         
     }
