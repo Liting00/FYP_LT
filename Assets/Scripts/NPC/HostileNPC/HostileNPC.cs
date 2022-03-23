@@ -9,6 +9,7 @@ public class HostileNPC : BasedNPC
     private float update;
 
     private float nextUpdatedTime;
+    internal GameObject collidedTile;
 
     // Start is called before the first frame update
     void Start()

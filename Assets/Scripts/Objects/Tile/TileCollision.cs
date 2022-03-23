@@ -6,8 +6,6 @@ public class TileCollision : MonoBehaviour
 {
     //script
     [SerializeField] Tile tileScript;
-    private TargetController targetController;
-    private List<GameObject> hostileNPCs = new List<GameObject>();
 
     private void OnMouseEnter()
     {
@@ -22,13 +20,19 @@ public class TileCollision : MonoBehaviour
     {
         if(other.gameObject.tag == "HostileNPC")
         {
-            Debug.Log(gameObject.name + " hit!");
-            //targetController.collidedTile.Add(gameObject);
-            hostileNPCs.Add(gameObject);
-            
+            //Debug.Log(gameObject.name + " hit!");
+            GameObject tController = GameObject.Find("TargetController");
+            TargetController targetController = tController.GetComponent<TargetController>();
+            targetController.collidedTile.Add(gameObject);
+            //Debug.Log(targetController.collidedTile.Count);
         }
     }
-
+    private void OnTriggerExit(Collider other)
+    {
+        GameObject tController = GameObject.Find("TargetController");
+        TargetController targetController = tController.GetComponent<TargetController>();
+        targetController.collidedTile.Remove(gameObject);
+    }
     public void OnMouseDown()
     {
         float currentX = tileScript._highlight.transform.position.x - 0.5f;

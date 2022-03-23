@@ -63,6 +63,7 @@ public class SpawnManager : MonoBehaviour
             if (!Physics.CheckSphere(pos, 0.6f, LayerMask.GetMask("NPC")))
             {
                 //Debug.Log("Collision");
+                spawnPool[1].name = $"HostileNPC {i}";
                 Instantiate(spawnPool[1], pos, Quaternion.identity);
             }
         }

@@ -8,6 +8,7 @@ TagManager:
   - HostileNPC
   - NonHostileNPC
   - Tile
+  - button
   layers:
   - Default
   - TransparentFX
