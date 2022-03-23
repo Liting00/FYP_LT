@@ -31,7 +31,7 @@ public class SpawnManager : MonoBehaviour
     }
     public void spawnObject()
     {
-        float screenX, screenZ;
+        float screenX, screenZ, screenY;
         Vector3 pos;
 
         for(int i = 0; i < NonhostileNPCSpawn; i++)
@@ -57,7 +57,8 @@ public class SpawnManager : MonoBehaviour
         {
             screenX = Random.Range((float)0.0000, _width - 3 - 1);
             screenZ = Random.Range((float)0.0000, _height - 1);
-            pos = new Vector3(screenX, 0.1f, screenZ);
+            screenY = 0.1f;
+            pos = new Vector3(screenX, screenY, screenZ);
 
             if (!Physics.CheckSphere(pos, 0.6f, LayerMask.GetMask("NPC")))
             {

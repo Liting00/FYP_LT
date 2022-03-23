@@ -16,15 +16,17 @@ public class TileCollision : MonoBehaviour
     {
         tileScript.onHighlight(false);
     }
-    private void OnCollisionEnter(Collision collision)
+
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.collider.tag == "HostileNPC")
+        if(other.gameObject.tag == "HostileNPC")
         {
-            Debug.Log(collision.gameObject.name + " hit!");
-            hostileNPCs.Add(collision.gameObject);
+            Debug.Log(gameObject.name + " hit!");
+            hostileNPCs.Add(other.gameObject);
             //myCube = collision.gameObject;
         }
     }
+
     public void OnMouseDown()
     {
         float currentX = tileScript._highlight.transform.position.x - 0.5f;
