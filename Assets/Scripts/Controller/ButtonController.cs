@@ -26,6 +26,7 @@ public class ButtonController : MonoBehaviour
             TargetController targetController = tController.GetComponent<TargetController>();
             targetController.destroyTarget();
             targetController.changeTarget = true;
+            textBox.SetActive(false);
             Debug.Log("Shoot Button pressed");
         }
         if (buttonPressed == passButton)
@@ -33,6 +34,7 @@ public class ButtonController : MonoBehaviour
             GameObject tController = GameObject.Find("Target Controller");
             TargetController targetController = tController.GetComponent<TargetController>();
             targetController.changeTarget = true;
+            textBox.SetActive(false);
             Debug.Log("Pass Button pressed");
         }
         if (buttonPressed == showAdvisorButton)
