@@ -25,12 +25,12 @@ public class GameManager : MonoBehaviour
         switch (newState)
         {
             case GameState.GenerateGrid:
+                //Debug.Log("Generate Grid State");
                 GridManager.Instance.GenerateGrid();
                 break;
             case GameState.SpawnNPC:
+                //Debug.Log("Generate Spawn State");
                 SpawnManager.Instance.spawnObject();
-                break;
-            case GameState.SpawnRedNPC:
                 break;
             default:
                 throw new System.ArgumentOutOfRangeException(nameof(newState), newState, null);

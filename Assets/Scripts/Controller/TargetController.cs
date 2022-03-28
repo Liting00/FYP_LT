@@ -6,28 +6,25 @@ public class TargetController : MonoBehaviour
 {
     private string npc = "HostileNPC";
     private string tile = "Tile";
-
+    string previousNPCName = "";
 
     private GameObject[] hostileNPCS;
     private GameObject[] tiles;
+    private GameObject selectedNPC;
 
     internal List<GameObject> collidedTile = new List<GameObject>();
-    private GameObject selectedNPC;
-    private int index = 0;
-    internal bool changeTarget = true;
-
-    public float range = 15f;
+    internal bool changeTarget = false;
+    internal bool destroy = false;
 
     private float update;
     private float nextUpdatedTime = 0.1f;
-    void UpdateTarget()
+    /*void UpdateTarget()
     {
         //Debug.Log("Start Target");
         hostileNPCS = GameObject.FindGameObjectsWithTag(npc);
         tiles = GameObject.FindGameObjectsWithTag(tile);
-        
+
         float npcPosX, npcPosZ;
-        int tileIndex = 0;
 
         foreach (GameObject npc in hostileNPCS)
         {
@@ -50,55 +47,47 @@ public class TargetController : MonoBehaviour
                 }
             }   
         }
-    }
-    int SelectAnHostileNPC(GameObject[] hostileNPCS)
-    {
-        return Random.Range(0, hostileNPCS.Length-1);
-    }
-    void updateTarget2()
+    }*/
+    public void Start()
     {
         tiles = GameObject.FindGameObjectsWithTag(tile);
+        hostileNPCS = GameObject.FindGameObjectsWithTag(npc);
+        selectedNPC = hostileNPCS[Random.Range(0, hostileNPCS.Length)];
+    }
+    void updateTarget()
+    {
+        //colour all the tiles to black
         foreach (GameObject tile in tiles)
         {
-            tile.GetComponent<Renderer>().material.color = new Color(38 / 255.0f, 38 / 255.0f, 38 / 255.0f);
+            tile.GetComponent<Renderer>().material.color = Color.black;
         }
 
         hostileNPCS = GameObject.FindGameObjectsWithTag(npc);
-        //Debug.Log(hostileNPCS.Length);
-
+        if (hostileNPCS.Length == 0)
+            return;
         //for changing target
         if (changeTarget == true)
         {
-            int timeout = 5;
-            while (timeout > 0)
-            {
-                int previousIndex = index;
-                timeout--;
-                index = SelectAnHostileNPC(hostileNPCS);
-                if (index != previousIndex)
-                    break;
-            }
-            
-            selectedNPC = hostileNPCS[index];
+            Debug.Log("Change Target");
+            do
+                selectedNPC = hostileNPCS[Random.Range(0, hostileNPCS.Length)];
+            while (string.Compare(previousNPCName, selectedNPC.name) == 0);
+            previousNPCName = selectedNPC.name;
             changeTarget = false;
-            //Debug.Log(selectedNPC.name);
         }
-        //Debug.Log("Collided Tile: " + collidedTile.Count);
+
+        //highlight selectedNPC tile
         foreach (GameObject tile in collidedTile)
         {
-            //Debug.Log("Tiles " + tile.transform.position);
+            //Debug.Log("Tiles " + tile.name);
             float npcPosX = selectedNPC.transform.position.x - 0.5f;
             float npcPosZ = selectedNPC.transform.position.z - 0.5f;
             //Debug.Log("Selected NPC " + npcPosX + ", " + npcPosZ);
-            if (tile.transform.position.x >= npcPosX && tile.transform.position.x <= npcPosX + 1f && tile.transform.position.z >= npcPosZ && tile.transform.position.z <= npcPosZ + 1f)
+            if (tile.transform.position.x >= npcPosX && tile.transform.position.x <= npcPosX + 1f 
+                && tile.transform.position.z >= npcPosZ && tile.transform.position.z <= npcPosZ + 1f)
                 tile.GetComponent<Renderer>().material.color = Color.grey;
+                
         }
-    }
-    void Start()
-    {
-        //selectedNPC = SelectAnHostileNPC(hostileNPCS);
-        //objColor = tiles[0].GetComponent<MeshRenderer>().material.color;
-        //print(objColor.r + " " + objColor.g + " " + objColor.b + " " + objColor.a + " ");
     }
     // Update is called once per frame
     void Update()
@@ -107,8 +96,38 @@ public class TargetController : MonoBehaviour
         if (update > nextUpdatedTime)
         {
             update = 0f;
-            updateTarget2();
+            updateTarget();
         }
         
+    }
+    internal void destroyTarget()
+    {
+        if (hostileNPCS.Length == 0)
+            return;
+        float npcPosX = selectedNPC.transform.position.x - 0.5f;
+        float npcPosZ = selectedNPC.transform.position.z - 0.5f;
+
+        foreach (GameObject o in GameObject.FindGameObjectsWithTag("HostileNPC"))
+        {
+            //Debug.Log("Vector X: " + o.transform.position.x);
+            //Debug.Log("Vector Y: " + o.transform.position.y);
+            if (o.transform.position.x >= npcPosX && o.transform.position.x <= npcPosX + 1f 
+                && o.transform.position.z >= npcPosZ && o.transform.position.z <= npcPosZ + 1f)
+            {
+                Destroy(o);
+            }
+
+        }
+        foreach (GameObject o in GameObject.FindGameObjectsWithTag("NonHostileNPC"))
+        {
+            //Debug.Log("Vector X: " + o.transform.position.x);
+            //Debug.Log("Vector Y: " + o.transform.position.y);
+            if (o.transform.position.x >= npcPosX && o.transform.position.x <= npcPosX + 1f 
+                && o.transform.position.z >= npcPosZ && o.transform.position.z <= npcPosZ + 1f)
+            {
+                Destroy(o);
+            }
+
+        }
     }
 }

@@ -45,13 +45,9 @@ public class SpawnManager : MonoBehaviour
             if (!Physics.CheckSphere(pos, 0.6f, LayerMask.GetMask("NPC")))
             {
                 //Debug.Log("Collision");
+                spawnPool[1].name = $"NonHostileNPC {i}";
                 Instantiate(spawnPool[0], pos, Quaternion.identity);
             }
-            /*Collider2D Collision = Physics2D.OverlapCircle(pos, checkRadius, LayerMask.GetMask("NPC"));
-            if (Collision == false)
-            {
-                Instantiate(toSpawn, pos, toSpawn.transform.rotation);
-            }*/
         }
         for (int i = 0; i < hostileNPCSpawn; i++)
         {

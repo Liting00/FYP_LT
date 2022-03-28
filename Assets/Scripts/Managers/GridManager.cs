@@ -17,12 +17,6 @@ public class GridManager : MonoBehaviour
         Instance = this;
     }
 
-    //when Start run GenerateGrid
-    private void Start()
-    {
-        //GenerateGrid();
-    }
-
     public void GenerateGrid()
     {
         for (int x = 0; x < _width - 3; x++)

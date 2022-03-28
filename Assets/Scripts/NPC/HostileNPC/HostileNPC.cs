@@ -10,10 +10,13 @@ public class HostileNPC : BasedNPC
 
     private float nextUpdatedTime;
     internal GameObject collidedTile;
+    InfectionManager infectionManager;
 
     // Start is called before the first frame update
     void Start()
     {
+        GameObject IManager = GameObject.Find("Infection Manager");
+        infectionManager = IManager.GetComponent<InfectionManager>();
         nextUpdatedTime = nextUpdate();
     }
 
@@ -36,19 +39,19 @@ public class HostileNPC : BasedNPC
 
         foreach (GameObject o in GameObject.FindGameObjectsWithTag("NonHostileNPC"))
         {
-            if (o.transform.position.x >= pos.x -0.5f && o.transform.position.x <= pos.x + 0.5f && o.transform.position.z >= pos.z - 0.5f && o.transform.position.z <= pos.z + 0.5f)
+            if (o.transform.position.x >= pos.x -0.5f && o.transform.position.x <= pos.x + 0.5f 
+                && o.transform.position.z >= pos.z - 0.5f && o.transform.position.z <= pos.z + 0.5f)
             {
                 //chances of infection
-                float chances = Random.Range(0.0000f, 1f);
-                if (chances <= 0.100f)
+                if (Random.Range(0.0000f, 1f) <= 1f)
                 {
                     Vector3 spanLoc = o.transform.position;
                     Quaternion spawnRot = o.transform.rotation;
-                    //Debug.Log(spanLoc);
+                    objToSpawn.name = $"InfectedHostileNPC {infectionManager.infected}";
+                    infectionManager.infected++;
                     Destroy(o);
                     Instantiate(objToSpawn, spanLoc, spawnRot);
                 }
-
             }
         }
     }
