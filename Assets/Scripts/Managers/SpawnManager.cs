@@ -17,22 +17,20 @@ public class SpawnManager : MonoBehaviour
 
     public List<ScriptableNPC> _npcs;
 
+    protected internal int infected = 0;
+    protected internal int nonInfected = 0;
 
     private void Awake()
     {
         Instance = this;
-
         //_npcs = Resources.LoadAll<ScriptableNPC>("NPCS").ToList();
-    }
-
-    void Start()
-    {
-        //spawnObject();
     }
     public void spawnObject()
     {
         float screenX, screenZ, screenY;
         Vector3 pos;
+        infected = hostileNPCSpawn;
+        nonInfected = NonhostileNPCSpawn;
 
         for(int i = 0; i < NonhostileNPCSpawn; i++)
         {
@@ -45,9 +43,11 @@ public class SpawnManager : MonoBehaviour
             if (!Physics.CheckSphere(pos, 0.6f, LayerMask.GetMask("NPC")))
             {
                 //Debug.Log("Collision");
-                spawnPool[1].name = $"NonHostileNPC {i}";
+                spawnPool[0].name = $"NonHostileNPC {i}";
                 Instantiate(spawnPool[0], pos, Quaternion.identity);
             }
+            else
+                i--;
         }
         for (int i = 0; i < hostileNPCSpawn; i++)
         {
@@ -62,6 +62,8 @@ public class SpawnManager : MonoBehaviour
                 spawnPool[1].name = $"HostileNPC {i}";
                 Instantiate(spawnPool[1], pos, Quaternion.identity);
             }
+            else
+                i--;
         }
     }
 }

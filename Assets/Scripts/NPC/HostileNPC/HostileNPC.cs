@@ -10,13 +10,13 @@ public class HostileNPC : BasedNPC
 
     private float nextUpdatedTime;
     internal GameObject collidedTile;
-    InfectionManager infectionManager;
+    SpawnManager spawnManager;
 
     // Start is called before the first frame update
     void Start()
     {
-        GameObject IManager = GameObject.Find("Infection Manager");
-        infectionManager = IManager.GetComponent<InfectionManager>();
+        GameObject SManager = GameObject.Find("Spawn Manager");
+        spawnManager = SManager.GetComponent<SpawnManager>();
         nextUpdatedTime = nextUpdate();
     }
 
@@ -47,10 +47,13 @@ public class HostileNPC : BasedNPC
                 {
                     Vector3 spanLoc = o.transform.position;
                     Quaternion spawnRot = o.transform.rotation;
-                    objToSpawn.name = $"InfectedHostileNPC {infectionManager.infected}";
-                    infectionManager.infected++;
+                    spawnManager.nonInfected--;
+                    spawnManager.infected++;
+                    objToSpawn.name = $"Infected {o.name}";
                     Destroy(o);
-                    Instantiate(objToSpawn, spanLoc, spawnRot);
+                    Debug.Log(o.name + " is Destroy!");
+                    GameObject infectedNPC = Instantiate(objToSpawn, spanLoc, spawnRot) as GameObject;
+                    infectedNPC.name = infectedNPC.name.Replace("(Clone)", "");
                 }
             }
         }

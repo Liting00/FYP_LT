@@ -15,6 +15,7 @@ public class TargetController : MonoBehaviour
     internal List<GameObject> collidedTile = new List<GameObject>();
     internal bool changeTarget = false;
     internal bool destroy = false;
+    SpawnManager spawnManager;
 
     private float update;
     private float nextUpdatedTime = 0.1f;
@@ -53,6 +54,9 @@ public class TargetController : MonoBehaviour
         tiles = GameObject.FindGameObjectsWithTag(tile);
         hostileNPCS = GameObject.FindGameObjectsWithTag(npc);
         selectedNPC = hostileNPCS[Random.Range(0, hostileNPCS.Length)];
+
+        GameObject SManager = GameObject.Find("Spawn Manager");
+        spawnManager = SManager.GetComponent<SpawnManager>();
     }
     void updateTarget()
     {
@@ -115,6 +119,7 @@ public class TargetController : MonoBehaviour
                 && o.transform.position.z >= npcPosZ && o.transform.position.z <= npcPosZ + 1f)
             {
                 Destroy(o);
+                spawnManager.infected--;
             }
 
         }
@@ -126,6 +131,7 @@ public class TargetController : MonoBehaviour
                 && o.transform.position.z >= npcPosZ && o.transform.position.z <= npcPosZ + 1f)
             {
                 Destroy(o);
+                spawnManager.nonInfected--;
             }
 
         }

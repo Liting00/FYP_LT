@@ -9,8 +9,16 @@ public class ButtonController : MonoBehaviour
     public Button passButton;
     public Button showAdvisorButton;
 
-    [SerializeField] public GameObject textBox;
+    TargetController targetController;
+    AdvisorManager advisorManager;
 
+    private void Start()
+    {
+        GameObject tController = GameObject.Find("Target Controller");
+        targetController = tController.GetComponent<TargetController>();
+        GameObject AManager = GameObject.Find("Advisor Manager");
+        advisorManager = AManager.GetComponent<AdvisorManager>();
+    }
     void OnEnable()
     {
         //Register Button Events
@@ -21,28 +29,28 @@ public class ButtonController : MonoBehaviour
     private void buttonCallBack(Button buttonPressed)
     {
         if (buttonPressed == shootButton)
-        {
-            GameObject tController = GameObject.Find("Target Controller");
-            TargetController targetController = tController.GetComponent<TargetController>();
+        {  
             targetController.destroyTarget();
             targetController.changeTarget = true;
-            textBox.SetActive(false);
+            advisorManager.advisorBox.SetActive(false);
             Debug.Log("Shoot Button pressed");
         }
         if (buttonPressed == passButton)
         {
-            GameObject tController = GameObject.Find("Target Controller");
-            TargetController targetController = tController.GetComponent<TargetController>();
             targetController.changeTarget = true;
-            textBox.SetActive(false);
+            advisorManager.advisorBox.SetActive(false);
             Debug.Log("Pass Button pressed");
         }
         if (buttonPressed == showAdvisorButton)
         {
-            if (textBox.activeInHierarchy)
-                textBox.SetActive(false);
+            
+            if (advisorManager.advisorBox.activeInHierarchy)
+                advisorManager.advisorBox.SetActive(false);
             else
-                textBox.SetActive(true);
+            {
+                advisorManager.getAdvise();
+                advisorManager.advisorBox.SetActive(true);
+            }
             Debug.Log("Show Advisor Button pressed");
         }
     }
