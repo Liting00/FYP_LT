@@ -119,7 +119,8 @@ public class TargetController : MonoBehaviour
                 && o.transform.position.z >= npcPosZ && o.transform.position.z <= npcPosZ + 1f)
             {
                 Destroy(o);
-                spawnManager.infected--;
+                spawnManager.setInfected(spawnManager.getInfected() - 1);
+                //spawnManager.infected--;
             }
 
         }
@@ -131,7 +132,8 @@ public class TargetController : MonoBehaviour
                 && o.transform.position.z >= npcPosZ && o.transform.position.z <= npcPosZ + 1f)
             {
                 Destroy(o);
-                spawnManager.nonInfected--;
+                spawnManager.setNonInfected(spawnManager.getNonInfected() - 1);
+                //spawnManager.nonInfected--;
             }
 
         }

@@ -9,6 +9,7 @@ public class ButtonController : MonoBehaviour
     public Button passButton;
     public Button showAdvisorButton;
 
+
     TargetController targetController;
     AdvisorManager advisorManager;
 
@@ -24,7 +25,7 @@ public class ButtonController : MonoBehaviour
         //Register Button Events
         shootButton.onClick.AddListener(() => buttonCallBack(shootButton));
         passButton.onClick.AddListener(() => buttonCallBack(passButton));
-        showAdvisorButton.onClick.AddListener(() => buttonCallBack(showAdvisorButton));
+        //showAdvisorButton.onClick.AddListener(() => buttonCallBack(showAdvisorButton));
     }
     private void buttonCallBack(Button buttonPressed)
     {
@@ -41,7 +42,7 @@ public class ButtonController : MonoBehaviour
             advisorManager.advisorBox.SetActive(false);
             Debug.Log("Pass Button pressed");
         }
-        if (buttonPressed == showAdvisorButton)
+        /*if (buttonPressed == showAdvisorButton)
         {
             
             if (advisorManager.advisorBox.activeInHierarchy)
@@ -52,6 +53,6 @@ public class ButtonController : MonoBehaviour
                 advisorManager.advisorBox.SetActive(true);
             }
             Debug.Log("Show Advisor Button pressed");
-        }
+        }*/
     }
 }

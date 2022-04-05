@@ -47,8 +47,12 @@ public class HostileNPC : BasedNPC
                 {
                     Vector3 spanLoc = o.transform.position;
                     Quaternion spawnRot = o.transform.rotation;
-                    spawnManager.nonInfected--;
-                    spawnManager.infected++;
+                    int infected = spawnManager.getInfected();
+                    spawnManager.setInfected(infected - 1);
+                    int nonInfected = spawnManager.getNonInfected();
+                    spawnManager.setInfected(nonInfected + 1);
+                    //spawnManager.nonInfected--;
+                    //spawnManager.infected++;
                     objToSpawn.name = $"Infected {o.name}";
                     Destroy(o);
                     Debug.Log(o.name + " is Destroy!");

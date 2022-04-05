@@ -17,8 +17,25 @@ public class SpawnManager : MonoBehaviour
 
     public List<ScriptableNPC> _npcs;
 
-    protected internal int infected = 0;
-    protected internal int nonInfected = 0;
+    private int infected = 0;
+    private int nonInfected = 0;
+
+    public int getInfected()
+    {
+        return infected;
+    }
+    public int getNonInfected()
+    {
+        return nonInfected;
+    }
+    public void setInfected(int value)
+    {
+        infected = value;
+    }
+    public void setNonInfected(int value)
+    {
+        nonInfected = value;
+    }
 
     private void Awake()
     {
