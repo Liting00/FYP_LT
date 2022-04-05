@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DilmerGames.Core.Singletons;
+using Unity.Netcode;
 
-public class GridManager : MonoBehaviour
+public class GridManager : NetworkSingleton<GridManager>
 {
     public static GridManager Instance;
 
@@ -19,6 +21,8 @@ public class GridManager : MonoBehaviour
 
     public void GenerateGrid()
     {
+        if (!IsServer) return;
+
         for (int x = 0; x < _width - 3; x++)
         {
             for (int z = 0; z < _height; z++)
@@ -29,6 +33,7 @@ public class GridManager : MonoBehaviour
                 //even and odd colouring
                 var isOffset = (x + z) % 2 == 1;
                 spawnedTile.Init(isOffset);
+                spawnedTile.GetComponent<NetworkObject>().Spawn();
             }
         }
         //move camera (offset)

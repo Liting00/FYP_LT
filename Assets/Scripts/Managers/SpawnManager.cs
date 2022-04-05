@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using DilmerGames.Core.Singletons;
+using Unity.Netcode;
 
-public class SpawnManager : MonoBehaviour
+public class SpawnManager : NetworkSingleton<SpawnManager>
 {
     //[SerializeField] private GameObject npc_civilian;
 
@@ -44,6 +46,8 @@ public class SpawnManager : MonoBehaviour
     }
     public void spawnObject()
     {
+        if (!IsServer) return;
+
         float screenX, screenZ, screenY;
         Vector3 pos;
         infected = hostileNPCSpawn;
@@ -61,7 +65,8 @@ public class SpawnManager : MonoBehaviour
             {
                 //Debug.Log("Collision");
                 spawnPool[0].name = $"NonHostileNPC {i}";
-                Instantiate(spawnPool[0], pos, Quaternion.identity);
+                GameObject go = Instantiate(spawnPool[0], pos, Quaternion.identity);
+                go.GetComponent<NetworkObject>().Spawn();
             }
             else
                 i--;
@@ -77,7 +82,8 @@ public class SpawnManager : MonoBehaviour
             {
                 //Debug.Log("Collision");
                 spawnPool[1].name = $"HostileNPC {i}";
-                Instantiate(spawnPool[1], pos, Quaternion.identity);
+                GameObject go = Instantiate(spawnPool[1], pos, Quaternion.identity);
+                go.GetComponent<NetworkObject>().Spawn();
             }
             else
                 i--;

@@ -13,7 +13,10 @@ public class ButtonController : MonoBehaviour
 
     TargetController targetController;
     AdvisorManager advisorManager;
-
+    private void Awake()
+    {
+        Debug.Log("Button Controller is called");
+    }
     private void Start()
     {
         GameObject tController = GameObject.Find("Target Controller");

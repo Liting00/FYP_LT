@@ -4,8 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Unity.Netcode;
+using UnityEngine.SceneManagement;
 
-public class UIManagerTest : MonoBehaviour
+public class UIManagerMenu : MonoBehaviour
 {
     [SerializeField]
     private Button startServerButton;
@@ -17,7 +18,12 @@ public class UIManagerTest : MonoBehaviour
     private Button startClientButton;
 
     [SerializeField]
-    private TextMeshProUGUI playersInGameText;
+    private Button startGameButton;
+    
+    //[SerializeField]
+    //private TextMeshProUGUI playersInGameText;
+
+    private bool hasServerStarted;
 
     private void Awake()
     {
@@ -61,6 +67,19 @@ public class UIManagerTest : MonoBehaviour
             {
                 Debug.Log("Server could not be Started...");
             }
+        });
+        NetworkManager.Singleton.OnServerStarted += () =>
+        {
+            hasServerStarted = true;
+        };
+        startGameButton.onClick.AddListener(() =>
+        {
+            /*if (!hasServerStarted)
+            {
+                Debug.Log("Server has not yet started");
+                return;
+            }*/
+            SceneManager.LoadScene("Grid Environment");
         });
 
     }

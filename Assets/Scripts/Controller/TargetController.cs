@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DilmerGames.Core.Singletons;
 
 public class TargetController : MonoBehaviour
 {
@@ -49,6 +50,10 @@ public class TargetController : MonoBehaviour
             }   
         }
     }*/
+    private void Awake()
+    {
+        Debug.Log("TargetController awake was called");
+    }
     public void Start()
     {
         tiles = GameObject.FindGameObjectsWithTag(tile);

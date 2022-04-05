@@ -28,11 +28,12 @@ public class PlayerManager : NetworkSingleton<PlayerManager>
         //playersInGameText.Text = $"Player in Game: {PlayerManager.Instance.PlayerInGame}";
     }
 
-    void Start()
+    private void Start()
     {
+        //Debug.Log("Start");
         NetworkManager.Singleton.OnClientConnectedCallback += (id) =>
         {
-            if (IsClient)
+            if (IsHost)
             {
                 Debug.Log($"ID {id} just connected");
                 playersInGame.Value++;
@@ -41,7 +42,7 @@ public class PlayerManager : NetworkSingleton<PlayerManager>
         };
         NetworkManager.Singleton.OnClientDisconnectCallback += (id) =>
         {
-            if (IsClient)
+            if (IsHost)
             {
                 Debug.Log($"ID {id} just disconnected");
                 playersInGame.Value--;
