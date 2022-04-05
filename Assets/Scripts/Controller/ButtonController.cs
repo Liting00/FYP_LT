@@ -5,9 +5,10 @@ using UnityEngine.UI;
 
 public class ButtonController : MonoBehaviour
 {
-    public Button shootButton;
-    public Button passButton;
-    public Button showAdvisorButton;
+    public Button playerShootButton;
+    public Button playerPassButton;
+    public Button advisorShootButton;
+    public Button advisorPassButton;
 
 
     TargetController targetController;
@@ -23,24 +24,36 @@ public class ButtonController : MonoBehaviour
     void OnEnable()
     {
         //Register Button Events
-        shootButton.onClick.AddListener(() => buttonCallBack(shootButton));
-        passButton.onClick.AddListener(() => buttonCallBack(passButton));
+        playerShootButton.onClick.AddListener(() => buttonCallBack(playerShootButton));
+        playerPassButton.onClick.AddListener(() => buttonCallBack(playerPassButton));
+        advisorShootButton.onClick.AddListener(() => buttonCallBack(advisorShootButton));
+        advisorPassButton.onClick.AddListener(() => buttonCallBack(advisorPassButton));
         //showAdvisorButton.onClick.AddListener(() => buttonCallBack(showAdvisorButton));
     }
     private void buttonCallBack(Button buttonPressed)
     {
-        if (buttonPressed == shootButton)
+        if (buttonPressed == playerShootButton)
         {  
             targetController.destroyTarget();
             targetController.changeTarget = true;
             advisorManager.advisorBox.SetActive(false);
-            Debug.Log("Shoot Button pressed");
+            Debug.Log("Player Shoot Button pressed");
         }
-        if (buttonPressed == passButton)
+        if (buttonPressed == playerPassButton)
         {
             targetController.changeTarget = true;
             advisorManager.advisorBox.SetActive(false);
-            Debug.Log("Pass Button pressed");
+            Debug.Log("Player Pass Button pressed");
+        }
+        if (buttonPressed == advisorShootButton)
+        {
+            advisorManager.insertAdvise("Shoot");
+            Debug.Log("Advisor Shoot Button pressed");
+        }
+        if (buttonPressed == advisorPassButton)
+        {
+            advisorManager.insertAdvise("Pass");
+            Debug.Log("Advisor Pass Button pressed");
         }
         /*if (buttonPressed == showAdvisorButton)
         {

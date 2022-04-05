@@ -55,7 +55,7 @@ public class HostileNPC : BasedNPC
                     //spawnManager.infected++;
                     objToSpawn.name = $"Infected {o.name}";
                     Destroy(o);
-                    Debug.Log(o.name + " is Destroy!");
+                    //Debug.Log(o.name + " is Destroy!");
                     GameObject infectedNPC = Instantiate(objToSpawn, spanLoc, spawnRot) as GameObject;
                     infectedNPC.name = infectedNPC.name.Replace("(Clone)", "");
                 }
