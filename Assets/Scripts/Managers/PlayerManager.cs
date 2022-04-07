@@ -23,11 +23,6 @@ public class PlayerManager : NetworkSingleton<PlayerManager>
         playersInGame.Value = value;
 
     }
-    private void Update()
-    {
-        //playersInGameText.Text = $"Player in Game: {PlayerManager.Instance.PlayerInGame}";
-    }
-
     private void Start()
     {
         //Debug.Log("Start");
@@ -37,7 +32,7 @@ public class PlayerManager : NetworkSingleton<PlayerManager>
             {
                 Debug.Log($"ID {id} just connected");
                 playersInGame.Value++;
-                playerUI.SetActive(true);
+                //playerUI.SetActive(true);
             }
         };
         NetworkManager.Singleton.OnClientDisconnectCallback += (id) =>
@@ -46,7 +41,7 @@ public class PlayerManager : NetworkSingleton<PlayerManager>
             {
                 Debug.Log($"ID {id} just disconnected");
                 playersInGame.Value--;
-                playerUI.SetActive(false);
+                //playerUI.SetActive(false);
             }
         };
     }

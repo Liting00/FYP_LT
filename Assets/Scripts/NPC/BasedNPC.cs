@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-public class BasedNPC : MonoBehaviour
+using DilmerGames.Core.Singletons;
+public class BasedNPC : NetworkSingleton<BasedNPC>
 {
     public float moveSpeed = 0.25f;
     public float rotSpeed = 100f;

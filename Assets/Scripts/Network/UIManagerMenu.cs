@@ -20,8 +20,8 @@ public class UIManagerMenu : MonoBehaviour
     [SerializeField]
     private Button startGameButton;
     
-    //[SerializeField]
-    //private TextMeshProUGUI playersInGameText;
+    [SerializeField]
+    private TextMeshProUGUI playersInGameText;
 
     private bool hasServerStarted;
 
@@ -31,7 +31,7 @@ public class UIManagerMenu : MonoBehaviour
     }
     private void Update()
     {
-        //playersInGameText.text = $"Player in Game: {PlayerManager.Instance.PlayerInGame}";
+        playersInGameText.text = $"Player in Game: {PlayerManager.Instance.PlayerInGame}";
     }
     private void Start()
     {
@@ -74,12 +74,12 @@ public class UIManagerMenu : MonoBehaviour
         };
         startGameButton.onClick.AddListener(() =>
         {
-            /*if (!hasServerStarted)
+            if (!hasServerStarted)
             {
                 Debug.Log("Server has not yet started");
                 return;
-            }*/
-            SceneManager.LoadScene("Grid Environment");
+            }
+            GameManager.Instance.ChangeState(GameState.GenerateGrid);
         });
 
     }

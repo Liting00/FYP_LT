@@ -20,9 +20,9 @@ public class TileCollision : MonoBehaviour
     {
         if(other.gameObject.tag == "HostileNPC")
         {
-            GameObject tController = GameObject.Find("Target Controller");
-            TargetController targetController = tController.GetComponent<TargetController>();
-            targetController.collidedTile.Add(gameObject);
+            //GameObject tController = GameObject.Find("Target Controller");
+            //TargetController targetController = tController.GetComponent<TargetController>();
+            //targetController.collidedTile.Add(gameObject);
             //Debug.Log(gameObject.name + " hit!");
         }
     }
@@ -30,9 +30,9 @@ public class TileCollision : MonoBehaviour
     {
         if (other.gameObject.tag == "HostileNPC")
         {
-            GameObject tController = GameObject.Find("Target Controller");
-            TargetController targetController = tController.GetComponent<TargetController>();
-            targetController.collidedTile.Remove(gameObject);
+            //GameObject tController = GameObject.Find("Target Controller");
+            //TargetController targetController = tController.GetComponent<TargetController>();
+            //targetController.collidedTile.Remove(gameObject);
             //Debug.Log(gameObject.name + " Remove!");
         }
     }

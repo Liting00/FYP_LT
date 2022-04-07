@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
 public class HostileNPC : BasedNPC
@@ -57,6 +58,7 @@ public class HostileNPC : BasedNPC
                     Destroy(o);
                     //Debug.Log(o.name + " is Destroy!");
                     GameObject infectedNPC = Instantiate(objToSpawn, spanLoc, spawnRot) as GameObject;
+                    infectedNPC.GetComponent<NetworkObject>().Spawn();
                     infectedNPC.name = infectedNPC.name.Replace("(Clone)", "");
                 }
             }
