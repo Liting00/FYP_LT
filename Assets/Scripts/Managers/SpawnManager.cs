@@ -88,5 +88,6 @@ public class SpawnManager : NetworkSingleton<SpawnManager>
             else
                 i--;
         }
+        GameManager.Instance.ChangeState(GameState.Targeter);
     }
 }

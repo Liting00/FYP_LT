@@ -22,6 +22,9 @@ public class UIManager : NetworkBehaviour
     [SerializeField]
     private TextMeshProUGUI playersInGameText;
 
+    [SerializeField]
+    private GameObject targetController;
+
     private bool hasServerStarted = false;
 
     private void Awake()
@@ -65,6 +68,7 @@ public class UIManager : NetworkBehaviour
             if (NetworkManager.Singleton.StartClient())
             {
                 Debug.Log("Client Started...");
+
             }
             else
             {
@@ -76,6 +80,7 @@ public class UIManager : NetworkBehaviour
             if (NetworkManager.Singleton.StartServer())
             {
                 Debug.Log("Server Started...");
+                targetController.SetActive(true);
             }
             else
             {

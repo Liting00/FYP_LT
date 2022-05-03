@@ -24,6 +24,8 @@ public class HostileNPC : BasedNPC
     // Update is called once per frame
     void Update()
     {
+        if (!IsServer) return;
+
         update += Time.deltaTime;
         if (update > nextUpdatedTime)
         {

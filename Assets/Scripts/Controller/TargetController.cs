@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DilmerGames.Core.Singletons;
 
-public class TargetController : MonoBehaviour
+public class TargetController : NetworkSingleton<TargetController>
 {
     private string npc = "HostileNPC";
     private string tile = "Tile";
@@ -20,6 +20,8 @@ public class TargetController : MonoBehaviour
 
     private float update;
     private float nextUpdatedTime = 0.1f;
+
+    bool enableUpdate = false;
     /*void UpdateTarget()
     {
         //Debug.Log("Start Target");
@@ -50,11 +52,11 @@ public class TargetController : MonoBehaviour
             }   
         }
     }*/
-    private void Awake()
+    /*private void Awake()
     {
         Debug.Log("TargetController awake was called");
-    }
-    public void Start()
+    }*/
+    /*void Start()
     {
         tiles = GameObject.FindGameObjectsWithTag(tile);
         hostileNPCS = GameObject.FindGameObjectsWithTag(npc);
@@ -62,6 +64,16 @@ public class TargetController : MonoBehaviour
 
         GameObject SManager = GameObject.Find("Spawn Manager");
         spawnManager = SManager.GetComponent<SpawnManager>();
+    }*/
+    public void targetInit()
+    {
+        tiles = GameObject.FindGameObjectsWithTag(tile);
+        hostileNPCS = GameObject.FindGameObjectsWithTag(npc);
+        selectedNPC = hostileNPCS[Random.Range(0, hostileNPCS.Length)];
+
+        GameObject SManager = GameObject.Find("Spawn Manager");
+        spawnManager = SManager.GetComponent<SpawnManager>();
+        enableUpdate = true;
     }
     void updateTarget()
     {
@@ -74,6 +86,7 @@ public class TargetController : MonoBehaviour
         hostileNPCS = GameObject.FindGameObjectsWithTag(npc);
         if (hostileNPCS.Length == 0)
             return;
+
         //for changing target
         if (changeTarget == true)
         {
@@ -101,9 +114,14 @@ public class TargetController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!IsServer) return;
+
+        if (enableUpdate == false) return;
+
         update += Time.deltaTime;
         if (update > nextUpdatedTime)
         {
+            Debug.Log("Update Target");
             update = 0f;
             updateTarget();
         }

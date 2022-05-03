@@ -33,6 +33,9 @@ public class GameManager : MonoBehaviour
                 //Debug.Log("Generate Spawn State");
                 SpawnManager.Instance.spawnObject();
                 break;
+            case GameState.Targeter:
+                TargetController.Instance.targetInit();
+                break;
             default:
                 throw new System.ArgumentOutOfRangeException(nameof(newState), newState, null);
         }
@@ -49,5 +52,6 @@ public enum GameState
 {
     GenerateGrid = 0,
     SpawnNPC = 1,
-    SpawnRedNPC = 2
+    Targeter = 2,
+
 }
