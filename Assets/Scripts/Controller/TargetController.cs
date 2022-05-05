@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DilmerGames.Core.Singletons;
+using UnityEngine.Networking;
+using Unity.Netcode;
 
 public class TargetController : NetworkSingleton<TargetController>
 {
@@ -13,9 +15,9 @@ public class TargetController : NetworkSingleton<TargetController>
     private GameObject[] tiles;
     private GameObject selectedNPC;
 
-    internal List<GameObject> collidedTile = new List<GameObject>();
-    internal bool changeTarget = false;
-    internal bool destroy = false;
+    public List<GameObject> collidedTile = new List<GameObject>();
+    public bool changeTarget = false;
+    public bool destroy = false;
     SpawnManager spawnManager;
 
     private float update;
@@ -65,7 +67,24 @@ public class TargetController : NetworkSingleton<TargetController>
         GameObject SManager = GameObject.Find("Spawn Manager");
         spawnManager = SManager.GetComponent<SpawnManager>();
     }*/
+    // Update is called once per frame
+    void Update()
+    {
+        if (enableUpdate == false) return;
+
+        update += Time.deltaTime;
+        if (update > nextUpdatedTime)
+        {
+            update = 0f;
+            updateTarget();
+        }
+    }
     public void targetInit()
+    {
+        initalization();
+        updateClientRpc();
+    }
+    private void initalization()
     {
         tiles = GameObject.FindGameObjectsWithTag(tile);
         hostileNPCS = GameObject.FindGameObjectsWithTag(npc);
@@ -74,6 +93,11 @@ public class TargetController : NetworkSingleton<TargetController>
         GameObject SManager = GameObject.Find("Spawn Manager");
         spawnManager = SManager.GetComponent<SpawnManager>();
         enableUpdate = true;
+    }
+    [ClientRpc]
+    void updateClientRpc()
+    {
+       initalization();
     }
     void updateTarget()
     {
@@ -97,7 +121,6 @@ public class TargetController : NetworkSingleton<TargetController>
             previousNPCName = selectedNPC.name;
             changeTarget = false;
         }
-
         //highlight selectedNPC tile
         foreach (GameObject tile in collidedTile)
         {
@@ -107,27 +130,15 @@ public class TargetController : NetworkSingleton<TargetController>
             //Debug.Log("Selected NPC " + npcPosX + ", " + npcPosZ);
             if (tile.transform.position.x >= npcPosX && tile.transform.position.x <= npcPosX + 1f 
                 && tile.transform.position.z >= npcPosZ && tile.transform.position.z <= npcPosZ + 1f)
-                tile.GetComponent<Renderer>().material.color = Color.grey;
-                
+            {
+                tile.GetComponent<Renderer>().material.color = Color.gray;
+                //Debug.Log("Highlighted Gray");
+            }
+
+
         }
     }
-    // Update is called once per frame
-    void Update()
-    {
-        if (!IsServer) return;
-
-        if (enableUpdate == false) return;
-
-        update += Time.deltaTime;
-        if (update > nextUpdatedTime)
-        {
-            Debug.Log("Update Target");
-            update = 0f;
-            updateTarget();
-        }
-        
-    }
-    internal void destroyTarget()
+    public void destroyTarget()
     {
         if (hostileNPCS.Length == 0)
             return;
@@ -155,7 +166,8 @@ public class TargetController : NetworkSingleton<TargetController>
                 && o.transform.position.z >= npcPosZ && o.transform.position.z <= npcPosZ + 1f)
             {
                 Destroy(o);
-                spawnManager.setNonInfected(spawnManager.getNonInfected() - 1);
+                SpawnManager.Instance.setNonInfected(spawnManager.getNonInfected() - 1);
+                //spawnManager.setNonInfected(spawnManager.getNonInfected() - 1);
                 //spawnManager.nonInfected--;
             }
 

@@ -44,9 +44,15 @@ public class SpawnManager : NetworkSingleton<SpawnManager>
         Instance = this;
         //_npcs = Resources.LoadAll<ScriptableNPC>("NPCS").ToList();
     }
-    public void spawnObject()
+
+    public void generateNPCs()
     {
-        if (!IsServer) return;
+        if (IsServer)
+            spawnNPCs();
+        GameManager.Instance.ChangeState(GameState.Targeter);
+    }
+    private void spawnNPCs()
+    {
 
         float screenX, screenZ, screenY;
         Vector3 pos;
@@ -88,6 +94,5 @@ public class SpawnManager : NetworkSingleton<SpawnManager>
             else
                 i--;
         }
-        GameManager.Instance.ChangeState(GameState.Targeter);
     }
 }

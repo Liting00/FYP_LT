@@ -8,21 +8,16 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     public GameState GameState;
 
+
     private void Awake()
     {
         Instance = this;
         Debug.Log("Game Manager is called");
     }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        ChangeState(GameState.GenerateGrid);
-    }
-
     public void ChangeState(GameState newState)
     {
         GameState = newState;
+        Debug.Log("State Change: " + GameState);
         switch (newState)
         {
             case GameState.GenerateGrid:
@@ -31,7 +26,7 @@ public class GameManager : MonoBehaviour
                 break;
             case GameState.SpawnNPC:
                 //Debug.Log("Generate Spawn State");
-                SpawnManager.Instance.spawnObject();
+                SpawnManager.Instance.generateNPCs();
                 break;
             case GameState.Targeter:
                 TargetController.Instance.targetInit();

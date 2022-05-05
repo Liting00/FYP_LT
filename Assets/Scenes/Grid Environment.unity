@@ -2199,6 +2199,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ffe328f46b631141b7f7f4b60048018, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  collidedTile: []
+  changeTarget: 0
+  destroy: 0
 --- !u!4 &1367454836
 Transform:
   m_ObjectHideFlags: 0

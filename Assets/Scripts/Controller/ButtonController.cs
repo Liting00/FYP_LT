@@ -19,8 +19,8 @@ public class ButtonController : MonoBehaviour
     }
     private void Start()
     {
-        GameObject tController = GameObject.Find("Target Controller");
-        targetController = tController.GetComponent<TargetController>();
+        //GameObject tController = GameObject.Find("Target Controller");
+        //targetController = tController.GetComponent<TargetController>();
         GameObject AManager = GameObject.Find("Advisor Manager");
         advisorManager = AManager.GetComponent<AdvisorManager>();
     }
@@ -36,9 +36,11 @@ public class ButtonController : MonoBehaviour
     private void buttonCallBack(Button buttonPressed)
     {
         if (buttonPressed == playerShootButton)
-        {  
-            targetController.destroyTarget();
-            targetController.changeTarget = true;
+        {
+            TargetController.Instance.destroyTarget();
+            TargetController.Instance.changeTarget = true;
+            //targetController.destroyTarget();
+            //targetController.changeTarget = true;
             advisorManager.advisorBox.SetActive(false);
             Debug.Log("Player Shoot Button pressed");
         }

@@ -21,8 +21,14 @@ public class GridManager : NetworkSingleton<GridManager>
 
     public void GenerateGrid()
     {
-        if (!IsServer) return;
+        if (IsServer)
+            spawnTiles();
 
+        GameManager.Instance.ChangeState(GameState.SpawnNPC);
+    }
+
+    private void spawnTiles()
+    {
         for (int x = 0; x < _width - 3; x++)
         {
             for (int z = 0; z < _height; z++)
@@ -38,7 +44,5 @@ public class GridManager : NetworkSingleton<GridManager>
         }
         //move camera (offset)
         //_cam.transform.position = new Vector3((float)_width / 2 - 3.5f, (float)_height / 2 - 0.5f, -10);
-
-        GameManager.Instance.ChangeState(GameState.SpawnNPC);
     }
 }
