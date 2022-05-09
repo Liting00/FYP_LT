@@ -15,9 +15,9 @@ public class TargetController : NetworkSingleton<TargetController>
     private GameObject[] tiles;
     private GameObject selectedNPC;
 
-    public List<GameObject> collidedTile = new List<GameObject>();
-    public bool changeTarget = false;
-    public bool destroy = false;
+    internal List<GameObject> collidedTile = new List<GameObject>();
+    internal bool changeTarget = false;
+    internal bool destroy = false;
     SpawnManager spawnManager;
 
     private float update;
@@ -86,6 +86,7 @@ public class TargetController : NetworkSingleton<TargetController>
     }
     private void initalization()
     {
+        Debug.Log("Target Initalize");
         tiles = GameObject.FindGameObjectsWithTag(tile);
         hostileNPCS = GameObject.FindGameObjectsWithTag(npc);
         selectedNPC = hostileNPCS[Random.Range(0, hostileNPCS.Length)];
@@ -95,18 +96,26 @@ public class TargetController : NetworkSingleton<TargetController>
         enableUpdate = true;
     }
     [ClientRpc]
-    void updateClientRpc()
+    private void updateClientRpc()
     {
-       initalization();
+        if (IsOwner) return;
+
+        initalization();
     }
-    void updateTarget()
+    /*[ClientRpc]
+    private void updateTargetClientRpc(GameObject tile)
+    {
+        if (IsOwner) return;
+
+        tile.GetComponent<Renderer>().material.color = Color.gray;
+    }*/
+    private void updateTarget()
     {
         //colour all the tiles to black
         foreach (GameObject tile in tiles)
         {
             tile.GetComponent<Renderer>().material.color = Color.black;
         }
-
         hostileNPCS = GameObject.FindGameObjectsWithTag(npc);
         if (hostileNPCS.Length == 0)
             return;
@@ -115,8 +124,14 @@ public class TargetController : NetworkSingleton<TargetController>
         if (changeTarget == true)
         {
             Debug.Log("Change Target");
+            int timeout = 5;
             do
+            {
                 selectedNPC = hostileNPCS[Random.Range(0, hostileNPCS.Length)];
+                //** need to optimize this
+                timeout--;
+                if (timeout == 0) break;
+            }
             while (string.Compare(previousNPCName, selectedNPC.name) == 0);
             previousNPCName = selectedNPC.name;
             changeTarget = false;
@@ -132,10 +147,9 @@ public class TargetController : NetworkSingleton<TargetController>
                 && tile.transform.position.z >= npcPosZ && tile.transform.position.z <= npcPosZ + 1f)
             {
                 tile.GetComponent<Renderer>().material.color = Color.gray;
+                //updateTargetClientRpc(tile);
                 //Debug.Log("Highlighted Gray");
             }
-
-
         }
     }
     public void destroyTarget()
@@ -153,7 +167,9 @@ public class TargetController : NetworkSingleton<TargetController>
                 && o.transform.position.z >= npcPosZ && o.transform.position.z <= npcPosZ + 1f)
             {
                 Destroy(o);
-                spawnManager.setInfected(spawnManager.getInfected() - 1);
+                //** need to optimize this
+                SpawnManager.Instance.setInfected(spawnManager.getNonInfected() - 1);
+                //spawnManager.setInfected(spawnManager.getInfected() - 1);
                 //spawnManager.infected--;
             }
 
@@ -166,6 +182,7 @@ public class TargetController : NetworkSingleton<TargetController>
                 && o.transform.position.z >= npcPosZ && o.transform.position.z <= npcPosZ + 1f)
             {
                 Destroy(o);
+                //** need to optimize this
                 SpawnManager.Instance.setNonInfected(spawnManager.getNonInfected() - 1);
                 //spawnManager.setNonInfected(spawnManager.getNonInfected() - 1);
                 //spawnManager.nonInfected--;

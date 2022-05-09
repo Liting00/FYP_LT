@@ -11,7 +11,6 @@ public class ButtonController : MonoBehaviour
     public Button advisorPassButton;
 
 
-    TargetController targetController;
     AdvisorManager advisorManager;
     private void Awake()
     {
@@ -19,8 +18,6 @@ public class ButtonController : MonoBehaviour
     }
     private void Start()
     {
-        //GameObject tController = GameObject.Find("Target Controller");
-        //targetController = tController.GetComponent<TargetController>();
         GameObject AManager = GameObject.Find("Advisor Manager");
         advisorManager = AManager.GetComponent<AdvisorManager>();
     }
@@ -39,25 +36,25 @@ public class ButtonController : MonoBehaviour
         {
             TargetController.Instance.destroyTarget();
             TargetController.Instance.changeTarget = true;
-            //targetController.destroyTarget();
-            //targetController.changeTarget = true;
-            advisorManager.advisorBox.SetActive(false);
             Debug.Log("Player Shoot Button pressed");
         }
         if (buttonPressed == playerPassButton)
         {
-            targetController.changeTarget = true;
-            advisorManager.advisorBox.SetActive(false);
+            TargetController.Instance.changeTarget = true;
             Debug.Log("Player Pass Button pressed");
         }
         if (buttonPressed == advisorShootButton)
         {
-            advisorManager.insertAdvise("Shoot");
+            //advisorManager.insertAdvise("Shoot");
+            UIManager.Instance.updateAdviseText("Shoot");
+            UIManager.Instance.updateServerRpc("Shoot");
             Debug.Log("Advisor Shoot Button pressed");
         }
         if (buttonPressed == advisorPassButton)
         {
-            advisorManager.insertAdvise("Pass");
+            //advisorManager.insertAdvise("Pass");
+            UIManager.Instance.updateAdviseText("Pass");
+            UIManager.Instance.updateServerRpc("Pass");
             Debug.Log("Advisor Pass Button pressed");
         }
         /*if (buttonPressed == showAdvisorButton)

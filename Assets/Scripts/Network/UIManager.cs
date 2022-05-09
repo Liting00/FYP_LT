@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DilmerGames.Core.Singletons;
 using Unity.Netcode;
-using UnityEngine.SceneManagement;
 
-public class UIManager : MonoBehaviour
+public class UIManager : NetworkSingleton<UIManager>
 {
     [SerializeField]
     private Button startServerButton;
@@ -24,6 +24,15 @@ public class UIManager : MonoBehaviour
     private TextMeshProUGUI playersInGameText;
 
     private bool hasServerStarted;
+
+    [SerializeField]
+    private GameObject playerUI;
+
+    [SerializeField]
+    private GameObject advisorUI;
+
+    [SerializeField]
+    private TextMeshProUGUI adviseTextBox;
 
     private void Awake()
     {
@@ -76,13 +85,40 @@ public class UIManager : MonoBehaviour
         {
             if (!hasServerStarted)
             {
-                Debug.Log("Server has not yet started");
+                Debug.Log("Server has not yet started.");
+                return;
+            }
+            if (IsServer)
+            {
+                Debug.Log("Player Start Game");
+                playerUI.SetActive(true);
+                adviseTextBox.gameObject.SetActive(true);
+                adviseTextBox.text = "No Instruction";
+                updateClientRpc();
                 GameManager.Instance.ChangeState(GameState.GenerateGrid);
                 return;
             }
-            GameManager.Instance.ChangeState(GameState.GenerateGrid);
         });
+    }
+    [ClientRpc]
+    private void updateClientRpc()
+    {
+        if (IsOwner) return;
 
+        Debug.Log("Active Advisor UI");
+        advisorUI.SetActive(true);
+        adviseTextBox.gameObject.SetActive(true);
+        adviseTextBox.text = "No Instruction";
+    }
+    [ServerRpc(RequireOwnership = false)]
+    public void updateServerRpc(string advise)
+    {
+        Debug.Log("Update Server");
+        adviseTextBox.text = advise;
+    }
+    public void updateAdviseText(string advise)
+    {
+        adviseTextBox.text = advise;
     }
 
 }
