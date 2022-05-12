@@ -81,10 +81,10 @@ public class TargetController : NetworkSingleton<TargetController>
     }
     public void targetInit()
     {
-        initalization();
+        Init();
         updateClientRpc();
     }
-    private void initalization()
+    private void Init()
     {
         Debug.Log("Target Initalize");
         tiles = GameObject.FindGameObjectsWithTag(tile);
@@ -100,17 +100,34 @@ public class TargetController : NetworkSingleton<TargetController>
     {
         if (IsOwner) return;
 
-        initalization();
+        Init();
     }
-    /*[ClientRpc]
-    private void updateTargetClientRpc(GameObject tile)
+    [ClientRpc]
+    void targetClientRpc(float npcPosX, float npcPosZ)
     {
         if (IsOwner) return;
 
-        tile.GetComponent<Renderer>().material.color = Color.gray;
-    }*/
+        //colour all the tiles to black
+        foreach (GameObject tile in tiles)
+        {
+            tile.GetComponent<Renderer>().material.color = Color.black;
+        }
+
+        foreach (GameObject tile in collidedTile)
+        {
+            if (tile.transform.position.x >= npcPosX && tile.transform.position.x <= npcPosX + 1f
+                && tile.transform.position.z >= npcPosZ && tile.transform.position.z <= npcPosZ + 1f)
+            {
+                tile.GetComponent<Renderer>().material.color = Color.gray;
+                return;
+            }
+        }
+    }
     private void updateTarget()
     {
+        //don't run if your advisor
+        if (!IsOwner) return;
+
         //colour all the tiles to black
         foreach (GameObject tile in tiles)
         {
@@ -147,8 +164,8 @@ public class TargetController : NetworkSingleton<TargetController>
                 && tile.transform.position.z >= npcPosZ && tile.transform.position.z <= npcPosZ + 1f)
             {
                 tile.GetComponent<Renderer>().material.color = Color.gray;
-                //updateTargetClientRpc(tile);
-                //Debug.Log("Highlighted Gray");
+                targetClientRpc(npcPosX, npcPosZ);
+                return;
             }
         }
     }

@@ -15,6 +15,7 @@ public class HostileNPC : BasedNPC
     // Start is called before the first frame update
     void Start()
     {
+        //** need to optimize this
         GameObject SManager = GameObject.Find("Spawn Manager");
         spawnManager = SManager.GetComponent<SpawnManager>();
         nextUpdatedTime = nextUpdate();
