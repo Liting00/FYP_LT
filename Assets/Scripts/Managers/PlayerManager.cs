@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 using DilmerGames.Core.Singletons;
@@ -7,7 +5,7 @@ using DilmerGames.Core.Singletons;
 public class PlayerManager : NetworkSingleton<PlayerManager>
 {
     private NetworkVariable<int> playersInGame = new NetworkVariable<int>();
-    
+ 
     public int PlayerInGame
     {
         get
@@ -15,9 +13,16 @@ public class PlayerManager : NetworkSingleton<PlayerManager>
             return playersInGame.Value;
         }
     }
+    public string JoinCode
+    {
+        get
+        {
+            return RelayManager.Instance.joinCode;
+        }
+    }
     private void Start()
     {
-        Debug.Log("Start");
+        Debug.Log("Start Player Manager");
         NetworkManager.Singleton.OnClientConnectedCallback += (id) =>
         {
             if (IsServer)
@@ -25,6 +30,7 @@ public class PlayerManager : NetworkSingleton<PlayerManager>
                 Debug.Log($"ID {id} just connected");
                 playersInGame.Value++;
             }
+                
         };
         NetworkManager.Singleton.OnClientDisconnectCallback += (id) =>
         {
@@ -33,6 +39,7 @@ public class PlayerManager : NetworkSingleton<PlayerManager>
                 Debug.Log($"ID {id} just disconnected");
                 playersInGame.Value--;
             }
+                
         };
     }
 }

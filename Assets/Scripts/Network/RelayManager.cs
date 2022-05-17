@@ -8,6 +8,7 @@ using Unity.Services.Core.Environments;
 using Unity.Services.Authentication;
 using Unity.Services.Relay.Models;
 using Unity.Services.Relay;
+using System;
 
 public class RelayManager : Singleton<RelayManager>
 {
@@ -17,6 +18,8 @@ public class RelayManager : Singleton<RelayManager>
     [SerializeField]
     private int maxConnection = 2;
 
+    public string joinCode;
+
     public bool isRelayEnabled => Transport != null &&
         Transport.Protocol == UnityTransport.ProtocolType.RelayUnityTransport;
 
@@ -24,7 +27,10 @@ public class RelayManager : Singleton<RelayManager>
 
     public async Task<RelayHostData> SetupRelay()
     {
+        Allocation allocation;
+
         Debug.Log($"Relay Server starting with max connection {maxConnection}");
+
         InitializationOptions options = new InitializationOptions()
            .SetEnvironmentName(environment);
 
@@ -34,9 +40,15 @@ public class RelayManager : Singleton<RelayManager>
         {
             await AuthenticationService.Instance.SignInAnonymouslyAsync();
         }
-
-        Allocation allocation = await Relay.Instance.CreateAllocationAsync(maxConnection);
-
+        try
+        {
+            allocation = await Relay.Instance.CreateAllocationAsync(maxConnection);
+        }
+        catch (Exception e)
+        {
+            Debug.Log($"Relay create allocation request failed {e.Message}");
+            throw;
+        }
         RelayHostData relayHostData = new RelayHostData
         {
             Key = allocation.Key,
@@ -51,12 +63,18 @@ public class RelayManager : Singleton<RelayManager>
         Transport.SetRelayServerData(relayHostData.IPv4Address, relayHostData.Port, relayHostData.AllocationIDBytes,
             relayHostData.Key, relayHostData.ConnectionData);
 
+        joinCode = $"Lobby Code: {relayHostData.JoinCode}";
+
         Debug.Log($"Relay Server generated with a join code {relayHostData.JoinCode}");
 
         return relayHostData;
     }
     public async Task<RelayJoinData> JoinRelay(string joinCode)
     {
+        JoinAllocation allocation;
+
+        Debug.Log($"Client joining game with Join Code: {joinCode}");
+
         InitializationOptions options = new InitializationOptions()
            .SetEnvironmentName(environment);
 
@@ -66,9 +84,16 @@ public class RelayManager : Singleton<RelayManager>
         {
             await AuthenticationService.Instance.SignInAnonymouslyAsync();
         }
-
-        JoinAllocation allocation = await Relay.Instance.JoinAllocationAsync(joinCode);
-
+        try 
+        { 
+            allocation = await Relay.Instance.JoinAllocationAsync(joinCode);
+        }
+        catch (Exception e)
+        {
+            Debug.Log($"Relay join allocation request failed {e.Message}");
+            throw;
+        }
+        
         RelayJoinData relayJoinData = new RelayJoinData
         {
             Key = allocation.Key,

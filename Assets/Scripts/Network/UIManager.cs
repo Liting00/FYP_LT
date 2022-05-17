@@ -37,6 +37,9 @@ public class UIManager : NetworkSingleton<UIManager>
     [SerializeField]
     private TMP_InputField inputCodeText;
 
+    [SerializeField]
+    private TextMeshProUGUI joinCodeText;
+
     private void Awake()
     {
         Cursor.visible = true;
@@ -44,10 +47,13 @@ public class UIManager : NetworkSingleton<UIManager>
     private void Update()
     {
         playersInGameText.text = $"Player in Game: {PlayerManager.Instance.PlayerInGame}";
+        joinCodeText.text = PlayerManager.Instance.JoinCode;
+
     }
     private void Start()
     {
-        startHostButton.onClick.AddListener(async () =>
+        //Start HOST
+        startHostButton?.onClick.AddListener(async () =>
         {
             if (RelayManager.Instance.isRelayEnabled)
             {
@@ -63,11 +69,17 @@ public class UIManager : NetworkSingleton<UIManager>
                 Debug.Log("Host could not be Started...");
             }
         });
-        startClientButton.onClick.AddListener(async () =>
+        //Start Client
+        startClientButton?.onClick.AddListener(async () =>
         {
-            if (RelayManager.Instance.isRelayEnabled && string.IsNullOrEmpty(inputCodeText.text))
+            if (RelayManager.Instance.isRelayEnabled && !string.IsNullOrEmpty(inputCodeText.text))
             {
                 await RelayManager.Instance.JoinRelay(inputCodeText.text);
+            }
+            else
+            {
+                Debug.Log("Empty Input Code. Client could not be Started");
+                return;
             }
 
             if (NetworkManager.Singleton.StartClient())
@@ -79,7 +91,8 @@ public class UIManager : NetworkSingleton<UIManager>
                 Debug.Log("Client could not be Started...");
             }
         });
-        startServerButton.onClick.AddListener(() =>
+        //Start Server
+        startServerButton?.onClick.AddListener(() =>
         {
             if (NetworkManager.Singleton.StartServer())
             {
@@ -90,6 +103,11 @@ public class UIManager : NetworkSingleton<UIManager>
                 Debug.Log("Server could not be Started...");
             }
         });
+        // STATUS TYPE CALLBACKS
+        NetworkManager.Singleton.OnClientConnectedCallback += (id) =>
+        {
+            Debug.Log($"{id} just connected...");
+        };
         NetworkManager.Singleton.OnServerStarted += () =>
         {
             hasServerStarted = true;
