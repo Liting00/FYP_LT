@@ -34,6 +34,9 @@ public class UIManager : NetworkSingleton<UIManager>
     [SerializeField]
     private TextMeshProUGUI adviseTextBox;
 
+    [SerializeField]
+    private TMP_InputField inputCodeText;
+
     private void Awake()
     {
         Cursor.visible = true;
@@ -44,8 +47,13 @@ public class UIManager : NetworkSingleton<UIManager>
     }
     private void Start()
     {
-        startHostButton.onClick.AddListener(() =>
+        startHostButton.onClick.AddListener(async () =>
         {
+            if (RelayManager.Instance.isRelayEnabled)
+            {
+                await RelayManager.Instance.SetupRelay();
+            }
+
             if (NetworkManager.Singleton.StartHost())
             {
                 Debug.Log("Host Started...");
@@ -55,8 +63,13 @@ public class UIManager : NetworkSingleton<UIManager>
                 Debug.Log("Host could not be Started...");
             }
         });
-        startClientButton.onClick.AddListener(() =>
+        startClientButton.onClick.AddListener(async () =>
         {
+            if (RelayManager.Instance.isRelayEnabled && string.IsNullOrEmpty(inputCodeText.text))
+            {
+                await RelayManager.Instance.JoinRelay(inputCodeText.text);
+            }
+
             if (NetworkManager.Singleton.StartClient())
             {
                 Debug.Log("Client Started...");
