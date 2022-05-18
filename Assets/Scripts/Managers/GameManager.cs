@@ -48,5 +48,4 @@ public enum GameState
     GenerateGrid = 0,
     SpawnNPC = 1,
     Targeter = 2,
-
 }

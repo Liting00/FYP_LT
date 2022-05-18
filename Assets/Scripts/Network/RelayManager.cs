@@ -18,7 +18,7 @@ public class RelayManager : Singleton<RelayManager>
     [SerializeField]
     private int maxConnection = 2;
 
-    public string joinCode;
+    internal string joinCode;
 
     public bool isRelayEnabled => Transport != null &&
         Transport.Protocol == UnityTransport.ProtocolType.RelayUnityTransport;

@@ -5,13 +5,18 @@ using UnityEngine.UI;
 
 public class ButtonController : MonoBehaviour
 {
-    public Button playerShootButton;
-    public Button playerPassButton;
-    public Button advisorShootButton;
-    public Button advisorPassButton;
+    [SerializeField]
+    private Button playerShootButton;
 
+    [SerializeField]
+    private Button playerPassButton;
 
-    AdvisorManager advisorManager;
+    [SerializeField]
+    private Button advisorShootButton;
+
+    [SerializeField]
+    private Button advisorPassButton;
+
     private void Awake()
     {
         Debug.Log("Button Controller is called");
@@ -19,7 +24,6 @@ public class ButtonController : MonoBehaviour
     private void Start()
     {
         GameObject AManager = GameObject.Find("Advisor Manager");
-        advisorManager = AManager.GetComponent<AdvisorManager>();
     }
     void OnEnable()
     {
@@ -28,7 +32,6 @@ public class ButtonController : MonoBehaviour
         playerPassButton.onClick.AddListener(() => buttonCallBack(playerPassButton));
         advisorShootButton.onClick.AddListener(() => buttonCallBack(advisorShootButton));
         advisorPassButton.onClick.AddListener(() => buttonCallBack(advisorPassButton));
-        //showAdvisorButton.onClick.AddListener(() => buttonCallBack(showAdvisorButton));
     }
     private void buttonCallBack(Button buttonPressed)
     {
@@ -45,29 +48,15 @@ public class ButtonController : MonoBehaviour
         }
         if (buttonPressed == advisorShootButton)
         {
-            //advisorManager.insertAdvise("Shoot");
             UIManager.Instance.updateAdviseText("Shoot");
             UIManager.Instance.updateServerRpc("Shoot");
             Debug.Log("Advisor Shoot Button pressed");
         }
         if (buttonPressed == advisorPassButton)
         {
-            //advisorManager.insertAdvise("Pass");
             UIManager.Instance.updateAdviseText("Pass");
             UIManager.Instance.updateServerRpc("Pass");
             Debug.Log("Advisor Pass Button pressed");
         }
-        /*if (buttonPressed == showAdvisorButton)
-        {
-            
-            if (advisorManager.advisorBox.activeInHierarchy)
-                advisorManager.advisorBox.SetActive(false);
-            else
-            {
-                advisorManager.getAdvise();
-                advisorManager.advisorBox.SetActive(true);
-            }
-            Debug.Log("Show Advisor Button pressed");
-        }*/
     }
 }

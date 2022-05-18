@@ -11,34 +11,46 @@ public class SpawnManager : NetworkSingleton<SpawnManager>
 
     public static SpawnManager Instance;
 
-    [SerializeField] private float _width, _height;
+    [SerializeField] 
+    private float _width, _height;
 
-    public int NonhostileNPCSpawn;
-    public int hostileNPCSpawn;
-    public List<GameObject> spawnPool;
+    [SerializeField]
+    private int NonhostileNPCSpawn;
 
-    public List<ScriptableNPC> _npcs;
+    [SerializeField]
+    private int hostileNPCSpawn;
 
-    private int infected = 0;
-    private int nonInfected = 0;
+    [SerializeField]
+    private List<GameObject> spawnPool;
 
-    public int getInfected()
+
+    private NetworkVariable<int> infected = new NetworkVariable<int>();
+    private NetworkVariable<int> nonInfected = new NetworkVariable<int>();
+
+    //public List<ScriptableNPC> _npcs;
+
+    public int Infected
     {
-        return infected;
+        get
+        {
+            return infected.Value;
+        }
     }
-    public int getNonInfected()
+    public int NonInfected
     {
-        return nonInfected;
+        get
+        {
+            return nonInfected.Value;
+        }
     }
-    public void setInfected(int value)
+    public void addInfected(int value)
     {
-        infected = value;
+        infected.Value = infected.Value + value;
     }
-    public void setNonInfected(int value)
+    public void addNonInfected(int value)
     {
-        nonInfected = value;
+        nonInfected.Value = nonInfected.Value + value;
     }
-
     private void Awake()
     {
         Instance = this;
@@ -56,8 +68,8 @@ public class SpawnManager : NetworkSingleton<SpawnManager>
 
         float screenX, screenZ, screenY;
         Vector3 pos;
-        infected = hostileNPCSpawn;
-        nonInfected = NonhostileNPCSpawn;
+        infected.Value = hostileNPCSpawn;
+        nonInfected.Value = NonhostileNPCSpawn;
 
         for(int i = 0; i < NonhostileNPCSpawn; i++)
         {

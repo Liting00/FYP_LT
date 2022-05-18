@@ -10,7 +10,7 @@ public class GridManager : NetworkSingleton<GridManager>
 
     [SerializeField] private int _width, _height;
 
-    [SerializeField] private Tile _titlePrefab;
+    [SerializeField] private Tile _tilePrefab;
 
     [SerializeField] private Transform _cam;
 
@@ -33,7 +33,7 @@ public class GridManager : NetworkSingleton<GridManager>
         {
             for (int z = 0; z < _height; z++)
             {
-                var spawnedTile = Instantiate(_titlePrefab, new Vector3(x, 0f, z), Quaternion.identity);
+                var spawnedTile = Instantiate(_tilePrefab, new Vector3(x, 0f, z), Quaternion.identity);
                 spawnedTile.name = $"Tile {x} {z}";
 
                 //even and odd colouring

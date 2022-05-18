@@ -9,7 +9,7 @@ public class TargetController : NetworkSingleton<TargetController>
 {
     private string npc = "HostileNPC";
     private string tile = "Tile";
-    string previousNPCName = "";
+    private string previousNPCName = "";
 
     private GameObject[] hostileNPCS;
     private GameObject[] tiles;
@@ -18,12 +18,11 @@ public class TargetController : NetworkSingleton<TargetController>
     internal List<GameObject> collidedTile = new List<GameObject>();
     internal bool changeTarget = false;
     internal bool destroy = false;
-    SpawnManager spawnManager;
 
     private float update;
     private float nextUpdatedTime = 0.1f;
 
-    bool enableUpdate = false;
+    private bool enableUpdate = false;
     /*void UpdateTarget()
     {
         //Debug.Log("Start Target");
@@ -90,9 +89,6 @@ public class TargetController : NetworkSingleton<TargetController>
         tiles = GameObject.FindGameObjectsWithTag(tile);
         hostileNPCS = GameObject.FindGameObjectsWithTag(npc);
         selectedNPC = hostileNPCS[Random.Range(0, hostileNPCS.Length)];
-
-        GameObject SManager = GameObject.Find("Spawn Manager");
-        spawnManager = SManager.GetComponent<SpawnManager>();
         enableUpdate = true;
     }
     [ClientRpc]
@@ -184,10 +180,7 @@ public class TargetController : NetworkSingleton<TargetController>
                 && o.transform.position.z >= npcPosZ && o.transform.position.z <= npcPosZ + 1f)
             {
                 Destroy(o);
-                //** need to optimize this
-                SpawnManager.Instance.setInfected(spawnManager.getNonInfected() - 1);
-                //spawnManager.setInfected(spawnManager.getInfected() - 1);
-                //spawnManager.infected--;
+                SpawnManager.Instance.addInfected(-1);
             }
 
         }
@@ -199,10 +192,7 @@ public class TargetController : NetworkSingleton<TargetController>
                 && o.transform.position.z >= npcPosZ && o.transform.position.z <= npcPosZ + 1f)
             {
                 Destroy(o);
-                //** need to optimize this
-                SpawnManager.Instance.setNonInfected(spawnManager.getNonInfected() - 1);
-                //spawnManager.setNonInfected(spawnManager.getNonInfected() - 1);
-                //spawnManager.nonInfected--;
+                SpawnManager.Instance.addNonInfected(-1);
             }
 
         }

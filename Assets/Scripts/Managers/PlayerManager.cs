@@ -20,6 +20,10 @@ public class PlayerManager : NetworkSingleton<PlayerManager>
             return RelayManager.Instance.joinCode;
         }
     }
+    public void addPlayerInGame(int value)
+    {
+        playersInGame.Value = playersInGame.Value + value;
+    }
     private void Start()
     {
         Debug.Log("Start Player Manager");
@@ -28,7 +32,7 @@ public class PlayerManager : NetworkSingleton<PlayerManager>
             if (IsServer)
             {
                 Debug.Log($"ID {id} just connected");
-                playersInGame.Value++;
+                addPlayerInGame(1);
             }
                 
         };
@@ -37,7 +41,7 @@ public class PlayerManager : NetworkSingleton<PlayerManager>
             if (IsServer)
             {
                 Debug.Log($"ID {id} just disconnected");
-                playersInGame.Value--;
+                addPlayerInGame(-1);
             }
                 
         };

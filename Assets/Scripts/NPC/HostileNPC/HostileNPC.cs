@@ -10,18 +10,12 @@ public class HostileNPC : BasedNPC
     private float update;
 
     private float nextUpdatedTime;
-    SpawnManager spawnManager;
 
-    // Start is called before the first frame update
     void Start()
     {
         //** need to optimize this
-        GameObject SManager = GameObject.Find("Spawn Manager");
-        spawnManager = SManager.GetComponent<SpawnManager>();
         nextUpdatedTime = nextUpdate();
     }
-
-    // Update is called once per frame
     void Update()
     {
         if (!IsServer) return;
@@ -32,7 +26,7 @@ public class HostileNPC : BasedNPC
             infection();
         }
     }
-    void infection()
+    private void infection()
     {
         //Debug.Log("Start Infection");
         nextUpdatedTime = nextUpdate();
@@ -50,12 +44,8 @@ public class HostileNPC : BasedNPC
                 {
                     Vector3 spanLoc = o.transform.position;
                     Quaternion spawnRot = o.transform.rotation;
-                    int infected = spawnManager.getInfected();
-                    spawnManager.setInfected(infected - 1);
-                    int nonInfected = spawnManager.getNonInfected();
-                    spawnManager.setInfected(nonInfected + 1);
-                    //spawnManager.nonInfected--;
-                    //spawnManager.infected++;
+                    SpawnManager.Instance.addInfected(1);
+                    SpawnManager.Instance.addNonInfected(-1);
                     objToSpawn.name = $"Infected {o.name}";
                     Destroy(o);
                     //Debug.Log(o.name + " is Destroy!");
@@ -68,7 +58,7 @@ public class HostileNPC : BasedNPC
     }
 
     //time for it takes to do the next infection
-    float nextUpdate()
+    private float nextUpdate()
     {
         return Random.Range(5.0f, 10.0f);
     }
