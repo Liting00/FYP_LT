@@ -6,11 +6,11 @@ using DilmerGames.Core.Singletons;
 
 public class AdvisorManager : NetworkSingleton<AdvisorManager>
 {
-    string[] advise = { "Destroy", "Don't Destroy", "Destroy when alone" };
+    //string[] advise = { "Destroy", "Don't Destroy", "Destroy when alone" };
     [SerializeField] internal GameObject advisorBox;
     [SerializeField] private GameObject advisorUI;
 
-    internal void insertAdvise(string advise)
+    public void insertAdvise(string advise)
     {
         advisorBox.GetComponent<UnityEngine.UI.Text>().text = advise;
     }
