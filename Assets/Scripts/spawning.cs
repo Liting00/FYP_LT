@@ -36,6 +36,5 @@ public class spawning : MonoBehaviour
             Debug.Log("Collision happened");
         }
     }
-
 }
 

@@ -35,12 +35,6 @@ public class GameManager : MonoBehaviour
                 throw new System.ArgumentOutOfRangeException(nameof(newState), newState, null);
         }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 }
 
 public enum GameState

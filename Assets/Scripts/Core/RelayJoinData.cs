@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 
 public struct RelayJoinData
 {
