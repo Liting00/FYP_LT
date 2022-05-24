@@ -15,7 +15,10 @@ public class SpawnManager : NetworkSingleton<SpawnManager>
     private float _width, _height;
 
     [SerializeField]
-    private int NonhostileNPCSpawn;
+    private int greenNonhostileNPCSpawn;
+
+    [SerializeField]
+    private int blueNonhostileNPCSpawn;
 
     [SerializeField]
     private int hostileNPCSpawn;
@@ -69,9 +72,9 @@ public class SpawnManager : NetworkSingleton<SpawnManager>
         float screenX, screenZ, screenY;
         Vector3 pos;
         infected.Value = hostileNPCSpawn;
-        nonInfected.Value = NonhostileNPCSpawn;
+        nonInfected.Value = greenNonhostileNPCSpawn +  blueNonhostileNPCSpawn;
 
-        for(int i = 0; i < NonhostileNPCSpawn; i++)
+        for(int i = 0; i < blueNonhostileNPCSpawn; i++)
         {
             //offset -3 to move to the right
             screenX = Random.Range((float)0.0000, _width - 3 - 1);
@@ -82,8 +85,26 @@ public class SpawnManager : NetworkSingleton<SpawnManager>
             if (!Physics.CheckSphere(pos, 0.6f, LayerMask.GetMask("NPC")))
             {
                 //Debug.Log("Collision");
-                spawnPool[0].name = $"NonHostileNPC {i}";
+                spawnPool[0].name = $"BlueNonHostileNPC {i}";
                 GameObject go = Instantiate(spawnPool[0], pos, Quaternion.identity);
+                go.GetComponent<NetworkObject>().Spawn();
+            }
+            else
+                i--;
+        }
+        for (int i = 0; i < greenNonhostileNPCSpawn; i++)
+        {
+            //offset -3 to move to the right
+            screenX = Random.Range((float)0.0000, _width - 3 - 1);
+            screenZ = Random.Range((float)0.0000, _height - 1);
+            pos = new Vector3(screenX, 0.1f, screenZ);
+
+            //add collison
+            if (!Physics.CheckSphere(pos, 0.6f, LayerMask.GetMask("NPC")))
+            {
+                //Debug.Log("Collision");
+                spawnPool[2].name = $"GreenNonHostileNPC {i}";
+                GameObject go = Instantiate(spawnPool[2], pos, Quaternion.identity);
                 go.GetComponent<NetworkObject>().Spawn();
             }
             else

@@ -7,8 +7,8 @@ using Unity.Netcode;
 
 public class TargetController : NetworkSingleton<TargetController>
 {
-    private string npc = "HostileNPC";
-    private string tile = "Tile";
+    private static string npc = "HostileNPC";
+    private static string tile = "Tile";
     private string previousNPCName = "";
 
     private GameObject[] hostileNPCS;

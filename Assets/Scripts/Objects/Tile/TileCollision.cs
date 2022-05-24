@@ -22,7 +22,7 @@ public class TileCollision : MonoBehaviour
         {
             //GameObject tController = GameObject.Find("Target Controller");
             TargetController.Instance.collidedTile.Add(gameObject);
-            //Debug.Log(gameObject.name + " hit!");
+            Debug.Log(gameObject.name + " hit!");
         }
     }
     private void OnTriggerExit(Collider other)

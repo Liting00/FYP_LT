@@ -11,6 +11,9 @@ public class HostileNPC : BasedNPC
 
     private float nextUpdatedTime;
 
+    [SerializeField]
+    private float infectionRate;
+
     void Start()
     {
         //** need to optimize this
@@ -40,7 +43,7 @@ public class HostileNPC : BasedNPC
                 && o.transform.position.z >= pos.z - 0.5f && o.transform.position.z <= pos.z + 0.5f)
             {
                 //chances of infection
-                if (Random.Range(0.0000f, 1f) <= 1f)
+                if (Random.Range(0.0000f, 1f) <= infectionRate)
                 {
                     Vector3 spanLoc = o.transform.position;
                     Quaternion spawnRot = o.transform.rotation;

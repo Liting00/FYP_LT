@@ -23,7 +23,7 @@ public class ButtonController : MonoBehaviour
     }
     private void Start()
     {
-        GameObject AManager = GameObject.Find("Advisor Manager");
+        //GameObject AManager = GameObject.Find("Advisor Manager");
     }
     void OnEnable()
     {
@@ -39,23 +39,27 @@ public class ButtonController : MonoBehaviour
         {
             TargetController.Instance.destroyTarget();
             TargetController.Instance.changeTarget = true;
+            AdvisorManager.Instance.insertAdvise("No Instruction");
+            AdvisorManager.Instance.updateAdviseClientRpc("No Instruction");
             Debug.Log("Player Shoot Button pressed");
         }
         if (buttonPressed == playerPassButton)
         {
             TargetController.Instance.changeTarget = true;
+            AdvisorManager.Instance.insertAdvise("No Instruction");
+            AdvisorManager.Instance.updateAdviseClientRpc("No Instruction");
             Debug.Log("Player Pass Button pressed");
         }
         if (buttonPressed == advisorShootButton)
         {
-            UIManager.Instance.updateAdviseText("Shoot");
-            UIManager.Instance.updateServerRpc("Shoot");
+            AdvisorManager.Instance.insertAdvise("Shoot");
+            AdvisorManager.Instance.updateAdviseTextServerRpc("Shoot");
             Debug.Log("Advisor Shoot Button pressed");
         }
         if (buttonPressed == advisorPassButton)
         {
-            UIManager.Instance.updateAdviseText("Pass");
-            UIManager.Instance.updateServerRpc("Pass");
+            AdvisorManager.Instance.insertAdvise("Pass");
+            AdvisorManager.Instance.updateAdviseTextServerRpc("Pass");
             Debug.Log("Advisor Pass Button pressed");
         }
     }

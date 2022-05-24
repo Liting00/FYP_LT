@@ -122,34 +122,26 @@ public class UIManager : NetworkSingleton<UIManager>
             if (IsServer)
             {
                 Debug.Log("Player Start Game");
-                playerUI.SetActive(true);
-                adviseTextBox.gameObject.SetActive(true);
-                adviseTextBox.text = "No Instruction";
-                updateClientRpc();
+                playerStartGame();
+                advisorStartGameClientRpc();
                 GameManager.Instance.ChangeState(GameState.GenerateGrid);
                 return;
             }
         });
     }
+    private void playerStartGame()
+    {
+        AdvisorManager.Instance.setAdvisorTextBoxState(true);
+        AdvisorManager.Instance.insertAdvise("No Instruction");
+        PlayerManager.Instance.setPlayerUIState(true);
+    }
     [ClientRpc]
-    private void updateClientRpc()
+    private void advisorStartGameClientRpc()
     {
         if (IsOwner) return;
 
-        Debug.Log("Active Advisor UI");
-        advisorUI.SetActive(true);
-        adviseTextBox.gameObject.SetActive(true);
-        adviseTextBox.text = "No Instruction";
+        AdvisorManager.Instance.setAdvisorUIState(true);
+        AdvisorManager.Instance.setAdvisorTextBoxState(true);
+        AdvisorManager.Instance.insertAdvise("No Instruction");
     }
-    [ServerRpc(RequireOwnership = false)]
-    public void updateServerRpc(string advise)
-    {
-        Debug.Log("Update Server");
-        adviseTextBox.text = advise;
-    }
-    public void updateAdviseText(string advise)
-    {
-        adviseTextBox.text = advise;
-    }
-
 }

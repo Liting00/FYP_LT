@@ -5,7 +5,10 @@ using DilmerGames.Core.Singletons;
 public class PlayerManager : NetworkSingleton<PlayerManager>
 {
     private NetworkVariable<int> playersInGame = new NetworkVariable<int>();
- 
+
+    [SerializeField]
+    private GameObject playerUI;
+
     public int PlayerInGame
     {
         get
@@ -23,6 +26,10 @@ public class PlayerManager : NetworkSingleton<PlayerManager>
     public void addPlayerInGame(int value)
     {
         playersInGame.Value = playersInGame.Value + value;
+    }
+    public void setPlayerUIState(bool state)
+    {
+        playerUI.gameObject.SetActive(state);
     }
     private void Start()
     {
