@@ -4,13 +4,16 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using Unity.Netcode;
+using TMPro;
 
 namespace Assets.Scripts.Network
 {
     public class MenuUIManager : NetworkSingleton<MenuUIManager>
     {
+        public static new MenuUIManager Instance;
+
         [SerializeField]
-        private Button playAsPlayerButton;
+        private Button playAsShooterButton;
 
         [SerializeField]
         private Button playAsAdvisorButton;
@@ -28,7 +31,15 @@ namespace Assets.Scripts.Network
         private Button advisorBackButton;
 
         [SerializeField]
+        private TMP_InputField inputCodeText;
+
+        [SerializeField]
         private GameObject loadingIcon;
+
+        private void Awake()
+        {
+            Instance = this;
+        }
 
         private void Start()
         {
@@ -36,14 +47,14 @@ namespace Assets.Scripts.Network
             advisorMenu.SetActive(false);
             loadingIcon.SetActive(false);
 
-            StartCoroutine(LoadAsynchronously());
-
             mainMenu.SetActive(true);
             advisorMenu.SetActive(false);
 
-            playAsPlayerButton?.onClick.AddListener(() =>
+            playAsShooterButton?.onClick.AddListener(() =>
             {
-                // start Host
+                StartCoroutine(LoadPlayerAsynchronously());
+                LevelManager.Instance.NewGame(LevelManager.PlayerState.Shooter);
+                Debug.Log("Play as Player");
             });
             playAsAdvisorButton?.onClick.AddListener(() =>
             {
@@ -52,7 +63,8 @@ namespace Assets.Scripts.Network
             });
             advisorEnterButton?.onClick.AddListener(() =>
             {
-                //Loading Scene
+                StartCoroutine(LoadAdvisorAsynchronously());
+                LevelManager.Instance.NewGame(LevelManager.PlayerState.Advisor);
             });
             advisorBackButton?.onClick.AddListener(() =>
             {
@@ -74,19 +86,53 @@ namespace Assets.Scripts.Network
             }
             else
             {
-                Debug.Log("Host could not be Started...");
+                Debug.Log("Shooter Host could not be Started...");
             }
         }
-        IEnumerator LoadAsynchronously()
+        private async Task startClientAsync()
+        {
+            if (RelayManager.Instance.isRelayEnabled && !string.IsNullOrEmpty(inputCodeText.text))
+            {
+                await RelayManager.Instance.JoinRelay(inputCodeText.text);
+            }
+            else
+            {
+                Debug.Log("Empty Input Code. Client could not be Started");
+                return;
+            }
+
+            if (NetworkManager.Singleton.StartClient())
+            {
+                Debug.Log("Client Started...");
+            }
+            else
+            {
+                Debug.Log("Advisor Client could not be Started...");
+            }
+        }
+        IEnumerator LoadPlayerAsynchronously()
         {
             loadingIcon.SetActive(true);
             Task task = startHostAsync();
-
             while (!task.IsCompleted)
             {
-                loadingIcon.SetActive(false);
-                yield return task;
+                Debug.Log(task.Status);
+
+                yield return null;
             }
+            loadingIcon.SetActive(false);
+        }
+        IEnumerator LoadAdvisorAsynchronously()
+        {
+            loadingIcon.SetActive(true);
+            Task task = startClientAsync();
+            while (!task.IsCompleted)
+            {
+                Debug.Log(task.Status);
+
+                yield return null;
+            }
+            loadingIcon.SetActive(false);
         }
     }
 }

@@ -1,24 +1,51 @@
-using System.Collections;
-using System.Collections.Generic;
+using DilmerGames.Core.Singletons;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Threading.Tasks;
+using System.Collections;
 
-public class LevelManager : MonoBehaviour
+public class LevelManager : NetworkSingleton<LevelManager>
 {
-    public static LevelManager Instance;
+    public static new LevelManager Instance;
 
-    //[SerializeField] private string menu = "Menu";
-    [SerializeField] private string newGame = "GridEnvironment";
+
+    [SerializeField] private string menu = "Menu";
+    [SerializeField] private string newGame = "Grid Environment";
+
+    public PlayerState playerState;
 
     private void Awake()
     {
         Instance = this;
     }
-
-    public void NewGame()
+    private void Start()
     {
-        SceneManager.LoadScene(newGame);
+        DontDestroyOnLoad(this);
     }
+    public void NewGame(PlayerState playerState)
+    {
+        this.playerState = playerState;
 
+        SceneManager.LoadScene(newGame);
+
+        if(playerState == PlayerState.Shooter)
+        {
+            Debug.Log("Player Start Game");
+        }
+        else if(playerState == PlayerState.Advisor)
+        {
+            //do something
+        }
+    }
+    public void MainMenu()
+    {
+        SceneManager.LoadScene(menu);
+    }
+    public enum PlayerState
+    {
+        Shooter = 0,
+        Advisor = 1
+    }
 
 }
