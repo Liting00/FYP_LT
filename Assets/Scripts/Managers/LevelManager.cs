@@ -7,13 +7,13 @@ using System.Collections;
 
 public class LevelManager : NetworkSingleton<LevelManager>
 {
-    public static new LevelManager Instance;
-
+    //change to PlayerManager
+    public static LevelManager Instance;
 
     [SerializeField] private string menu = "Menu";
     [SerializeField] private string newGame = "Grid Environment";
 
-    public PlayerState playerState;
+    public PlayerState playerState = PlayerState.NoState;
 
     private void Awake()
     {
@@ -29,9 +29,11 @@ public class LevelManager : NetworkSingleton<LevelManager>
 
         SceneManager.LoadScene(newGame);
 
-        if(playerState == PlayerState.Shooter)
+        if (playerState == PlayerState.Shooter)
         {
-            Debug.Log("Player Start Game");
+            //Debug.Log("Player Start Game");
+            //GameObject advisorManager = GameObject.Find("Advisor Manager");
+            //AdvisorManager.Instance.setAdvisorTextBoxState(true);
         }
         else if(playerState == PlayerState.Advisor)
         {
@@ -45,7 +47,8 @@ public class LevelManager : NetworkSingleton<LevelManager>
     public enum PlayerState
     {
         Shooter = 0,
-        Advisor = 1
+        Advisor = 1,
+        NoState = 2
     }
 
 }

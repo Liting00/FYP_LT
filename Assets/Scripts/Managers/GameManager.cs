@@ -21,11 +21,11 @@ public class GameManager : MonoBehaviour
         switch (newState)
         {
             case GameState.GenerateGrid:
-                //Debug.Log("Generate Grid State");
+                Debug.Log("Generate Grid State");
                 GridManager.Instance.GenerateGrid();
                 break;
             case GameState.SpawnNPC:
-                //Debug.Log("Generate Spawn State");
+                Debug.Log("Generate Spawn State");
                 SpawnManager.Instance.generateNPCs();
                 break;
             case GameState.Targeter:

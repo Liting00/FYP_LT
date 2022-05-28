@@ -10,7 +10,7 @@ namespace Assets.Scripts.Network
 {
     public class MenuUIManager : NetworkSingleton<MenuUIManager>
     {
-        public static new MenuUIManager Instance;
+        public static MenuUIManager Instance;
 
         [SerializeField]
         private Button playAsShooterButton;
@@ -31,10 +31,15 @@ namespace Assets.Scripts.Network
         private Button advisorBackButton;
 
         [SerializeField]
+        private Button startGameButton;
+
+        [SerializeField]
         private TMP_InputField inputCodeText;
 
         [SerializeField]
         private GameObject loadingIcon;
+
+        private bool hasServerStarted;
 
         private void Awake()
         {
@@ -45,16 +50,16 @@ namespace Assets.Scripts.Network
         {
             mainMenu.SetActive(false);
             advisorMenu.SetActive(false);
+            startGameButton.gameObject.SetActive(false);
             loadingIcon.SetActive(false);
-
+            
             mainMenu.SetActive(true);
             advisorMenu.SetActive(false);
 
             playAsShooterButton?.onClick.AddListener(() =>
             {
-                StartCoroutine(LoadPlayerAsynchronously());
-                LevelManager.Instance.NewGame(LevelManager.PlayerState.Shooter);
-                Debug.Log("Play as Player");
+                mainMenu.SetActive(false);
+                startGameButton.gameObject.SetActive(true);
             });
             playAsAdvisorButton?.onClick.AddListener(() =>
             {
@@ -71,6 +76,10 @@ namespace Assets.Scripts.Network
                 mainMenu.SetActive(true);
                 advisorMenu.SetActive(false);
             });
+            startGameButton?.onClick.AddListener(() =>
+            {
+                StartCoroutine(LoadPlayerAsynchronously());
+            });
         }
         private async Task startHostAsync()
         {
@@ -78,11 +87,12 @@ namespace Assets.Scripts.Network
             {
                 await RelayManager.Instance.SetupRelay();
             }
-
             if (NetworkManager.Singleton.StartHost())
             {
                 Debug.Log("Host Started...");
-                return;
+                Debug.Log("Host: " + IsHost);
+                Debug.Log("Client: " + IsClient);
+                LevelManager.Instance.NewGame(LevelManager.PlayerState.Shooter);
             }
             else
             {
@@ -112,26 +122,36 @@ namespace Assets.Scripts.Network
         }
         IEnumerator LoadPlayerAsynchronously()
         {
+            mainMenu.SetActive(false);
+            advisorMenu.SetActive(false);
+            startGameButton.gameObject.SetActive(false);
             loadingIcon.SetActive(true);
+
             Task task = startHostAsync();
+
             while (!task.IsCompleted)
             {
-                Debug.Log(task.Status);
+                //Debug.Log(task.Status);
 
                 yield return null;
             }
+
             loadingIcon.SetActive(false);
         }
         IEnumerator LoadAdvisorAsynchronously()
         {
+            mainMenu.SetActive(false);
+            advisorMenu.SetActive(false);
             loadingIcon.SetActive(true);
+
             Task task = startClientAsync();
+
             while (!task.IsCompleted)
             {
-                Debug.Log(task.Status);
-
+                //Debug.Log(task.Status);
                 yield return null;
             }
+
             loadingIcon.SetActive(false);
         }
     }

@@ -26,10 +26,24 @@ public class UIManager : NetworkSingleton<UIManager>
     private bool hasServerStarted;
 
     [SerializeField]
+    private GameObject mainMenu;
+
+    [SerializeField]
     private GameObject playerUI;
 
     [SerializeField]
+    private GameObject playerMenu;
+
+    [SerializeField]
     private GameObject advisorUI;
+    [SerializeField]
+    private GameObject advisorMenu;
+
+    [SerializeField]
+    private Button playAsAdvisorButton;
+
+    [SerializeField]
+    private Button advisorBackButton;
 
     [SerializeField]
     private TextMeshProUGUI adviseTextBox;
@@ -40,6 +54,9 @@ public class UIManager : NetworkSingleton<UIManager>
     [SerializeField]
     private TextMeshProUGUI joinCodeText;
 
+    [SerializeField]
+    private GameObject loadingIcon;
+
     private void Awake()
     {
         Cursor.visible = true;
@@ -48,21 +65,36 @@ public class UIManager : NetworkSingleton<UIManager>
     {
         playersInGameText.text = $"Player in Game: {PlayerManager.Instance.PlayerInGame}";
         joinCodeText.text = PlayerManager.Instance.JoinCode;
-
     }
     private void Start()
     {
+        mainMenu.SetActive(false);
+        advisorMenu.SetActive(false);
+        advisorUI.SetActive(false);
+        startGameButton.gameObject.SetActive(false);
+        loadingIcon.SetActive(false);
+        playerUI.SetActive(false);
+
+        mainMenu.SetActive(true);
+
         //Start HOST
         startHostButton?.onClick.AddListener(async () =>
         {
             if (RelayManager.Instance.isRelayEnabled)
             {
+                mainMenu.SetActive(false);
+                loadingIcon.SetActive(true);
+
                 await RelayManager.Instance.SetupRelay();
+
+                loadingIcon.SetActive(false);
             }
 
             if (NetworkManager.Singleton.StartHost())
             {
                 Debug.Log("Host Started...");
+                mainMenu.SetActive(false);
+                startGameButton.gameObject.SetActive(true);
             }
             else
             {
@@ -74,10 +106,14 @@ public class UIManager : NetworkSingleton<UIManager>
         {
             if (RelayManager.Instance.isRelayEnabled && !string.IsNullOrEmpty(inputCodeText.text))
             {
+                advisorMenu.SetActive(false);
+                loadingIcon.SetActive(true);
                 await RelayManager.Instance.JoinRelay(inputCodeText.text);
+                loadingIcon.SetActive(false);
             }
             else
             {
+                advisorMenu.SetActive(true);
                 Debug.Log("Empty Input Code. Client could not be Started");
                 return;
             }
@@ -91,17 +127,15 @@ public class UIManager : NetworkSingleton<UIManager>
                 Debug.Log("Client could not be Started...");
             }
         });
-        //Start Server
-        startServerButton?.onClick.AddListener(() =>
+        playAsAdvisorButton?.onClick.AddListener(() =>
         {
-            if (NetworkManager.Singleton.StartServer())
-            {
-                Debug.Log("Server Started...");
-            }
-            else
-            {
-                Debug.Log("Server could not be Started...");
-            }
+            mainMenu.SetActive(false);
+            advisorMenu.SetActive(true);
+        });
+        advisorBackButton?.onClick.AddListener(() =>
+        {
+            mainMenu.SetActive(true);
+            advisorMenu.SetActive(false);
         });
         // STATUS TYPE CALLBACKS
         NetworkManager.Singleton.OnClientConnectedCallback += (id) =>
@@ -121,9 +155,12 @@ public class UIManager : NetworkSingleton<UIManager>
             }
             if (IsServer)
             {
+                startGameButton.gameObject.SetActive(false);
                 Debug.Log("Player Start Game");
+
                 playerStartGame();
                 advisorStartGameClientRpc();
+
                 GameManager.Instance.ChangeState(GameState.GenerateGrid);
                 return;
             }

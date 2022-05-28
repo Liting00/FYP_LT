@@ -62,7 +62,7 @@ public class SpawnManager : NetworkSingleton<SpawnManager>
 
     public void generateNPCs()
     {
-        if (IsServer)
+        if (NetworkManager.IsServer)
             spawnNPCs();
         GameManager.Instance.ChangeState(GameState.Targeter);
     }

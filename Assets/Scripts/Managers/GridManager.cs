@@ -21,7 +21,7 @@ public class GridManager : NetworkSingleton<GridManager>
 
     public void GenerateGrid()
     {
-        if (IsServer)
+        if (NetworkManager.IsServer)
             spawnTiles();
 
         GameManager.Instance.ChangeState(GameState.SpawnNPC);
