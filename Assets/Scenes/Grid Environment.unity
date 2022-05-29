@@ -2729,7 +2729,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 593a2fe42fa9d37498c96f9a383b6521, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RunInBackground: 0
+  RunInBackground: 1
   LogLevel: 1
   NetworkConfig:
     ProtocolVersion: 0
@@ -2768,7 +2768,7 @@ MonoBehaviour:
     EnableTimeResync: 0
     TimeResyncInterval: 30
     EnsureNetworkVariableLengthSafety: 0
-    EnableSceneManagement: 0
+    EnableSceneManagement: 1
     ForceSamePrefabs: 1
     RecycleNetworkIds: 1
     NetworkIdRecycleDelay: 120
@@ -3088,7 +3088,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 674, y: -482}
+  m_AnchoredPosition: {x: 674, y: 495}
   m_SizeDelta: {x: 525.4777, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &822588992
@@ -5510,7 +5510,7 @@ MonoBehaviour:
   playAsAdvisorButton: {fileID: 1362027562}
   advisorBackButton: {fileID: 632353721}
   adviseTextBox: {fileID: 1701835994}
-  inputCodeText: {fileID: 331081027}
+  inputCodeText: {fileID: 2107750987}
   joinCodeText: {fileID: 822588992}
   loadingIcon: {fileID: 222203805}
 --- !u!4 &1836532757
