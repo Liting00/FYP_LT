@@ -23,6 +23,8 @@ public class TargetController : NetworkSingleton<TargetController>
     private float nextUpdatedTime = 0.1f;
 
     private bool enableUpdate = false;
+
+    public Material material;
     /*void UpdateTarget()
     {
         //Debug.Log("Start Target");
@@ -106,7 +108,7 @@ public class TargetController : NetworkSingleton<TargetController>
         //colour all the tiles to black
         foreach (GameObject tile in tiles)
         {
-            tile.GetComponent<Renderer>().material.color = Color.black;
+            tile.GetComponent<Renderer>().material.color = material.color;
         }
 
         foreach (GameObject tile in collidedTile)
@@ -124,10 +126,11 @@ public class TargetController : NetworkSingleton<TargetController>
         //don't run if your advisor
         if (!IsOwner) return;
 
+        MeshRenderer my_renderer = GetComponent<MeshRenderer>();
         //colour all the tiles to black
         foreach (GameObject tile in tiles)
         {
-            tile.GetComponent<Renderer>().material.color = Color.black;
+            tile.GetComponent<Renderer>().material.color = material.color;
         }
         hostileNPCS = GameObject.FindGameObjectsWithTag(npc);
         if (hostileNPCS.Length == 0)
