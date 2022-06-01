@@ -29,7 +29,7 @@ public class GridManager : NetworkSingleton<GridManager>
 
     private void spawnTiles()
     {
-        for (int x = 0; x < _width - 3; x++)
+        for (int x = 0; x < _width; x++)
         {
             for (int z = 0; z < _height; z++)
             {
@@ -38,6 +38,7 @@ public class GridManager : NetworkSingleton<GridManager>
 
                 //even and odd colouring
                 var isOffset = (x + z) % 2 == 1;
+
                 spawnedTile.Init(isOffset);
                 spawnedTile.GetComponent<NetworkObject>().Spawn();
             }

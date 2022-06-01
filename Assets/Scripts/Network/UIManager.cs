@@ -75,6 +75,7 @@ public class UIManager : NetworkSingleton<UIManager>
         loadingIcon.SetActive(false);
         playerUI.SetActive(false);
         joinCodeText.gameObject.SetActive(false);
+        adviseTextBox.gameObject.SetActive(false);
 
         mainMenu.SetActive(true);
 
@@ -158,6 +159,7 @@ public class UIManager : NetworkSingleton<UIManager>
             if (IsServer)
             {
                 startGameButton.gameObject.SetActive(false);
+                joinCodeText.gameObject.SetActive(false);
                 Debug.Log("Player Start Game");
 
                 playerStartGame();
