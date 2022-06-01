@@ -108,7 +108,7 @@ public class TargetController : NetworkSingleton<TargetController>
         //colour all the tiles to black
         foreach (GameObject tile in tiles)
         {
-            tile.GetComponent<Renderer>().material.color = material.color;
+            tile.GetComponent<Renderer>().material = material;
         }
 
         foreach (GameObject tile in collidedTile)
@@ -130,7 +130,7 @@ public class TargetController : NetworkSingleton<TargetController>
         //colour all the tiles to black
         foreach (GameObject tile in tiles)
         {
-            tile.GetComponent<Renderer>().material.color = material.color;
+            tile.GetComponent<Renderer>().material = material;
         }
         hostileNPCS = GameObject.FindGameObjectsWithTag(npc);
         if (hostileNPCS.Length == 0)
