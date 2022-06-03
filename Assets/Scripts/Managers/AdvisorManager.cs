@@ -15,6 +15,7 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
     [SerializeField]
     private TextMeshProUGUI adviseTextBox;
 
+
     public void insertAdvise(string text)
     {
         //advisorBox.GetComponent<UnityEngine.UI.Text>().text = advise;
@@ -40,5 +41,37 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
     public void setAdvisorTextBoxState(bool state)
     {
         adviseTextBox.gameObject.SetActive(state);
+    }
+    private void advisorAgent(AdvisorAgent advisorAgent)
+    {
+        switch (advisorAgent)
+        {
+            case AdvisorAgent.Pacifist:
+                pacifist();
+                break;
+            case AdvisorAgent.Trigger:
+                break;
+            case AdvisorAgent.RedBiasTrigger:
+                break;
+            case AdvisorAgent.BlueBiasTrigger:
+                break;
+            case AdvisorAgent.RedNpcCollection:
+                break;
+            case AdvisorAgent.BlueNpcCollection:
+                break;
+        }
+    }
+    private void pacifist()
+    {
+
+    }
+    public enum AdvisorAgent
+    {
+        Pacifist = 0,
+        Trigger = 1,
+        RedBiasTrigger = 2,
+        BlueBiasTrigger = 3,
+        RedNpcCollection = 4,
+        BlueNpcCollection = 5
     }
 }
