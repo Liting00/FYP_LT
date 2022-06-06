@@ -95,7 +95,7 @@ public class SpawnManager : NetworkSingleton<SpawnManager>
         for (int i = 0; i < greenNonhostileNPCSpawn; i++)
         {
             //offset -3 to move to the right
-            screenX = Random.Range((float)0.0000, _width - 1);
+            screenX = Random.Range((float)0.0000, _width - 3 - 1 );
             screenZ = Random.Range((float)0.0000, _height - 1);
             pos = new Vector3(screenX, 0.1f, screenZ);
 

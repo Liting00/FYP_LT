@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4366757, g: 0.48427194, b: 0.5645252, a: 1}
+  m_IndirectSpecularColor: {r: 0.4366756, g: 0.48427194, b: 0.5645252, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2217,7 +2217,7 @@ MonoBehaviour:
   _height: 9
   greenNonhostileNPCSpawn: 5
   blueNonhostileNPCSpawn: 5
-  hostileNPCSpawn: 1
+  hostileNPCSpawn: 2
   spawnPool:
   - {fileID: 1521441938112161391, guid: ac98f9307840bbe4b8d70946c3b024ab, type: 3}
   - {fileID: 6293373926139062098, guid: b410890e8403ee84cb4daceecb9ed17b, type: 3}
@@ -6162,6 +6162,14 @@ PrefabInstance:
     - target: {fileID: 236513962826478193, guid: 7279c74b2d16b514aaf7ee9fba624d5f, type: 3}
       propertyPath: m_Name
       value: Boundary
+      objectReference: {fileID: 0}
+    - target: {fileID: 236513962826478194, guid: 7279c74b2d16b514aaf7ee9fba624d5f, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 236513962826478195, guid: 7279c74b2d16b514aaf7ee9fba624d5f, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7279c74b2d16b514aaf7ee9fba624d5f, type: 3}

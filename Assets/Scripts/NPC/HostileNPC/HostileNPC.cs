@@ -5,7 +5,10 @@ using UnityEngine;
 
 public class HostileNPC : BasedNPC
 {
-    [SerializeField] GameObject objToSpawn;
+    [SerializeField] 
+    GameObject objToSpawn;
+
+    GameObject ant;
 
     private float update;
 
@@ -13,6 +16,8 @@ public class HostileNPC : BasedNPC
 
     [SerializeField]
     private float infectionRate;
+
+    private List<GameObject> influenceAreaNpcs = new List<GameObject>();
 
     void Start()
     {
@@ -37,7 +42,7 @@ public class HostileNPC : BasedNPC
         Vector3 pos = transform.position;
         //Debug.Log(pos);
 
-        foreach (GameObject o in GameObject.FindGameObjectsWithTag("NonHostileNPC"))
+        /*foreach (GameObject o in GameObject.FindGameObjectsWithTag("NonHostileNPC"))
         {
             if (o.transform.position.x >= pos.x -0.5f && o.transform.position.x <= pos.x + 0.5f 
                 && o.transform.position.z >= pos.z - 0.5f && o.transform.position.z <= pos.z + 0.5f)
@@ -57,6 +62,44 @@ public class HostileNPC : BasedNPC
                     infectedNPC.name = infectedNPC.name.Replace("(Clone)", "");
                 }
             }
+        }*/
+        foreach (GameObject o in influenceAreaNpcs)
+        {
+            //chances of infection
+
+            if (Random.Range(0.0000f, 1f) <= infectionRate && o != null) { 
+                Debug.Log("Infect!");
+                Vector3 spanLoc = o.transform.position;
+                Quaternion spawnRot = o.transform.rotation;
+
+                SpawnManager.Instance.addInfected(1);
+                SpawnManager.Instance.addNonInfected(-1);
+
+                objToSpawn.name = $"Infected {o.name}";
+                Destroy(o.gameObject);
+                //Debug.Log(o.name + " is Destroy!");
+
+                GameObject infectedNPC = Instantiate(objToSpawn, spanLoc, spawnRot) as GameObject;
+                infectedNPC.GetComponent<NetworkObject>().Spawn();
+                infectedNPC.name = infectedNPC.name.Replace("(Clone)", "");
+            }
+        }
+        
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("NonHostileNPC"))
+        {
+            influenceAreaNpcs.Add(other.gameObject);
+            //Debug.Log("NPC Collision");
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("NonHostileNPC"))
+        {
+            influenceAreaNpcs.Remove(other.gameObject);
+            //Debug.Log("NPC Exit Collision");
         }
     }
 
