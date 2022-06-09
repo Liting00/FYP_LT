@@ -8,8 +8,6 @@ public class HostileNPC : BasedNPC
     [SerializeField] 
     GameObject objToSpawn;
 
-    GameObject ant;
-
     private float update;
 
     private float nextUpdatedTime;
@@ -17,11 +15,8 @@ public class HostileNPC : BasedNPC
     [SerializeField]
     private float infectionRate;
 
-    private List<GameObject> influenceAreaNpcs = new List<GameObject>();
-
     void Start()
     {
-        //** need to optimize this
         nextUpdatedTime = nextUpdate();
     }
     void Update()
@@ -63,34 +58,35 @@ public class HostileNPC : BasedNPC
                 }
             }
         }*/
-        foreach (GameObject o in influenceAreaNpcs)
+        foreach (GameObject npc in influenceAreaNpcs)
         {
             //chances of infection
 
-            if (Random.Range(0.0000f, 1f) <= infectionRate && o != null) { 
+            if (Random.Range(0.0000f, 1f) <= infectionRate && npc != null) { 
                 Debug.Log("Infect!");
-                Vector3 spanLoc = o.transform.position;
-                Quaternion spawnRot = o.transform.rotation;
+                Vector3 spanLoc = npc.transform.position;
+                Quaternion spawnRot = npc.transform.rotation;
 
                 SpawnManager.Instance.addInfected(1);
                 SpawnManager.Instance.addNonInfected(-1);
 
-                objToSpawn.name = $"Infected {o.name}";
-                Destroy(o.gameObject);
-                //Debug.Log(o.name + " is Destroy!");
+                objToSpawn.name = $"Infected {npc.name}";
+                Destroy(npc.gameObject);
+                //Debug.Log(npc.name + " is Destroy!");
 
                 GameObject infectedNPC = Instantiate(objToSpawn, spanLoc, spawnRot) as GameObject;
                 infectedNPC.GetComponent<NetworkObject>().Spawn();
                 infectedNPC.name = infectedNPC.name.Replace("(Clone)", "");
             }
         }
-        
     }
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("NonHostileNPC"))
         {
             influenceAreaNpcs.Add(other.gameObject);
+            if(gameObject == TargetController.Instance.selectedNPC)
+                AdvisorManager.Instance.highlightedNPCs.Add(other.gameObject);
             //Debug.Log("NPC Collision");
         }
     }
@@ -99,6 +95,8 @@ public class HostileNPC : BasedNPC
         if (other.gameObject.CompareTag("NonHostileNPC"))
         {
             influenceAreaNpcs.Remove(other.gameObject);
+            if (gameObject == TargetController.Instance.selectedNPC)
+                AdvisorManager.Instance.highlightedNPCs.Remove(other.gameObject);
             //Debug.Log("NPC Exit Collision");
         }
     }

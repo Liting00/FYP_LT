@@ -9,16 +9,19 @@ public class TargetController : NetworkSingleton<TargetController>
 {
     private static string npc = "HostileNPC";
     private static string tile = "Tile";
-    private string previousNPCName = "";
+
 
     private GameObject[] hostileNPCS;
     private GameObject[] tiles;
-    private GameObject selectedNPC;
 
+    internal GameObject selectedNPC;
+    internal List<GameObject> highlightedNPCs = new List<GameObject>();
     internal List<GameObject> collidedTile = new List<GameObject>();
+
     internal bool changeTarget = false;
     internal bool destroy = false;
 
+    //Update interval
     private float update;
     private float nextUpdatedTime = 0.1f;
 
@@ -132,32 +135,40 @@ public class TargetController : NetworkSingleton<TargetController>
         {
             tile.GetComponent<Renderer>().material = material;
         }
-        hostileNPCS = GameObject.FindGameObjectsWithTag(npc);
-        if (hostileNPCS.Length == 0)
-            return;
 
-        //for changing target
+        hostileNPCS = GameObject.FindGameObjectsWithTag(npc);
+
+        if (hostileNPCS.Length == 0)
+            changeTarget = false;
+
+        string previousNPCName = "";
+
+        //Start for changing target
         if (changeTarget == true)
         {
             Debug.Log("Change Target");
-            int timeout = 5;
+
+            if (selectedNPC != null)
+                previousNPCName = selectedNPC.name;
+
             do
             {
                 selectedNPC = hostileNPCS[Random.Range(0, hostileNPCS.Length)];
-                //** need to optimize this
-                timeout--;
-                if (timeout == 0) break;
+                if (hostileNPCS.Length == 1)
+                    break;
             }
             while (string.Compare(previousNPCName, selectedNPC.name) == 0);
-            previousNPCName = selectedNPC.name;
+
             changeTarget = false;
         }
+
+        float npcPosX = selectedNPC.transform.position.x - 0.5f;
+        float npcPosZ = selectedNPC.transform.position.z - 0.5f;
+
         //highlight selectedNPC tile
         foreach (GameObject tile in collidedTile)
         {
             //Debug.Log("Tiles " + tile.name);
-            float npcPosX = selectedNPC.transform.position.x - 0.5f;
-            float npcPosZ = selectedNPC.transform.position.z - 0.5f;
             //Debug.Log("Selected NPC " + npcPosX + ", " + npcPosZ);
             if (tile.transform.position.x >= npcPosX && tile.transform.position.x <= npcPosX + 1f 
                 && tile.transform.position.z >= npcPosZ && tile.transform.position.z <= npcPosZ + 1f)
@@ -172,6 +183,7 @@ public class TargetController : NetworkSingleton<TargetController>
     {
         if (hostileNPCS.Length == 0)
             return;
+
         float npcPosX = selectedNPC.transform.position.x - 0.5f;
         float npcPosZ = selectedNPC.transform.position.z - 0.5f;
 
@@ -185,7 +197,6 @@ public class TargetController : NetworkSingleton<TargetController>
                 Destroy(o);
                 SpawnManager.Instance.addInfected(-1);
             }
-
         }
         foreach (GameObject o in GameObject.FindGameObjectsWithTag("NonHostileNPC"))
         {

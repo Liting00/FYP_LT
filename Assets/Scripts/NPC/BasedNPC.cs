@@ -13,6 +13,8 @@ public class BasedNPC : NetworkSingleton<BasedNPC>
     private bool isRotatingRight = false;
     private bool isWalking = false;
 
+    internal List<GameObject> influenceAreaNpcs = new List<GameObject>();
+
     // Start is called before the first frame update
     void Start()
     {
