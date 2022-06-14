@@ -1112,7 +1112,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -1814,7 +1814,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -2215,8 +2215,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _width: 16
   _height: 9
-  greenNonhostileNPCSpawn: 5
-  blueNonhostileNPCSpawn: 5
+  greenNonhostileNPCSpawn: 30
+  blueNonhostileNPCSpawn: 30
   hostileNPCSpawn: 2
   spawnPool:
   - {fileID: 1521441938112161391, guid: ac98f9307840bbe4b8d70946c3b024ab, type: 3}

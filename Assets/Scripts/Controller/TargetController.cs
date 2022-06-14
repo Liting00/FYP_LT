@@ -18,15 +18,18 @@ public class TargetController : NetworkSingleton<TargetController>
     internal List<GameObject> highlightedNPCs = new List<GameObject>();
     internal List<GameObject> collidedTile = new List<GameObject>();
 
+    internal GameObject selectedTile;
+
+    private GameObject previousTile;
+
     internal bool changeTarget = false;
     internal bool destroy = false;
 
     //Update interval
     private float update;
     private float nextUpdatedTime = 0.1f;
-
     private bool enableUpdate = false;
-
+   
     public Material material;
     /*void UpdateTarget()
     {
@@ -120,6 +123,7 @@ public class TargetController : NetworkSingleton<TargetController>
                 && tile.transform.position.z >= npcPosZ && tile.transform.position.z <= npcPosZ + 1f)
             {
                 tile.GetComponent<Renderer>().material.color = Color.gray;
+                selectedTile = tile;
                 return;
             }
         }
@@ -129,7 +133,6 @@ public class TargetController : NetworkSingleton<TargetController>
         //don't run if your advisor
         if (!IsOwner) return;
 
-        MeshRenderer my_renderer = GetComponent<MeshRenderer>();
         //colour all the tiles to black
         foreach (GameObject tile in tiles)
         {
@@ -139,14 +142,16 @@ public class TargetController : NetworkSingleton<TargetController>
         hostileNPCS = GameObject.FindGameObjectsWithTag(npc);
 
         if (hostileNPCS.Length == 0)
+        {
             changeTarget = false;
-
-        string previousNPCName = "";
+            return;
+        }
 
         //Start for changing target
         if (changeTarget == true)
         {
             Debug.Log("Change Target");
+            string previousNPCName = "";
 
             if (selectedNPC != null)
                 previousNPCName = selectedNPC.name;
@@ -173,9 +178,24 @@ public class TargetController : NetworkSingleton<TargetController>
             if (tile.transform.position.x >= npcPosX && tile.transform.position.x <= npcPosX + 1f 
                 && tile.transform.position.z >= npcPosZ && tile.transform.position.z <= npcPosZ + 1f)
             {
-                tile.GetComponent<Renderer>().material.color = Color.gray;
+                tile.GetComponent<Renderer>().material.color = Color.red;
+                selectedTile = tile;
                 targetClientRpc(npcPosX, npcPosZ);
-                return;
+            }
+        }
+        //TODO: Cannot make Collision Work
+        if (previousTile != selectedTile)
+        {
+            highlightedNPCs.Clear();
+            previousTile = selectedTile;
+            Debug.Log("Clear");
+        }
+        foreach (GameObject o in GameObject.FindGameObjectsWithTag("NonHostileNPC"))
+        {
+            if (o.transform.position.x >= npcPosX && o.transform.position.x <= npcPosX + 1.05f
+                && o.transform.position.z >= npcPosZ && o.transform.position.z <= npcPosZ + 1.05f)
+            {
+                highlightedNPCs.Add(o.gameObject);
             }
         }
     }
@@ -183,6 +203,21 @@ public class TargetController : NetworkSingleton<TargetController>
     {
         if (hostileNPCS.Length == 0)
             return;
+
+        //TODO: Cannot make Collision Work
+        /*Destroy(selectedNPC);
+        SpawnManager.Instance.addInfected(-1);
+
+        foreach (GameObject npc in highlightedNPCs)
+        {
+            Debug.Log(npc.name);
+            if (npc.name.Contains("Non"))
+                SpawnManager.Instance.addNonInfected(-1);
+            else
+                SpawnManager.Instance.addInfected(-1);
+            
+            Destroy(npc);
+        }*/
 
         float npcPosX = selectedNPC.transform.position.x - 0.5f;
         float npcPosZ = selectedNPC.transform.position.z - 0.5f;
@@ -194,6 +229,7 @@ public class TargetController : NetworkSingleton<TargetController>
             if (o.transform.position.x >= npcPosX && o.transform.position.x <= npcPosX + 1f 
                 && o.transform.position.z >= npcPosZ && o.transform.position.z <= npcPosZ + 1f)
             {
+                o.SetActive(false);
                 Destroy(o);
                 SpawnManager.Instance.addInfected(-1);
             }
@@ -205,10 +241,11 @@ public class TargetController : NetworkSingleton<TargetController>
             if (o.transform.position.x >= npcPosX && o.transform.position.x <= npcPosX + 1f 
                 && o.transform.position.z >= npcPosZ && o.transform.position.z <= npcPosZ + 1f)
             {
+                o.SetActive(false);
                 Destroy(o);
                 SpawnManager.Instance.addNonInfected(-1);
             }
-
         }
+        return;
     }
 }

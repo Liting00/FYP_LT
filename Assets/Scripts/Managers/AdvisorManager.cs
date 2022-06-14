@@ -122,21 +122,30 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
             updateAdviseClientRpc(advise);
         }
     }
+    //Bias to Green, Kill Green upon entering zone of influence
     private void GreenBiasTrigger()
     {
-        int biasCount = 0;
+        int biasCounter = 0;
 
-        foreach (GameObject npc in highlightedNPCs)
+        foreach (GameObject npc in TargetController.Instance.highlightedNPCs)
         {
             if (npc == null)
                 break;
 
             if (npc.name.Contains("Green"))
-                biasCount++;
+                biasCounter++;
+
+            Debug.Log(npc.name);
         }
-        if (biasCount >= 1)
+        if (biasCounter >= 1)
         {
             string advise = Advise(AdvisorAdvice.Shoot);
+            insertAdvise(advise);
+            updateAdviseClientRpc(advise);
+        }
+        else if(SpawnManager.Instance.Infected <= 1)
+        {
+            string advise = Advise(AdvisorAdvice.NoAdvice);
             insertAdvise(advise);
             updateAdviseClientRpc(advise);
         }
@@ -165,6 +174,12 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
             insertAdvise(advise);
             updateAdviseClientRpc(advise);
         }
+        else if (SpawnManager.Instance.Infected <= 1)
+        {
+            string advise = Advise(AdvisorAdvice.NoAdvice);
+            insertAdvise(advise);
+            updateAdviseClientRpc(advise);
+        }
         else
         {
             string advise = Advise(AdvisorAdvice.Pass);
@@ -174,7 +189,7 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
     }
     private void GreenBiasCollection()
     {
-        int biasCount = 0;
+        int biasCounter = 0;
         int collection = 2;
 
         foreach (GameObject npc in highlightedNPCs)
@@ -183,9 +198,9 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
                 break;
 
             if (npc.name.Contains("Green"))
-                biasCount++;
+                biasCounter++;
         }
-        if (biasCount >= collection)
+        if (biasCounter >= collection)
         {
             string advise = Advise(AdvisorAdvice.Shoot);
             insertAdvise(advise);

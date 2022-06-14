@@ -77,6 +77,7 @@ public class SpawnManager : NetworkSingleton<SpawnManager>
         for(int i = 0; i < blueNonhostileNPCSpawn; i++)
         {
             //offset -3 to move to the right
+            //TODO: remove -3
             screenX = Random.Range((float)0.0000, _width - 3 - 1);
             screenZ = Random.Range((float)0.0000, _height - 1);
             pos = new Vector3(screenX, 0.1f, screenZ);
@@ -95,6 +96,7 @@ public class SpawnManager : NetworkSingleton<SpawnManager>
         for (int i = 0; i < greenNonhostileNPCSpawn; i++)
         {
             //offset -3 to move to the right
+            //TODO: remove -3
             screenX = Random.Range((float)0.0000, _width - 3 - 1 );
             screenZ = Random.Range((float)0.0000, _height - 1);
             pos = new Vector3(screenX, 0.1f, screenZ);
@@ -112,7 +114,9 @@ public class SpawnManager : NetworkSingleton<SpawnManager>
         }
         for (int i = 0; i < hostileNPCSpawn; i++)
         {
-            screenX = Random.Range((float)0.0000, _width - 1);
+            //offset -3 to move to the right
+            //TODO: remove -3
+            screenX = Random.Range((float)0.0000, _width -3 - 1);
             screenZ = Random.Range((float)0.0000, _height - 1);
             screenY = 0.1f;
             pos = new Vector3(screenX, screenY, screenZ);

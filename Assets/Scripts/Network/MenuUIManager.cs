@@ -135,7 +135,7 @@ namespace Assets.Scripts.Network
 
                 yield return null;
             }
-
+            yield return new WaitForSeconds(2);
             loadingIcon.SetActive(false);
         }
         IEnumerator LoadAdvisorAsynchronously()
