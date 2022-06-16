@@ -48,8 +48,7 @@ public class PlayerManager : NetworkSingleton<PlayerManager>
             {
                 Debug.Log($"ID {id} just connected");
                 addPlayerInGame(1);
-            }
-                
+            }   
         };
         NetworkManager.Singleton.OnClientDisconnectCallback += (id) =>
         {
@@ -57,8 +56,7 @@ public class PlayerManager : NetworkSingleton<PlayerManager>
             {
                 Debug.Log($"ID {id} just disconnected");
                 addPlayerInGame(-1);
-            }
-                
+            }    
         };
     }
     private void playerStartGame()
