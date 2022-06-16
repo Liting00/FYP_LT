@@ -7,6 +7,8 @@ public class TileCollision : MonoBehaviour
     //script
     [SerializeField] Tile tileScript;
 
+    private List<GameObject> collidedNpcs = new List<GameObject>();
+
     /*private void OnMouseEnter()
     {
         tileScript.onHighlight(true);
@@ -20,30 +22,35 @@ public class TileCollision : MonoBehaviour
     {
         if(other.gameObject.tag == "HostileNPC")
         {
-            //GameObject tController = GameObject.Find("Target Controller");
             TargetController.Instance.collidedTile.Add(gameObject);
             //Debug.Log(gameObject.name + " hit!");
         }
         //TODO: Cannot make Collision Work
-        /*if(TargetController.Instance.selectedTile == this.gameObject && (other.gameObject.tag == "NonHostileNPC" || other.gameObject.tag == "HostileNPC"))
+        if (other.gameObject.tag == "NonHostileNPC" || other.gameObject.tag == "HostileNPC")
         {
-            Debug.Log(other.gameObject);
-            TargetController.Instance.highlightedNPCs.Add(other.gameObject);
-        }*/
+            collidedNpcs.Add(other.gameObject);
+        }
     }
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.tag == "HostileNPC")
         {
-            //GameObject tController = GameObject.Find("Target Controller");
             TargetController.Instance.collidedTile.Remove(gameObject);
             //Debug.Log(gameObject.name + " Remove!");
         }
         //TODO: Cannot make Collision Work
-        /*if (TargetController.Instance.selectedTile == this.gameObject && (other.gameObject.tag == "NonHostileNPC" || other.gameObject.tag == "HostileNPC"))
+        if (other.gameObject.tag == "NonHostileNPC" || other.gameObject.tag == "HostileNPC")
         {
-            TargetController.Instance.highlightedNPCs.Remove(other.gameObject);
-        }*/
+            collidedNpcs.Remove(other.gameObject);
+        }
+    }
+    private void Update()
+    {
+        if (TargetController.Instance.selectedTile == this.gameObject)
+        {
+            TargetController.Instance.highlightedNPCs.Clear();
+            TargetController.Instance.highlightedNPCs.AddRange(collidedNpcs);
+        }
     }
     /*public void OnMouseDown()
     {

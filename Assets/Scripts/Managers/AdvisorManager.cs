@@ -16,7 +16,7 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
     private AdvisorAgent selectedAgent;
 
     private float update = 0f;
-    private float nextUpdatedTime = 0.1f;
+    private float nextUpdatedTime = 0.5f;
 
     internal List<GameObject> highlightedNPCs = new List<GameObject>();
 
@@ -42,23 +42,66 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
             advisorAgent(selectedAgent);
         }
     }
-    public void insertAdvise(string text)
+    public void insertAdvise(AdvisorAdvice advisorAdvice)
     {
         //advisorBox.GetComponent<UnityEngine.UI.Text>().text = advise;
-        adviseTextBox.text = text;
+        switch (advisorAdvice)
+        {
+            case AdvisorAdvice.Shoot:
+                adviseTextBox.text = Advise(AdvisorAdvice.Shoot);
+                adviseTextBox.color = Color.red;
+                break;
+            case AdvisorAdvice.Pass:
+                adviseTextBox.text = Advise(AdvisorAdvice.Pass);
+                adviseTextBox.color = Color.green;
+                break;
+            case AdvisorAdvice.NoAdvice:
+                adviseTextBox.text = Advise(AdvisorAdvice.NoAdvice);
+                adviseTextBox.color = Color.white;
+                break;
+        }
     }
     [ServerRpc(RequireOwnership = false)]
-    public void updateAdviseTextServerRpc(string text)
+    public void updateAdviseTextServerRpc(AdvisorAdvice advisorAdvice)
     {
         Debug.Log("Update Server");
-        adviseTextBox.text = text;
+
+        switch (advisorAdvice)
+        {
+            case AdvisorAdvice.Shoot:
+                adviseTextBox.text = Advise(AdvisorAdvice.Shoot);
+                adviseTextBox.color = Color.red;
+                break;
+            case AdvisorAdvice.Pass:
+                adviseTextBox.text = Advise(AdvisorAdvice.Pass);
+                adviseTextBox.color = Color.green;
+                break;
+            case AdvisorAdvice.NoAdvice:
+                adviseTextBox.text = Advise(AdvisorAdvice.NoAdvice);
+                adviseTextBox.color = Color.white;
+                break;
+        }
     }
     [ClientRpc]
-    public void updateAdviseClientRpc(string text)
+    public void updateAdviseClientRpc(AdvisorAdvice advisorAdvice)
     {
         if (IsOwner) return;
 
-        adviseTextBox.text = text;
+        switch (advisorAdvice)
+        {
+            case AdvisorAdvice.Shoot:
+                adviseTextBox.text = Advise(AdvisorAdvice.Shoot);
+                adviseTextBox.color = Color.red;
+                break;
+            case AdvisorAdvice.Pass:
+                adviseTextBox.text = Advise(AdvisorAdvice.Pass);
+                adviseTextBox.color = Color.green;
+                break;
+            case AdvisorAdvice.NoAdvice:
+                adviseTextBox.text = Advise(AdvisorAdvice.NoAdvice);
+                adviseTextBox.color = Color.white;
+                break;
+        }
     }
     public void setAdvisorUIState(bool state)
     {
@@ -96,30 +139,26 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
     {
         if (highlightedNPCs.Count >= 1)
         {
-            string advise = Advise(AdvisorAdvice.Pass);
-            insertAdvise(advise);
-            updateAdviseClientRpc(advise);
+            insertAdvise(AdvisorAdvice.Pass);
+            updateAdviseClientRpc(AdvisorAdvice.Pass);
         }
         else
         {
-            string advise = Advise(AdvisorAdvice.NoAdvice);
-            insertAdvise(advise);
-            updateAdviseClientRpc(advise);
+            insertAdvise(AdvisorAdvice.NoAdvice);
+            updateAdviseClientRpc(AdvisorAdvice.NoAdvice);
         }  
     }
     private void Trigger()
     {
         if (highlightedNPCs.Count >= 1)
         {
-            string advise = Advise(AdvisorAdvice.Shoot);
-            insertAdvise(advise);
-            updateAdviseClientRpc(advise);
+            insertAdvise(AdvisorAdvice.Shoot);
+            updateAdviseClientRpc(AdvisorAdvice.Shoot);
         }
         else
         {
-            string advise = Advise(AdvisorAdvice.Pass);
-            insertAdvise(advise);
-            updateAdviseClientRpc(advise);
+            insertAdvise(AdvisorAdvice.Pass);
+            updateAdviseClientRpc(AdvisorAdvice.Pass);
         }
     }
     //Bias to Green, Kill Green upon entering zone of influence
@@ -130,30 +169,28 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
         foreach (GameObject npc in TargetController.Instance.highlightedNPCs)
         {
             if (npc == null)
-                break;
+                continue;
 
-            if (npc.name.Contains("Green"))
+            if (npc.name.Contains("Green") && !npc.name.Contains("Infected"))
+            {
+                Debug.Log(npc.name);
                 biasCounter++;
-
-            Debug.Log(npc.name);
+            }
         }
         if (biasCounter >= 1)
         {
-            string advise = Advise(AdvisorAdvice.Shoot);
-            insertAdvise(advise);
-            updateAdviseClientRpc(advise);
+            insertAdvise(AdvisorAdvice.Shoot);
+            updateAdviseClientRpc(AdvisorAdvice.Shoot);
         }
         else if(SpawnManager.Instance.Infected <= 1)
         {
-            string advise = Advise(AdvisorAdvice.NoAdvice);
-            insertAdvise(advise);
-            updateAdviseClientRpc(advise);
+            insertAdvise(AdvisorAdvice.NoAdvice);
+            updateAdviseClientRpc(AdvisorAdvice.NoAdvice);
         }
         else
         {
-            string advise = Advise(AdvisorAdvice.Pass);
-            insertAdvise(advise);
-            updateAdviseClientRpc(advise);
+            insertAdvise(AdvisorAdvice.Pass);
+            updateAdviseClientRpc(AdvisorAdvice.Pass);
         }
     }
     private void BlueBiasTrigger()
@@ -170,21 +207,18 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
         }
         if (biasCounter >= 1)
         {
-            string advise = Advise(AdvisorAdvice.Shoot);
-            insertAdvise(advise);
-            updateAdviseClientRpc(advise);
+            insertAdvise(AdvisorAdvice.Shoot);
+            updateAdviseClientRpc(AdvisorAdvice.Shoot);
         }
         else if (SpawnManager.Instance.Infected <= 1)
         {
-            string advise = Advise(AdvisorAdvice.NoAdvice);
-            insertAdvise(advise);
-            updateAdviseClientRpc(advise);
+            insertAdvise(AdvisorAdvice.NoAdvice);
+            updateAdviseClientRpc(AdvisorAdvice.NoAdvice);
         }
         else
         {
-            string advise = Advise(AdvisorAdvice.Pass);
-            insertAdvise(advise);
-            updateAdviseClientRpc(advise);
+            insertAdvise(AdvisorAdvice.Pass);
+            updateAdviseClientRpc(AdvisorAdvice.Pass);
         }
     }
     private void GreenBiasCollection()
@@ -202,15 +236,13 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
         }
         if (biasCounter >= collection)
         {
-            string advise = Advise(AdvisorAdvice.Shoot);
-            insertAdvise(advise);
-            updateAdviseClientRpc(advise);
+            insertAdvise(AdvisorAdvice.Shoot);
+            updateAdviseClientRpc(AdvisorAdvice.Shoot);
         }
         else
         {
-            string advise = Advise(AdvisorAdvice.Pass);
-            insertAdvise(advise);
-            updateAdviseClientRpc(advise);
+            insertAdvise(AdvisorAdvice.Pass);
+            updateAdviseClientRpc(AdvisorAdvice.Pass);
         }
     }
     private void BlueBiasCollection()
@@ -228,15 +260,13 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
         }
         if (biasCounter >= collection)
         {
-            string advise = Advise(AdvisorAdvice.Shoot);
-            insertAdvise(advise);
-            updateAdviseClientRpc(advise);
+            insertAdvise(AdvisorAdvice.Shoot);
+            updateAdviseClientRpc(AdvisorAdvice.Shoot);
         }
         else
         {
-            string advise = Advise(AdvisorAdvice.Pass);
-            insertAdvise(advise);
-            updateAdviseClientRpc(advise);
+            insertAdvise(AdvisorAdvice.Pass);
+            updateAdviseClientRpc(AdvisorAdvice.Pass);
         }
     }
     public string Advise(AdvisorAdvice advisorAdvice)

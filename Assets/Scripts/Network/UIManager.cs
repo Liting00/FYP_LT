@@ -173,7 +173,6 @@ public class UIManager : NetworkSingleton<UIManager>
     private void playerStartGame()
     {
         AdvisorManager.Instance.setAdvisorTextBoxState(true);
-        AdvisorManager.Instance.insertAdvise("No Instruction");
         PlayerManager.Instance.setPlayerUIState(true);
     }
     [ClientRpc]
@@ -183,6 +182,5 @@ public class UIManager : NetworkSingleton<UIManager>
 
         AdvisorManager.Instance.setAdvisorUIState(true);
         AdvisorManager.Instance.setAdvisorTextBoxState(true);
-        AdvisorManager.Instance.insertAdvise("No Instruction");
     }
 }
