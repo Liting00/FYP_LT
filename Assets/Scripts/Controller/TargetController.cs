@@ -144,6 +144,8 @@ public class TargetController : NetworkSingleton<TargetController>
         if (hostileNPCS.Length == 0)
         {
             changeTarget = false;
+            highlightedNPCs.Clear();
+            selectedNPC = null;
             return;
         }
 
@@ -184,12 +186,13 @@ public class TargetController : NetworkSingleton<TargetController>
             }
         }
         //TODO: Cannot make Collision Work
-        if (previousTile != selectedTile)
+        /*if (previousTile != selectedTile)
         {
             highlightedNPCs.Clear();
             previousTile = selectedTile;
             Debug.Log("Clear");
-        }
+        }*/
+        /*
         foreach (GameObject o in GameObject.FindGameObjectsWithTag("NonHostileNPC"))
         {
             if (o.transform.position.x >= npcPosX && o.transform.position.x <= npcPosX + 1.05f
@@ -197,7 +200,7 @@ public class TargetController : NetworkSingleton<TargetController>
             {
                 highlightedNPCs.Add(o.gameObject);
             }
-        }
+        }*/
     }
     public void destroyTarget()
     {
@@ -205,21 +208,25 @@ public class TargetController : NetworkSingleton<TargetController>
             return;
 
         //TODO: Cannot make Collision Work
-        /*Destroy(selectedNPC);
+        Destroy(selectedNPC);
         SpawnManager.Instance.addInfected(-1);
 
         foreach (GameObject npc in highlightedNPCs)
         {
+            if (npc == null)
+                continue;
+
             Debug.Log(npc.name);
+
             if (npc.name.Contains("Non"))
                 SpawnManager.Instance.addNonInfected(-1);
             else
                 SpawnManager.Instance.addInfected(-1);
             
-            Destroy(npc);
-        }*/
+            Destroy(npc.gameObject);
+        }
 
-        float npcPosX = selectedNPC.transform.position.x - 0.5f;
+        /*float npcPosX = selectedNPC.transform.position.x - 0.5f;
         float npcPosZ = selectedNPC.transform.position.z - 0.5f;
 
         foreach (GameObject o in GameObject.FindGameObjectsWithTag("HostileNPC"))
@@ -246,6 +253,6 @@ public class TargetController : NetworkSingleton<TargetController>
                 SpawnManager.Instance.addNonInfected(-1);
             }
         }
-        return;
+        return;*/
     }
 }

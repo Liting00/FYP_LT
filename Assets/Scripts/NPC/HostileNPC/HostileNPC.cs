@@ -58,12 +58,10 @@ public class HostileNPC : BasedNPC
                 }
             }
         }*/
-        bool infected = false;
 
         foreach (GameObject npc in influenceAreaNpcs)
         {
             //chances of infection
-
             if (Random.Range(0.0000f, 1f) <= infectionRate && npc != null) { 
                 Debug.Log("Infect!");
                 Vector3 spanLoc = npc.transform.position;
@@ -73,19 +71,17 @@ public class HostileNPC : BasedNPC
                 SpawnManager.Instance.addNonInfected(-1);
 
                 objToSpawn.name = $"Infected {npc.name}";
+                TargetController.Instance.highlightedNPCs.Remove(npc);
                 npc.SetActive(false);
                 Destroy(npc.gameObject);
-                infected = true;
                 //Debug.Log(npc.name + " is Destroy!");
 
                 GameObject infectedNPC = Instantiate(objToSpawn, spanLoc, spawnRot) as GameObject;
                 infectedNPC.GetComponent<NetworkObject>().Spawn();
                 infectedNPC.name = infectedNPC.name.Replace("(Clone)", "");
+                TargetController.Instance.highlightedNPCs.Add(infectedNPC);
             }
         }
-        //TODO: Cannot make Collision Work
-        //if (TargetController.Instance.selectedNPC == this.gameObject && infected == true)
-        //    TargetController.Instance.highlightedNPCs.Clear();
     }
     private void OnTriggerEnter(Collider other)
     {

@@ -48,8 +48,7 @@ public class PlayerManager : NetworkSingleton<PlayerManager>
             {
                 Debug.Log($"ID {id} just connected");
                 addPlayerInGame(1);
-            }
-                
+            }   
         };
         NetworkManager.Singleton.OnClientDisconnectCallback += (id) =>
         {
@@ -57,14 +56,13 @@ public class PlayerManager : NetworkSingleton<PlayerManager>
             {
                 Debug.Log($"ID {id} just disconnected");
                 addPlayerInGame(-1);
-            }
-                
+            }    
         };
     }
     private void playerStartGame()
     {
         AdvisorManager.Instance.setAdvisorTextBoxState(true);
-        AdvisorManager.Instance.insertAdvise("No Instruction");
+        //AdvisorManager.Instance.insertAdvise("No Instruction");
         setPlayerUIState(true);
     }
     [ClientRpc]
@@ -74,7 +72,7 @@ public class PlayerManager : NetworkSingleton<PlayerManager>
 
         AdvisorManager.Instance.setAdvisorUIState(true);
         AdvisorManager.Instance.setAdvisorTextBoxState(true);
-        AdvisorManager.Instance.insertAdvise("No Instruction");
+        //AdvisorManager.Instance.insertAdvise("No Instruction");
     }
 }
 
