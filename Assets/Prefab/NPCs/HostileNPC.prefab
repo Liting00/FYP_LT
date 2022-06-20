@@ -269,7 +269,6 @@ MonoBehaviour:
   moveSpeed: 0.25
   rotSpeed: 100
   objToSpawn: {fileID: 6293373926139062098}
-  infectionRate: 0.2
 --- !u!114 &3077482549083413706
 MonoBehaviour:
   m_ObjectHideFlags: 0

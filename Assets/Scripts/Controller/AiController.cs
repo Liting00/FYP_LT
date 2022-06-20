@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.AI;
 public class AiController : MonoBehaviour
 {
-    //TODO: Move to the extra 3 col of tiles on the left
     public NavMeshAgent agent;
 
     [Range(0, 100)] public float speed;

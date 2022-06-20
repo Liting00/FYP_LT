@@ -11,17 +11,11 @@ public class SpawnManager : NetworkSingleton<SpawnManager>
 
     public static SpawnManager Instance;
 
-    [SerializeField] 
+    [SerializeField]
     private float _width, _height;
-
-    [SerializeField]
-    private int greenNonhostileNPCSpawn;
-
-    [SerializeField]
-    private int blueNonhostileNPCSpawn;
-
-    [SerializeField]
-    private int hostileNPCSpawn;
+    private int greenNonhostileNPCSpawn =0 ;
+    private int blueNonhostileNPCSpawn=0;
+    private int hostileNPCSpawn=0;
 
     [SerializeField]
     private List<GameObject> spawnPool;
@@ -68,17 +62,20 @@ public class SpawnManager : NetworkSingleton<SpawnManager>
     }
     private void spawnNPCs()
     {
+        //Config Variables
+        hostileNPCSpawn = GameSettings.HOSTILE_NPC;
+        greenNonhostileNPCSpawn = GameSettings.NONHOSTILE_GREEN_NPC;
+        blueNonhostileNPCSpawn = GameSettings.NONHOSTILE_BLUE_NPC;
 
         float screenX, screenZ, screenY;
         Vector3 pos;
+
         infected.Value = hostileNPCSpawn;
         nonInfected.Value = greenNonhostileNPCSpawn +  blueNonhostileNPCSpawn;
 
         for(int i = 0; i < blueNonhostileNPCSpawn; i++)
         {
-            //offset -3 to move to the right
-            //TODO: remove -3
-            screenX = Random.Range((float)0.0000, _width - 3 - 1);
+            screenX = Random.Range((float)0.0000, _width  - 1);
             screenZ = Random.Range((float)0.0000, _height - 1);
             pos = new Vector3(screenX, 0.1f, screenZ);
 
@@ -95,9 +92,7 @@ public class SpawnManager : NetworkSingleton<SpawnManager>
         }
         for (int i = 0; i < greenNonhostileNPCSpawn; i++)
         {
-            //offset -3 to move to the right
-            //TODO: remove -3
-            screenX = Random.Range((float)0.0000, _width - 3 - 1 );
+            screenX = Random.Range((float)0.0000, _width  - 1 );
             screenZ = Random.Range((float)0.0000, _height - 1);
             pos = new Vector3(screenX, 0.1f, screenZ);
 
@@ -114,9 +109,7 @@ public class SpawnManager : NetworkSingleton<SpawnManager>
         }
         for (int i = 0; i < hostileNPCSpawn; i++)
         {
-            //offset -3 to move to the right
-            //TODO: remove -3
-            screenX = Random.Range((float)0.0000, _width -3 - 1);
+            screenX = Random.Range((float)0.0000, _width  - 1);
             screenZ = Random.Range((float)0.0000, _height - 1);
             screenY = 0.1f;
             pos = new Vector3(screenX, screenY, screenZ);

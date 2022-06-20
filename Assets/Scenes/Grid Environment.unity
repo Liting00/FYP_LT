@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4366757, g: 0.48427194, b: 0.5645252, a: 1}
+  m_IndirectSpecularColor: {r: 0.4366756, g: 0.48427194, b: 0.5645252, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2213,11 +2213,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbd49ce475ca8854da4782e07714fa73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _width: 16
-  _height: 9
-  greenNonhostileNPCSpawn: 30
-  blueNonhostileNPCSpawn: 30
-  hostileNPCSpawn: 2
+  _width: 19
+  _height: 10
+  greenNonhostileNPCSpawn: 4
+  blueNonhostileNPCSpawn: 4
+  hostileNPCSpawn: 4
   spawnPool:
   - {fileID: 1521441938112161391, guid: ac98f9307840bbe4b8d70946c3b024ab, type: 3}
   - {fileID: 6293373926139062098, guid: b410890e8403ee84cb4daceecb9ed17b, type: 3}

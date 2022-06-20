@@ -12,8 +12,7 @@ public class HostileNPC : BasedNPC
 
     private float nextUpdatedTime;
 
-    [SerializeField]
-    private float infectionRate;
+    private float infectionRate = 0.2f;
 
     void Start()
     {

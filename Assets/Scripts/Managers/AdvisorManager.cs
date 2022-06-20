@@ -173,7 +173,7 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
 
             if (npc.name.Contains("Green") && !npc.name.Contains("Infected"))
             {
-                Debug.Log(npc.name);
+                //Debug.Log(npc.name);
                 biasCounter++;
             }
         }
