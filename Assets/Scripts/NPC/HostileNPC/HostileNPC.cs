@@ -8,15 +8,18 @@ public class HostileNPC : BasedNPC
     [SerializeField] 
     GameObject objToSpawn;
 
+    [SerializeField]
+    GameObject infectionSphere;
+
     private float update;
-
     private float nextUpdatedTime;
-
-    private float infectionRate = 0.2f;
 
     void Start()
     {
         nextUpdatedTime = nextUpdate();
+
+        Vector3 sizeChange = new Vector3(GameSettings.INFECTION_RADIUS, GameSettings.INFECTION_RADIUS, GameSettings.INFECTION_RADIUS);
+        infectionSphere.transform.localScale = sizeChange;
     }
     void Update()
     {
@@ -61,7 +64,7 @@ public class HostileNPC : BasedNPC
         foreach (GameObject npc in influenceAreaNpcs)
         {
             //chances of infection
-            if (Random.Range(0.0000f, 1f) <= infectionRate && npc != null) { 
+            if (Random.Range(0.0000f, 1f) <= GameSettings.INFECTION_RATE && npc != null) { 
                 Debug.Log("Infect!");
                 Vector3 spanLoc = npc.transform.position;
                 Quaternion spawnRot = npc.transform.rotation;
@@ -103,10 +106,10 @@ public class HostileNPC : BasedNPC
         }
     }
 
-    //time for it takes to do the next infection
+    //Interval time for infection
     private float nextUpdate()
     {
-        return Random.Range(5.0f, 10.0f);
+        return Random.Range(GameSettings.INFECTION_INTERVAL_MIN, GameSettings.INFECTION_INTERVAL_MAX);
     }
 
 }

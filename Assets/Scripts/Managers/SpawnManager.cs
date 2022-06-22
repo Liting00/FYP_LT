@@ -13,13 +13,12 @@ public class SpawnManager : NetworkSingleton<SpawnManager>
 
     [SerializeField]
     private float _width, _height;
-    private int greenNonhostileNPCSpawn =0 ;
-    private int blueNonhostileNPCSpawn=0;
-    private int hostileNPCSpawn=0;
+    private int greenNonhostileNPCSpawn = 0 ;
+    private int blueNonhostileNPCSpawn = 0;
+    private int hostileNPCSpawn = 0;
 
     [SerializeField]
     private List<GameObject> spawnPool;
-
 
     private NetworkVariable<int> infected = new NetworkVariable<int>();
     private NetworkVariable<int> nonInfected = new NetworkVariable<int>();
@@ -62,11 +61,17 @@ public class SpawnManager : NetworkSingleton<SpawnManager>
     }
     private void spawnNPCs()
     {
-        //Config Variables
+        //Config Variables. Number of Spawns
         hostileNPCSpawn = GameSettings.HOSTILE_NPC;
         greenNonhostileNPCSpawn = GameSettings.NONHOSTILE_GREEN_NPC;
         blueNonhostileNPCSpawn = GameSettings.NONHOSTILE_BLUE_NPC;
+        
+        //Max Npc Size
+        float npcSize = GameSettings.NPC_SIZE;
 
+        if (npcSize > 0.4f)
+            npcSize = 0.4f;
+        
         float screenX, screenZ, screenY;
         Vector3 pos;
 
@@ -84,6 +89,7 @@ public class SpawnManager : NetworkSingleton<SpawnManager>
             {
                 //Debug.Log("Collision");
                 spawnPool[0].name = $"BlueNonHostileNPC {i}";
+                spawnPool[0].transform.localScale = new Vector3(npcSize, npcSize, npcSize);
                 GameObject go = Instantiate(spawnPool[0], pos, Quaternion.identity);
                 go.GetComponent<NetworkObject>().Spawn();
             }
@@ -101,6 +107,7 @@ public class SpawnManager : NetworkSingleton<SpawnManager>
             {
                 //Debug.Log("Collision");
                 spawnPool[2].name = $"GreenNonHostileNPC {i}";
+                spawnPool[2].transform.localScale = new Vector3(npcSize, npcSize, npcSize);
                 GameObject go = Instantiate(spawnPool[2], pos, Quaternion.identity);
                 go.GetComponent<NetworkObject>().Spawn();
             }
@@ -118,6 +125,7 @@ public class SpawnManager : NetworkSingleton<SpawnManager>
             {
                 //Debug.Log("Collision");
                 spawnPool[1].name = $"HostileNPC {i}";
+                spawnPool[1].transform.localScale = new Vector3(npcSize, npcSize, npcSize);
                 GameObject go = Instantiate(spawnPool[1], pos, Quaternion.identity);
                 go.GetComponent<NetworkObject>().Spawn();
             }

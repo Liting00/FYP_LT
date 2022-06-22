@@ -130,7 +130,7 @@ Transform:
   m_GameObject: {fileID: 6293373926139062098}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_Children:
   - {fileID: 343838291476193923}
   - {fileID: 5119681931839610369}
@@ -269,6 +269,7 @@ MonoBehaviour:
   moveSpeed: 0.25
   rotSpeed: 100
   objToSpawn: {fileID: 6293373926139062098}
+  infectionSphere: {fileID: 6011439659986223590}
 --- !u!114 &3077482549083413706
 MonoBehaviour:
   m_ObjectHideFlags: 0

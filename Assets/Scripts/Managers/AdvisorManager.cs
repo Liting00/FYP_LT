@@ -16,7 +16,7 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
     private AdvisorAgent selectedAgent;
 
     private float update = 0f;
-    private float nextUpdatedTime = 0.5f;
+    private float nextUpdatedTime = GameSettings.ADVISOR_UPDATE_TIME;
 
     internal List<GameObject> highlightedNPCs = new List<GameObject>();
 
@@ -177,7 +177,12 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
                 biasCounter++;
             }
         }
-        if (biasCounter >= 1)
+        if(highlightedNPCs.Count == 1 && highlightedNPCs[0].name.Contains("Hostile"))
+        {
+            insertAdvise(AdvisorAdvice.Shoot);
+            updateAdviseClientRpc(AdvisorAdvice.Shoot);
+        }
+        else if (biasCounter >= 1)
         {
             insertAdvise(AdvisorAdvice.Shoot);
             updateAdviseClientRpc(AdvisorAdvice.Shoot);
@@ -197,15 +202,23 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
     {
         int biasCounter = 0;
 
-        foreach (GameObject npc in highlightedNPCs)
+        foreach (GameObject npc in TargetController.Instance.highlightedNPCs)
         {
             if (npc == null)
-                break;
+                continue;
 
-            if (npc.name.Contains("Blue"))
+            if (npc.name.Contains("Blue") && !npc.name.Contains("Infected"))
+            {
+                //Debug.Log(npc.name);
                 biasCounter++;
+            }
         }
-        if (biasCounter >= 1)
+        if (highlightedNPCs.Count == 1 && highlightedNPCs[0].name.Contains("Hostile"))
+        {
+            insertAdvise(AdvisorAdvice.Shoot);
+            updateAdviseClientRpc(AdvisorAdvice.Shoot);
+        }
+        else if (biasCounter >= 1)
         {
             insertAdvise(AdvisorAdvice.Shoot);
             updateAdviseClientRpc(AdvisorAdvice.Shoot);
@@ -274,13 +287,13 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
         string advise;
 
         if (advisorAdvice == AdvisorAdvice.NoAdvice)
-            advise = "No Advise";
+            advise = GameSettings.NO_ADVISE_TEXT;
         else if (advisorAdvice == AdvisorAdvice.Pass)
-            advise = "Pass";
+            advise = GameSettings.GREEN_BUTTON_TEXT;
         else if (advisorAdvice == AdvisorAdvice.Shoot)
-            advise = "Shoot";
+            advise = GameSettings.RED_BUTTON_TEXT;
         else
-            advise = "No Advise";
+            advise = GameSettings.NO_ADVISE_TEXT;
 
         return advise;
     }

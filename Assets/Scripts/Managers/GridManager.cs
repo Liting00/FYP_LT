@@ -8,8 +8,6 @@ public class GridManager : NetworkSingleton<GridManager>
 {
     public static GridManager Instance;
 
-    [SerializeField] private int _width, _height;
-
     [SerializeField] private Tile _tilePrefab;
 
     [SerializeField] private Transform _cam;
@@ -29,9 +27,9 @@ public class GridManager : NetworkSingleton<GridManager>
 
     private void spawnTiles()
     {
-        for (int x = 0; x < _width; x++)
+        for (int x = 0; x < GameSettings.WIDTH; x++)
         {
-            for (int z = 0; z < _height; z++)
+            for (int z = 0; z < GameSettings.HEIGHT; z++)
             {
                 var spawnedTile = Instantiate(_tilePrefab, new Vector3(x, 0f, z), Quaternion.identity);
                 spawnedTile.name = $"Tile {x} {z}";
