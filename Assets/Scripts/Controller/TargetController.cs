@@ -20,8 +20,6 @@ public class TargetController : NetworkSingleton<TargetController>
 
     internal GameObject selectedTile;
 
-    private GameObject previousTile;
-
     internal bool changeTarget = false;
     internal bool destroy = false;
 
@@ -30,7 +28,7 @@ public class TargetController : NetworkSingleton<TargetController>
     private float nextUpdatedTime = 0.1f;
     private bool enableUpdate = false;
    
-    public Material material;
+    public Material[] material;
     /*void UpdateTarget()
     {
         //Debug.Log("Start Target");
@@ -114,15 +112,16 @@ public class TargetController : NetworkSingleton<TargetController>
         //colour all the tiles to black
         foreach (GameObject tile in tiles)
         {
-            tile.GetComponent<Renderer>().material = material;
+            tile.GetComponent<Renderer>().material = material[GameSettings.TILE_SELECT];
         }
 
+        //highlight selected Tile
         foreach (GameObject tile in collidedTile)
         {
             if (tile.transform.position.x >= npcPosX && tile.transform.position.x <= npcPosX + 1f
                 && tile.transform.position.z >= npcPosZ && tile.transform.position.z <= npcPosZ + 1f)
             {
-                tile.GetComponent<Renderer>().material.color = Color.gray;
+                tile.GetComponent<Renderer>().material.color = Color.red;
                 selectedTile = tile;
                 return;
             }
@@ -136,7 +135,7 @@ public class TargetController : NetworkSingleton<TargetController>
         //colour all the tiles to black
         foreach (GameObject tile in tiles)
         {
-            tile.GetComponent<Renderer>().material = material;
+            tile.GetComponent<Renderer>().material = material[GameSettings.TILE_SELECT];
         }
 
         hostileNPCS = GameObject.FindGameObjectsWithTag(npc);
@@ -209,7 +208,7 @@ public class TargetController : NetworkSingleton<TargetController>
             return;
 
         //TODO: Cannot make Collision Work
-        Destroy(selectedNPC);
+        Destroy(selectedNPC.gameObject);
         SpawnManager.Instance.addInfected(-1);
 
         foreach (GameObject npc in highlightedNPCs)

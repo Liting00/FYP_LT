@@ -36,6 +36,6 @@ public static class GameSettings
     //Min: 0f to Max: 0.4f
     public static float NPC_SIZE = 0.18f;
 
-    public static int BACKGROUND_SELECT = 1;
-    public static int GRID_SELECT = 1;
+    public static int BACKGROUND_SELECT = 0;
+    public static int TILE_SELECT = 2;
 }

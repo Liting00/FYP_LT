@@ -177,7 +177,7 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
                 biasCounter++;
             }
         }
-        if(highlightedNPCs.Count == 1 && highlightedNPCs[0].name.Contains("Hostile") && highlightedNPCs[0] != null)
+        if(highlightedNPCs.Count == 1 && highlightedNPCs[0].name.Contains("Hostile") && highlightedNPCs[0].gameObject != null)
         {
             insertAdvise(AdvisorAdvice.Shoot);
             updateAdviseClientRpc(AdvisorAdvice.Shoot);
@@ -213,7 +213,7 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
                 biasCounter++;
             }
         }
-        if (highlightedNPCs.Count == 1 && highlightedNPCs[0].name.Contains("Hostile"))
+        if (highlightedNPCs.Count == 1 && highlightedNPCs[0].name.Contains("Hostile") && highlightedNPCs[0] != null)
         {
             insertAdvise(AdvisorAdvice.Shoot);
             updateAdviseClientRpc(AdvisorAdvice.Shoot);
@@ -242,7 +242,7 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
         foreach (GameObject npc in highlightedNPCs)
         {
             if (npc == null)
-                break;
+                continue;
 
             if (npc.name.Contains("Green"))
                 biasCounter++;
@@ -266,7 +266,7 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
         foreach (GameObject npc in highlightedNPCs)
         {
             if (npc == null)
-                break;
+                continue;
 
             if (npc.name.Contains("Blue"))
                 biasCounter++;
