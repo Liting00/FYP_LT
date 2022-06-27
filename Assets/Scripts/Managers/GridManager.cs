@@ -8,9 +8,10 @@ public class GridManager : NetworkSingleton<GridManager>
 {
     public static GridManager Instance;
 
-    [SerializeField] private Tile _tilePrefab;
+    [SerializeField] 
+    private Tile tilePrefab;
 
-    [SerializeField] private Transform _cam;
+    [SerializeField] private Transform cam;
 
     private void Awake()
     {
@@ -27,21 +28,48 @@ public class GridManager : NetworkSingleton<GridManager>
 
     private void spawnTiles()
     {
-        for (int x = 0; x < GameSettings.WIDTH; x++)
+        //Plane Size is 10 x 10 unit mesh
+        float tileSizeInstance, tileSize;
+
+        if (GameSettings.TILE_SIZE > 1f)
         {
-            for (int z = 0; z < GameSettings.HEIGHT; z++)
+            tileSizeInstance = 1f/10;
+            tileSize = 1f;
+        }
+        else
+        {
+            tileSizeInstance = GameSettings.TILE_SIZE / 10;
+            tileSize = GameSettings.TILE_SIZE;
+        }
+        
+        tilePrefab.transform.localScale = new Vector3(tileSizeInstance, tileSizeInstance, tileSizeInstance);
+        float x = 0;
+        while(x <= GameSettings.WIDTH - 1)
+        {
+            float z = 0;
+            while(z <= GameSettings.HEIGHT - 1)
             {
-                var spawnedTile = Instantiate(_tilePrefab, new Vector3(x, 0f, z), Quaternion.identity);
-                spawnedTile.name = $"Tile {x} {z}";
+                var spawnedTile = Instantiate(tilePrefab, new Vector3(x, 0f, z), Quaternion.identity);
+                spawnedTile.name = $"Tile {x}, {z}";
 
                 //even and odd colouring
-                var isOffset = (x + z) % 2 == 1;
+                //var isOffset = (x + z) % 2 == 1;
 
-                spawnedTile.Init(isOffset);
+                //spawnedTile.Init(isOffset);
                 spawnedTile.GetComponent<NetworkObject>().Spawn();
+                z = z + tileSize;
+                z = (float)(Mathf.Round(z * 100) / 100.0);
+                if (z > GameSettings.HEIGHT - 1f)
+                    break;
             }
+            x = x + tileSize;
+            x = (float)(Mathf.Round(x * 100) / 100.0);
+            //if (x > GameSettings.WIDTH - 1f)
+             //   break;
         }
         //move camera (offset)
-        //_cam.transform.position = new Vector3((float)_width / 2 - 3.5f, (float)_height / 2 - 0.5f, -10);
+        float camX = 9f;
+        float camY = 12.5f + (1f - GameSettings.TILE_SIZE);
+        cam.transform.position = new Vector3(camX, camY, 4.5f);
     }
 }

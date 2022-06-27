@@ -20,6 +20,9 @@ public class HostileNPC : BasedNPC
 
         Vector3 sizeChange = new Vector3(GameSettings.INFECTION_RADIUS, GameSettings.INFECTION_RADIUS, GameSettings.INFECTION_RADIUS);
         infectionSphere.transform.localScale = sizeChange;
+
+        CapsuleCollider myCollider = transform.GetComponent<CapsuleCollider>();
+        myCollider.radius = GameSettings.NPC_SIZE;
     }
     void Update()
     {

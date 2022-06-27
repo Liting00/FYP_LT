@@ -177,7 +177,7 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
                 biasCounter++;
             }
         }
-        if(highlightedNPCs.Count == 1 && highlightedNPCs[0].name.Contains("Hostile"))
+        if(highlightedNPCs.Count == 1 && highlightedNPCs[0].name.Contains("Hostile") && highlightedNPCs[0] != null)
         {
             insertAdvise(AdvisorAdvice.Shoot);
             updateAdviseClientRpc(AdvisorAdvice.Shoot);
