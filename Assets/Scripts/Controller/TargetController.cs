@@ -180,7 +180,6 @@ public class TargetController : NetworkSingleton<TargetController>
             if (tile.transform.position.x >= npcPosX && tile.transform.position.x <= npcPosX + 1f 
                 && tile.transform.position.z >= npcPosZ && tile.transform.position.z <= npcPosZ + 1f)
             {
-                Debug.Log("Red");
                 tile.GetComponent<Renderer>().material.color = Color.red;
                 selectedTile = tile;
                 targetClientRpc(npcPosX, npcPosZ);
