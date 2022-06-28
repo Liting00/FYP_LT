@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6452717201050515858}
   - component: {fileID: -7840894821540373925}
-  - component: {fileID: 5063877841079358571}
+  - component: {fileID: -3572251949224278295}
   - component: {fileID: 5064546702055797418}
   - component: {fileID: -2665386383841270115}
   - component: {fileID: -5682319749816206391}
@@ -32,7 +32,7 @@ Transform:
   m_GameObject: {fileID: 3068607382238777087}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
   m_Children:
   - {fileID: 4339733757093795259}
   m_Father: {fileID: 0}
@@ -52,8 +52,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _renderer: {fileID: -2665386383841270115}
   _highlight: {fileID: 7165960591852914825}
-  tileCollisionScript: {fileID: 5063877841079358571}
---- !u!114 &5063877841079358571
+  material:
+  - {fileID: 2100000, guid: 57affabf9cc8f1443a25f2ff280d83a8, type: 2}
+  - {fileID: 2100000, guid: e429c8ff9e485574b8aa09ee44b4da19, type: 2}
+  - {fileID: 2100000, guid: 3a5e74c1ed8337d4cbfafd0490ba8951, type: 2}
+  - {fileID: 2100000, guid: 99c80548b1df7044281ddaed1d658ead, type: 2}
+  - {fileID: 2100000, guid: 5ffe771db4b6b1a4babbbb27cd18facc, type: 2}
+  - {fileID: 2100000, guid: b747383878001c94dbaf7aa522f19c05, type: 2}
+  - {fileID: 2100000, guid: 7566f004765b64046b3b33e2c3513c6e, type: 2}
+  - {fileID: 2100000, guid: c3c8b2e7507849f43a31e15b9d7c3dc2, type: 2}
+  - {fileID: 2100000, guid: 98e3d348c55e6a244b34dd502d9ed4cc, type: 2}
+  - {fileID: 2100000, guid: 0744bcab18e19e444b1498ebfd1b47b1, type: 2}
+--- !u!114 &-3572251949224278295
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

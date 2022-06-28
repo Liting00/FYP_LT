@@ -7,7 +7,7 @@ public class TileCollision : MonoBehaviour
     //script
     [SerializeField] Tile tileScript;
 
-    private List<GameObject> collidedNpcs = new List<GameObject>();
+    internal List<GameObject> collidedNpcs = new List<GameObject>();
 
     /*private void OnMouseEnter()
     {

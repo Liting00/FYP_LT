@@ -8,9 +8,18 @@ public class Tile : MonoBehaviour
     [SerializeField] protected MeshRenderer _renderer;
     [SerializeField] internal GameObject _highlight;
 
+    public Material[] material;
     //script
-    [SerializeField] internal TileCollision tileCollisionScript;
+    //[SerializeField] internal TileCollision tileCollisionScript;
 
+    private void Start()
+    {
+        GetComponent<Renderer>().material = material[GameSettings.TILE_SELECT];
+    }
+    public void changeMaterial()
+    {
+        GetComponent<Renderer>().material = material[GameSettings.TILE_SELECT];
+    }
     public void Init(bool isOffset)
     {
         //not used
@@ -43,4 +52,13 @@ public class Tile : MonoBehaviour
         else
             _highlight.SetActive(false);
     }
+    public void redHighlight(bool onHighlight)
+    {
+        if (onHighlight == true)
+            GetComponent<Renderer>().material.color = Color.red;
+        else
+            GetComponent<Renderer>().material = material[GameSettings.TILE_SELECT];
+
+    }
+
 }

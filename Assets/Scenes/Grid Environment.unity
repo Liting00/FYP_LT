@@ -4860,6 +4860,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ffe328f46b631141b7f7f4b60048018, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tileScript: {fileID: -7840894821540373925, guid: 071c993cbd28d364396aa2bfc4536b9d, type: 3}
   material:
   - {fileID: 2100000, guid: 57affabf9cc8f1443a25f2ff280d83a8, type: 2}
   - {fileID: 2100000, guid: e429c8ff9e485574b8aa09ee44b4da19, type: 2}

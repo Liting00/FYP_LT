@@ -18,6 +18,9 @@ public class TargetController : NetworkSingleton<TargetController>
     internal List<GameObject> highlightedNPCs = new List<GameObject>();
     internal List<GameObject> collidedTile = new List<GameObject>();
 
+    [SerializeField]
+    Tile tileScript;
+
     internal GameObject selectedTile;
 
     internal bool changeTarget = false;
@@ -112,7 +115,7 @@ public class TargetController : NetworkSingleton<TargetController>
         //colour all the tiles to black
         foreach (GameObject tile in tiles)
         {
-            tile.GetComponent<Renderer>().material = material[GameSettings.TILE_SELECT];
+            tile.GetComponent<Tile>().redHighlight(false);
         }
 
         //highlight selected Tile
@@ -121,7 +124,7 @@ public class TargetController : NetworkSingleton<TargetController>
             if (tile.transform.position.x >= npcPosX && tile.transform.position.x <= npcPosX + 1f
                 && tile.transform.position.z >= npcPosZ && tile.transform.position.z <= npcPosZ + 1f)
             {
-                tile.GetComponent<Renderer>().material.color = Color.red;
+                tile.GetComponent<Tile>().redHighlight(true);
                 selectedTile = tile;
                 return;
             }
@@ -132,10 +135,11 @@ public class TargetController : NetworkSingleton<TargetController>
         //don't run if your advisor
         if (!IsOwner) return;
 
-        //colour all the tiles to black
+        //colour all the tiles back
         foreach (GameObject tile in tiles)
         {
-            tile.GetComponent<Renderer>().material = material[GameSettings.TILE_SELECT];
+            //tile.GetComponent<Renderer>().material = material[GameSettings.TILE_SELECT];
+            tile.GetComponent<Tile>().redHighlight(false);
         }
 
         hostileNPCS = GameObject.FindGameObjectsWithTag(npc);
@@ -179,19 +183,13 @@ public class TargetController : NetworkSingleton<TargetController>
             if (tile.transform.position.x >= npcPosX && tile.transform.position.x <= npcPosX + 1f 
                 && tile.transform.position.z >= npcPosZ && tile.transform.position.z <= npcPosZ + 1f)
             {
-                tile.GetComponent<Renderer>().material.color = Color.red;
+                //tile.GetComponent<Renderer>().material.color = Color.red;
+                tile.GetComponent<Tile>().redHighlight(true);
                 selectedTile = tile;
                 targetClientRpc(npcPosX, npcPosZ);
                 break;
             }
         }
-        //TODO: Cannot make Collision Work
-        /*if (previousTile != selectedTile)
-        {
-            highlightedNPCs.Clear();
-            previousTile = selectedTile;
-            Debug.Log("Clear");
-        }*/
         /*
         foreach (GameObject o in GameObject.FindGameObjectsWithTag("NonHostileNPC"))
         {
