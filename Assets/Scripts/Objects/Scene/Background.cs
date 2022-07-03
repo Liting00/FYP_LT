@@ -10,10 +10,8 @@ public class Background : MonoBehaviour
     public GameObject backgroundPlane;
 
     // Use this for initialization
-    void Start()
+    void Awake()
     {
-        //backgroundPlane.GetComponent<Renderer>().material = material[GameSettings.BACKGROUND_SELECT];
+        backgroundPlane.GetComponent<Renderer>().material = material[GameSettings.BACKGROUND_SELECT];
     }
-
-
 }

@@ -165,19 +165,25 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
     private void GreenBiasTrigger()
     {
         int biasCounter = 0;
+        bool onlyHostileNpc = false;
 
         foreach (GameObject npc in TargetController.Instance.highlightedNPCs)
         {
             if (npc == null)
                 continue;
-
-            if (npc.name.Contains("Green") && !npc.name.Contains("Infected"))
+            if(npc.name.Contains("Hostile") && !npc.name.Contains("Non"))
+            {
+                onlyHostileNpc = true;
+                Debug.Log("True");
+            }
+            if (npc.name.Contains("Green"))
             {
                 //Debug.Log(npc.name);
                 biasCounter++;
+                onlyHostileNpc = false;
             }
         }
-        if(highlightedNPCs.Count == 1 && highlightedNPCs[0].gameObject != null && highlightedNPCs[0].name.Contains("Hostile"))
+        if(onlyHostileNpc)
         {
             insertAdvise(AdvisorAdvice.Shoot);
             updateAdviseClientRpc(AdvisorAdvice.Shoot);
@@ -186,11 +192,6 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
         {
             insertAdvise(AdvisorAdvice.Shoot);
             updateAdviseClientRpc(AdvisorAdvice.Shoot);
-        }
-        else if(SpawnManager.Instance.Infected <= 1)
-        {
-            insertAdvise(AdvisorAdvice.NoAdvice);
-            updateAdviseClientRpc(AdvisorAdvice.NoAdvice);
         }
         else
         {

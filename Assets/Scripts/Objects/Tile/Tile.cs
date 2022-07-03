@@ -11,8 +11,7 @@ public class Tile : MonoBehaviour
     public Material[] material;
     //script
     //[SerializeField] internal TileCollision tileCollisionScript;
-
-    private void Start()
+    private void Awake()
     {
         GetComponent<Renderer>().material = material[GameSettings.TILE_SELECT];
     }
@@ -60,5 +59,4 @@ public class Tile : MonoBehaviour
             GetComponent<Renderer>().material = material[GameSettings.TILE_SELECT];
 
     }
-
 }

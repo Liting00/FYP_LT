@@ -23,7 +23,7 @@ public class TileCollision : MonoBehaviour
         if(other.gameObject.tag == "HostileNPC")
         {
             TargetController.Instance.collidedTile.Add(gameObject);
-            Debug.Log(gameObject.name + " hit!");
+            //Debug.Log(gameObject.name + " hit!");
         }
         //TODO: Cannot make Collision Work
         if (other.gameObject.tag == "NonHostileNPC" || other.gameObject.tag == "HostileNPC")

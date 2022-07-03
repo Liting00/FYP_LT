@@ -76,6 +76,8 @@ public class TargetController : NetworkSingleton<TargetController>
         spawnManager = SManager.GetComponent<SpawnManager>();
     }*/
     // Update is called once per frame
+
+    //TODO: Add Hotkey
     void Update()
     {
         if (enableUpdate == false) return;

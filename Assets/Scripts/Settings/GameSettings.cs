@@ -11,8 +11,8 @@ public static class GameSettings
     public static int HEIGHT = 10;
 
     //Number of Spawns
-    public static int NONHOSTILE_GREEN_NPC = 50;
-    public static int NONHOSTILE_BLUE_NPC = 50;
+    public static int NONHOSTILE_GREEN_NPC = 100;
+    public static int NONHOSTILE_BLUE_NPC = 100;
     public static int HOSTILE_NPC = 4;
 
     //Advisor Text
@@ -26,7 +26,7 @@ public static class GameSettings
     //Recommended from 2f to 15f
     public static float INFECTION_RADIUS = 8f;
     //Max is 1f
-    public static float INFECTION_RATE = 0.5f;
+    public static float INFECTION_RATE = 0.20f;
     public static float INFECTION_INTERVAL_MIN = 5f;
     public static float INFECTION_INTERVAL_MAX = 10f;
 
