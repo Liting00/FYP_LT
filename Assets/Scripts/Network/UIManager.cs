@@ -64,7 +64,7 @@ public class UIManager : NetworkSingleton<UIManager>
     private void Update()
     {
         playersInGameText.text = $"Player in Game: {PlayerManager.Instance.PlayerInGame}";
-        joinCodeText.text = PlayerManager.Instance.JoinCode;
+        joinCodeText.text = RelayManager.Instance.JoinCode;
     }
     private void Start()
     {

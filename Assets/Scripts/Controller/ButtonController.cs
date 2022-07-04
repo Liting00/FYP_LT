@@ -39,31 +39,28 @@ public class ButtonController : MonoBehaviour
         {
             TargetController.Instance.destroyTarget();
             TargetController.Instance.changeTarget = true;
-            string advise = AdvisorManager.Instance.Advise(AdvisorManager.AdvisorAdvice.NoAdvice);
-            AdvisorManager.Instance.insertAdvise(AdvisorManager.AdvisorAdvice.NoAdvice);
-            AdvisorManager.Instance.updateAdviseClientRpc(AdvisorManager.AdvisorAdvice.NoAdvice);
+            //string advise = AdvisorManager.Instance.Advise(AdvisorAdvice.NoAdvice);
+            AdvisorManager.Instance.insertAdvise(AdvisorAdvice.NoAdvice);
+            AdvisorManager.Instance.updateAdviseClientRpc(AdvisorAdvice.NoAdvice);
             Debug.Log("Player Shoot Button pressed");
         }
         if (buttonPressed == playerPassButton)
         {
             TargetController.Instance.changeTarget = true;
-            string advise = AdvisorManager.Instance.Advise(AdvisorManager.AdvisorAdvice.NoAdvice);
-            AdvisorManager.Instance.insertAdvise(AdvisorManager.AdvisorAdvice.NoAdvice);
-            AdvisorManager.Instance.updateAdviseClientRpc(AdvisorManager.AdvisorAdvice.NoAdvice);
+            AdvisorManager.Instance.insertAdvise(AdvisorAdvice.NoAdvice);
+            AdvisorManager.Instance.updateAdviseClientRpc(AdvisorAdvice.NoAdvice);
             Debug.Log("Player Pass Button pressed");
         }
         if (buttonPressed == advisorShootButton)
         {
-            string advise = AdvisorManager.Instance.Advise(AdvisorManager.AdvisorAdvice.Shoot);
-            AdvisorManager.Instance.insertAdvise(AdvisorManager.AdvisorAdvice.Shoot);
-            AdvisorManager.Instance.updateAdviseTextServerRpc(AdvisorManager.AdvisorAdvice.Shoot);
+            AdvisorManager.Instance.insertAdvise(AdvisorAdvice.Shoot);
+            AdvisorManager.Instance.updateAdviseTextServerRpc(AdvisorAdvice.Shoot);
             Debug.Log("Advisor Shoot Button pressed");
         }
         if (buttonPressed == advisorPassButton)
         {
-            string advise = AdvisorManager.Instance.Advise(AdvisorManager.AdvisorAdvice.Pass);
-            AdvisorManager.Instance.insertAdvise(AdvisorManager.AdvisorAdvice.Pass);
-            AdvisorManager.Instance.updateAdviseTextServerRpc(AdvisorManager.AdvisorAdvice.Pass);
+            AdvisorManager.Instance.insertAdvise(AdvisorAdvice.Pass);
+            AdvisorManager.Instance.updateAdviseTextServerRpc(AdvisorAdvice.Pass);
             Debug.Log("Advisor Pass Button pressed");
         }
     }

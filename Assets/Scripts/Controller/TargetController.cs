@@ -137,7 +137,7 @@ public class TargetController : NetworkSingleton<TargetController>
         //don't run if your advisor
         if (!IsOwner) return;
 
-        //colour all the tiles back
+        //colour all the tiles back to normal
         foreach (GameObject tile in tiles)
         {
             //tile.GetComponent<Renderer>().material = material[GameSettings.TILE_SELECT];
@@ -158,10 +158,10 @@ public class TargetController : NetworkSingleton<TargetController>
         if (changeTarget == true)
         {
             Debug.Log("Change Target");
-            string previousNPCName = "";
+            string previousNpcName = "";
 
             if (selectedNPC != null)
-                previousNPCName = selectedNPC.name;
+                previousNpcName = selectedNPC.name;
 
             do
             {
@@ -169,7 +169,7 @@ public class TargetController : NetworkSingleton<TargetController>
                 if (hostileNPCS.Length == 1)
                     break;
             }
-            while (string.Compare(previousNPCName, selectedNPC.name) == 0);
+            while (string.Compare(previousNpcName, selectedNPC.name) == 0);
 
             changeTarget = false;
         }
@@ -207,22 +207,17 @@ public class TargetController : NetworkSingleton<TargetController>
         if (hostileNPCS.Length == 0)
             return;
 
-        //TODO: Cannot make Collision Work
-        Destroy(selectedNPC.gameObject);
-        SpawnManager.Instance.addInfected(-1);
-
         foreach (GameObject npc in highlightedNPCs)
         {
             if (npc == null)
                 continue;
 
-            Debug.Log(npc.name);
-
             if (npc.name.Contains("Non"))
                 SpawnManager.Instance.addNonInfected(-1);
             else
                 SpawnManager.Instance.addInfected(-1);
-            
+
+            //Debug.Log(npc.name);
             Destroy(npc.gameObject);
         }
 

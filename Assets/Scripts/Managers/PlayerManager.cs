@@ -16,13 +16,6 @@ public class PlayerManager : NetworkSingleton<PlayerManager>
             return playersInGame.Value;
         }
     }
-    public string JoinCode
-    {
-        get
-        {
-            return RelayManager.Instance.joinCode;
-        }
-    }
     public void addPlayerInGame(int value)
     {
         playersInGame.Value = playersInGame.Value + value;

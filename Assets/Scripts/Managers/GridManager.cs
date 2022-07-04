@@ -72,4 +72,8 @@ public class GridManager : NetworkSingleton<GridManager>
         float camY = 12.5f + (1f - GameSettings.TILE_SIZE);
         cam.transform.position = new Vector3(camX, camY, 4.5f);
     }
+    public void deSpawnTiles()
+    {
+
+    }
 }

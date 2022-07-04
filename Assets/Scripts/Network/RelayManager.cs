@@ -18,12 +18,20 @@ public class RelayManager : Singleton<RelayManager>
     [SerializeField]
     private int maxConnection = 2;
 
-    internal string joinCode;
+    private string joinCode;
 
     public bool isRelayEnabled => Transport != null &&
         Transport.Protocol == UnityTransport.ProtocolType.RelayUnityTransport;
 
     public UnityTransport Transport => NetworkManager.Singleton.gameObject.GetComponent<UnityTransport>();
+
+    public string JoinCode
+    {
+        get
+        {
+            return joinCode;
+        }
+    }
 
     public async Task<RelayHostData> SetupRelay()
     {

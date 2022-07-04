@@ -42,6 +42,7 @@ public class SpawnManager : NetworkSingleton<SpawnManager>
     public void addInfected(int value)
     {
         infected.Value = infected.Value + value;
+        Debug.Log("Infected Left: " + infected.Value);
     }
     public void addNonInfected(int value)
     {
@@ -132,5 +133,9 @@ public class SpawnManager : NetworkSingleton<SpawnManager>
             else
                 i--;
         }
+    }
+    public void degenerateSpawns()
+    {
+
     }
 }

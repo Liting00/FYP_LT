@@ -167,14 +167,20 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
         int biasCounter = 0;
         bool onlyHostileNpc = false;
 
+        if(SpawnManager.Instance.Infected == 0)
+        {
+            insertAdvise(AdvisorAdvice.NoAdvice);
+            return;
+        }
+
         foreach (GameObject npc in TargetController.Instance.highlightedNPCs)
         {
             if (npc == null)
                 continue;
+
             if(npc.name.Contains("Hostile") && !npc.name.Contains("Non"))
             {
                 onlyHostileNpc = true;
-                Debug.Log("True");
             }
             if (npc.name.Contains("Green"))
             {
@@ -183,6 +189,7 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
                 onlyHostileNpc = false;
             }
         }
+        //true if the tile only has a Hostile Npc
         if(onlyHostileNpc)
         {
             insertAdvise(AdvisorAdvice.Shoot);
@@ -283,7 +290,7 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
             updateAdviseClientRpc(AdvisorAdvice.Pass);
         }
     }
-    public string Advise(AdvisorAdvice advisorAdvice)
+    private string Advise(AdvisorAdvice advisorAdvice)
     {
         string advise;
 
@@ -298,20 +305,19 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
 
         return advise;
     }
-    public enum AdvisorAgent
-    {
-        Pacifist = 0,
-        Trigger = 1,
-        GreenBiasTrigger = 2,
-        BlueBiasTrigger = 3,
-        GreenNpcCollection = 4,
-        BlueNpcCollection = 5
-    }
-    public enum AdvisorAdvice
-    {
-        Pass,
-        Shoot,
-        NoAdvice
-    }
-    
+}
+public enum AdvisorAgent
+{
+    Pacifist = 0,
+    Trigger = 1,
+    GreenBiasTrigger = 2,
+    BlueBiasTrigger = 3,
+    GreenNpcCollection = 4,
+    BlueNpcCollection = 5
+}
+public enum AdvisorAdvice
+{
+    Pass,
+    Shoot,
+    NoAdvice
 }
