@@ -28,9 +28,10 @@ public class GridManager : NetworkSingleton<GridManager>
 
     private void spawnTiles()
     {
-        //Plane Size is 10 x 10 unit mesh
+        //Note: Plane Object Size is 10 x 10 of a object 
         float tileSizeInstance, tileSize;
 
+        //Set limit
         if (GameSettings.TILE_SIZE > 1f)
         {
             tileSizeInstance = 1f/10;
@@ -72,8 +73,14 @@ public class GridManager : NetworkSingleton<GridManager>
         float camY = 12.5f + (1f - GameSettings.TILE_SIZE);
         cam.transform.position = new Vector3(camX, camY, 4.5f);
     }
-    public void deSpawnTiles()
+    public void despawnTiles()
     {
+        foreach(GameObject tile in GameObject.FindGameObjectsWithTag("Tile"))
+        {
+            if (tile == null)
+                continue;
 
+            Destroy(tile.gameObject);
+        }
     }
 }

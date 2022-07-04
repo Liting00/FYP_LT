@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
 
     private bool gamestart = false;
 
+    public int NumberOfGames { get; set; }
+
     private void Update()
     {
         if (!gamestart)
@@ -59,12 +61,23 @@ public class GameManager : MonoBehaviour
     {
         if (SpawnManager.Instance.Infected == 0)
         {
-            ChangeState(GameState.SpawnNPC);
+            ChangeState(GameState.RoundOver);
         }
     }
     private void roundOver()
     {
-        //foreach()
+        gamestart = false;
+
+        //delay the game end in N sec
+        StartCoroutine(LoadFinishGameAsynchronously());
+    }
+    IEnumerator LoadFinishGameAsynchronously()
+    {
+        yield return new WaitForSeconds(GameSettings.ENDGAME_DELAY);
+
+        SpawnManager.Instance.despawnNpcs();
+        GridManager.Instance.despawnTiles();
+        UIManager.Instance.roundOver();
     }
 }
 

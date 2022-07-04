@@ -10,6 +10,8 @@ namespace Assets.Scripts.Network
 {
     public class MenuUIManager : NetworkSingleton<MenuUIManager>
     {
+        //TODO: not used
+
         public static MenuUIManager Instance;
 
         [SerializeField]

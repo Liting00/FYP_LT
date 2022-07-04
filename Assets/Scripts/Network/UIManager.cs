@@ -57,6 +57,12 @@ public class UIManager : NetworkSingleton<UIManager>
     [SerializeField]
     private GameObject loadingIcon;
 
+    [SerializeField]
+    private TextMeshProUGUI numGameText;
+
+    [SerializeField]
+    private TextMeshProUGUI playerText;
+
     private void Awake()
     {
         Cursor.visible = true;
@@ -76,6 +82,8 @@ public class UIManager : NetworkSingleton<UIManager>
         playerUI.SetActive(false);
         joinCodeText.gameObject.SetActive(false);
         adviseTextBox.gameObject.SetActive(false);
+        numGameText.gameObject.SetActive(false);
+        playerText.gameObject.SetActive(false);
 
         mainMenu.SetActive(true);
 
@@ -98,6 +106,8 @@ public class UIManager : NetworkSingleton<UIManager>
                 mainMenu.SetActive(false);
                 joinCodeText.gameObject.SetActive(true);
                 startGameButton.gameObject.SetActive(true);
+                numGameText.text = $"Game: {++GameManager.Instance.NumberOfGames}";
+                numGameText.gameObject.SetActive(true);
             }
             else
             {
@@ -160,6 +170,7 @@ public class UIManager : NetworkSingleton<UIManager>
             {
                 startGameButton.gameObject.SetActive(false);
                 joinCodeText.gameObject.SetActive(false);
+                numGameText.gameObject.SetActive(false);
                 Debug.Log("Player Start Game");
 
                 playerStartGame();
@@ -182,5 +193,19 @@ public class UIManager : NetworkSingleton<UIManager>
 
         AdvisorManager.Instance.setAdvisorUIState(true);
         AdvisorManager.Instance.setAdvisorTextBoxState(true);
+    }
+
+    public void roundOver()
+    {
+        //TODO: Might change text
+        playerText.text = "All Hostile are killed";
+        playerText.gameObject.SetActive(true);
+
+        playerUI.gameObject.SetActive(false);
+        adviseTextBox.gameObject.SetActive(false);
+
+        numGameText.text = $"Game: {++GameManager.Instance.NumberOfGames}";
+        numGameText.gameObject.SetActive(true);
+        startGameButton.gameObject.SetActive(true);
     }
 }

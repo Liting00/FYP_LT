@@ -72,8 +72,8 @@ public class HostileNPC : BasedNPC
                 Vector3 spanLoc = npc.transform.position;
                 Quaternion spawnRot = npc.transform.rotation;
 
-                SpawnManager.Instance.addInfected(1);
-                SpawnManager.Instance.addNonInfected(-1);
+                SpawnManager.Instance.NonInfected--;
+                SpawnManager.Instance.Infected++;
 
                 objToSpawn.name = $"Infected {npc.name}";
                 TargetController.Instance.highlightedNPCs.Remove(npc);

@@ -31,6 +31,10 @@ public class SpawnManager : NetworkSingleton<SpawnManager>
         {
             return infected.Value;
         }
+        set
+        {
+            infected.Value = value;
+        }
     }
     public int NonInfected
     {
@@ -38,15 +42,11 @@ public class SpawnManager : NetworkSingleton<SpawnManager>
         {
             return nonInfected.Value;
         }
-    }
-    public void addInfected(int value)
-    {
-        infected.Value = infected.Value + value;
-        Debug.Log("Infected Left: " + infected.Value);
-    }
-    public void addNonInfected(int value)
-    {
-        nonInfected.Value = nonInfected.Value + value;
+        set
+        {
+            nonInfected.Value = value;
+            Debug.Log("Infected: " + infected.Value);
+        }
     }
     private void Awake()
     {
@@ -134,8 +134,22 @@ public class SpawnManager : NetworkSingleton<SpawnManager>
                 i--;
         }
     }
-    public void degenerateSpawns()
+    public void despawnNpcs()
     {
+        Debug.Log("Destroy All NPCs");
+        foreach(GameObject npc in GameObject.FindGameObjectsWithTag("NonHostileNPC"))
+        {
+            if (npc == null)
+                continue;
 
+            Destroy(npc.gameObject);
+        }
+        foreach (GameObject npc in GameObject.FindGameObjectsWithTag("HostileNPC"))
+        {
+            if (npc == null)
+                continue;
+
+            Destroy(npc.gameObject);
+        }
     }
 }

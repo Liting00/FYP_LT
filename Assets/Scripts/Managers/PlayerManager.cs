@@ -24,6 +24,7 @@ public class PlayerManager : NetworkSingleton<PlayerManager>
     {
         playerUI.gameObject.SetActive(state);
     }
+    //TODO: not used
     private void Start()
     {
         Debug.Log("Start Player Manager");

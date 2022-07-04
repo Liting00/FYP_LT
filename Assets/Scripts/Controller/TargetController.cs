@@ -140,6 +140,9 @@ public class TargetController : NetworkSingleton<TargetController>
         //colour all the tiles back to normal
         foreach (GameObject tile in tiles)
         {
+            if (tile == null)
+                continue;
+
             //tile.GetComponent<Renderer>().material = material[GameSettings.TILE_SELECT];
             tile.GetComponent<Tile>().redHighlight(false);
         }
@@ -213,9 +216,9 @@ public class TargetController : NetworkSingleton<TargetController>
                 continue;
 
             if (npc.name.Contains("Non"))
-                SpawnManager.Instance.addNonInfected(-1);
+                SpawnManager.Instance.NonInfected--;
             else
-                SpawnManager.Instance.addInfected(-1);
+                SpawnManager.Instance.Infected--;
 
             //Debug.Log(npc.name);
             Destroy(npc.gameObject);

@@ -38,4 +38,6 @@ public static class GameSettings
 
     public static int BACKGROUND_SELECT = 0;
     public static int TILE_SELECT = 2;
+
+    public static float ENDGAME_DELAY = 1.2f;
 }
