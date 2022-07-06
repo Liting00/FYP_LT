@@ -10,10 +10,4 @@ public class NonHostileNPC : BasedNPC
         CapsuleCollider myCollider = transform.GetComponent<CapsuleCollider>();
         myCollider.radius = GameSettings.NPC_SIZE;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

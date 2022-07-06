@@ -63,6 +63,9 @@ public class UIManager : NetworkSingleton<UIManager>
     [SerializeField]
     private TextMeshProUGUI playerText;
 
+    [SerializeField]
+    private TextMeshProUGUI playerInfoText;
+
     private void Awake()
     {
         Cursor.visible = true;
@@ -71,9 +74,13 @@ public class UIManager : NetworkSingleton<UIManager>
     {
         playersInGameText.text = $"Player in Game: {PlayerManager.Instance.PlayerInGame}";
         joinCodeText.text = RelayManager.Instance.JoinCode;
+
+        if(GameManager.Instance.IsGameStarted)
+            playerInfo();
     }
     private void Start()
     {
+        //Logger.Instance.resetScore();
         mainMenu.SetActive(false);
         advisorMenu.SetActive(false);
         advisorUI.SetActive(false);
@@ -84,6 +91,7 @@ public class UIManager : NetworkSingleton<UIManager>
         adviseTextBox.gameObject.SetActive(false);
         numGameText.gameObject.SetActive(false);
         playerText.gameObject.SetActive(false);
+        playerInfoText.gameObject.SetActive(false);
 
         mainMenu.SetActive(true);
 
@@ -171,6 +179,7 @@ public class UIManager : NetworkSingleton<UIManager>
                 startGameButton.gameObject.SetActive(false);
                 joinCodeText.gameObject.SetActive(false);
                 numGameText.gameObject.SetActive(false);
+                playerText.gameObject.SetActive(false);
                 Debug.Log("Player Start Game");
 
                 playerStartGame();
@@ -185,6 +194,7 @@ public class UIManager : NetworkSingleton<UIManager>
     {
         AdvisorManager.Instance.setAdvisorTextBoxState(true);
         PlayerManager.Instance.setPlayerUIState(true);
+        playerInfoText.gameObject.SetActive(true);
     }
     [ClientRpc]
     private void advisorStartGameClientRpc()
@@ -193,6 +203,7 @@ public class UIManager : NetworkSingleton<UIManager>
 
         AdvisorManager.Instance.setAdvisorUIState(true);
         AdvisorManager.Instance.setAdvisorTextBoxState(true);
+        playerInfoText.gameObject.SetActive(true);
     }
 
     public void roundOver()
@@ -206,6 +217,24 @@ public class UIManager : NetworkSingleton<UIManager>
 
         numGameText.text = $"Game: {++GameManager.Instance.NumberOfGames}";
         numGameText.gameObject.SetActive(true);
-        startGameButton.gameObject.SetActive(true);
+        
+        Logger.Instance.accumlateScore();
+        Logger.Instance.resetScore();
+            
+        if(GameManager.Instance.NumberOfGames < GameSettings.NUMBEROFGAMES)
+            startGameButton.gameObject.SetActive(true);
+    }
+    //Update player Info Text
+    public void playerInfo()
+    {
+        int greenRemove = Logger.Instance.GreenRemove;
+        int blueRemove = Logger.Instance.BlueRemove;
+        int redRemove = Logger.Instance.RedRemove;
+        int infected = Logger.Instance.Infected;
+
+        playerInfoText.text = $"Green Remove: {greenRemove}\n " +
+            $"Blue Remove: {blueRemove}\n " +
+            $"Red Remove: {redRemove}\n " +
+            $"Infected: {infected}";
     }
 }

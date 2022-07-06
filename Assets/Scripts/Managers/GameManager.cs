@@ -32,6 +32,13 @@ public class GameManager : MonoBehaviour
         Instance = this;
         Debug.Log("Game Manager is called");
     }
+    public bool IsGameStarted
+    {
+        get
+        {
+            return gamestart;
+        }
+    }
     public void ChangeState(GameState newState)
     {
         GameState = newState;

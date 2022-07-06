@@ -29,7 +29,7 @@ public class TargetController : NetworkSingleton<TargetController>
     //Update interval
     private float update;
     private float nextUpdatedTime = 0.1f;
-    private bool enableUpdate = false;
+    private bool EnableTargetController { get; set; }
    
     public Material[] material;
     /*void UpdateTarget()
@@ -80,7 +80,7 @@ public class TargetController : NetworkSingleton<TargetController>
     //TODO: Add Hotkey
     void Update()
     {
-        if (enableUpdate == false) return;
+        if (EnableTargetController == false) return;
 
         update += Time.deltaTime;
         if (update > nextUpdatedTime)
@@ -100,7 +100,7 @@ public class TargetController : NetworkSingleton<TargetController>
         tiles = GameObject.FindGameObjectsWithTag(tile);
         hostileNPCS = GameObject.FindGameObjectsWithTag(npc);
         selectedNPC = hostileNPCS[Random.Range(0, hostileNPCS.Length)];
-        enableUpdate = true;
+        EnableTargetController = true;
     }
     [ClientRpc]
     private void updateClientRpc()
@@ -183,6 +183,9 @@ public class TargetController : NetworkSingleton<TargetController>
         //highlight selectedNPC tile
         foreach (GameObject tile in collidedTile)
         {
+            if (tile == null)
+                continue;
+
             //Debug.Log("Tiles " + tile.name);
             //Debug.Log("Selected NPC " + npcPosX + ", " + npcPosZ);
             if (tile.transform.position.x >= npcPosX && tile.transform.position.x <= npcPosX + 1f 
@@ -215,11 +218,22 @@ public class TargetController : NetworkSingleton<TargetController>
             if (npc == null)
                 continue;
 
-            if (npc.name.Contains("Non"))
+            if (npc.name.Contains("GreenNonHostile") && !npc.name.Contains("Infected"))
+            {
+                Logger.Instance.GreenRemove++;
                 SpawnManager.Instance.NonInfected--;
+            }
+            else if(npc.name.Contains("BlueNonHostile") && !npc.name.Contains("Infected"))
+            {
+                Logger.Instance.BlueRemove++;
+                SpawnManager.Instance.NonInfected--;
+            }
             else
+            {
+                Logger.Instance.RedRemove++;
                 SpawnManager.Instance.Infected--;
-
+            }
+                
             //Debug.Log(npc.name);
             Destroy(npc.gameObject);
         }

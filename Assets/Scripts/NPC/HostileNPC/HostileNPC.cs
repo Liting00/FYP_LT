@@ -72,6 +72,7 @@ public class HostileNPC : BasedNPC
                 Vector3 spanLoc = npc.transform.position;
                 Quaternion spawnRot = npc.transform.rotation;
 
+                Logger.Instance.Infected++;
                 SpawnManager.Instance.NonInfected--;
                 SpawnManager.Instance.Infected++;
 

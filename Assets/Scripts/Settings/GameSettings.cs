@@ -40,4 +40,6 @@ public static class GameSettings
     public static int TILE_SELECT = 2;
 
     public static float ENDGAME_DELAY = 1.2f;
+
+    public static int NUMBEROFGAMES = 5;
 }

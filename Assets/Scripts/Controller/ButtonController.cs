@@ -17,6 +17,10 @@ public class ButtonController : MonoBehaviour
     [SerializeField]
     private Button advisorPassButton;
 
+    public AudioSource ShootAudio;
+
+    public AudioSource PassAudio;
+
     private void Awake()
     {
         Debug.Log("Button Controller is called");
@@ -24,6 +28,17 @@ public class ButtonController : MonoBehaviour
     private void Start()
     {
         //GameObject AManager = GameObject.Find("Advisor Manager");
+    }
+    private void Update()
+    {
+        if(Input.GetKeyUp(KeyCode.Space))
+        {
+            PlayerShoot();
+        }
+        if(Input.GetKeyUp(KeyCode.DownArrow) || Input.GetKeyUp(KeyCode.UpArrow) || Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.RightArrow))
+        {
+            PlayerPass();
+        }
     }
     void OnEnable()
     {
@@ -37,31 +52,59 @@ public class ButtonController : MonoBehaviour
     {
         if (buttonPressed == playerShootButton)
         {
-            TargetController.Instance.destroyTarget();
-            TargetController.Instance.changeTarget = true;
-            //string advise = AdvisorManager.Instance.Advise(AdvisorAdvice.NoAdvice);
-            AdvisorManager.Instance.insertAdvise(AdvisorAdvice.NoAdvice);
-            AdvisorManager.Instance.updateAdviseClientRpc(AdvisorAdvice.NoAdvice);
-            Debug.Log("Player Shoot Button pressed");
+            PlayerShoot();
         }
         if (buttonPressed == playerPassButton)
         {
-            TargetController.Instance.changeTarget = true;
-            AdvisorManager.Instance.insertAdvise(AdvisorAdvice.NoAdvice);
-            AdvisorManager.Instance.updateAdviseClientRpc(AdvisorAdvice.NoAdvice);
-            Debug.Log("Player Pass Button pressed");
+            PlayerPass();
         }
         if (buttonPressed == advisorShootButton)
         {
-            AdvisorManager.Instance.insertAdvise(AdvisorAdvice.Shoot);
-            AdvisorManager.Instance.updateAdviseTextServerRpc(AdvisorAdvice.Shoot);
-            Debug.Log("Advisor Shoot Button pressed");
+            AdvisorShoot();
         }
         if (buttonPressed == advisorPassButton)
         {
-            AdvisorManager.Instance.insertAdvise(AdvisorAdvice.Pass);
-            AdvisorManager.Instance.updateAdviseTextServerRpc(AdvisorAdvice.Pass);
-            Debug.Log("Advisor Pass Button pressed");
+            AdvisorPass();
         }
+    }
+    private void PlayerShoot()
+    {
+        if(ShootAudio != null)
+            ShootAudio.Play();
+
+        TargetController.Instance.destroyTarget();
+        TargetController.Instance.changeTarget = true;
+        //string advise = AdvisorManager.Instance.Advise(AdvisorAdvice.NoAdvice);
+        AdvisorManager.Instance.insertAdvise(AdvisorAdvice.NoAdvice);
+        AdvisorManager.Instance.updateAdviseClientRpc(AdvisorAdvice.NoAdvice);
+        Debug.Log("Player Shoot Button pressed");
+    }
+    private void PlayerPass()
+    {
+        if (PassAudio != null)
+            PassAudio.Play();
+
+        TargetController.Instance.changeTarget = true;
+        AdvisorManager.Instance.insertAdvise(AdvisorAdvice.NoAdvice);
+        AdvisorManager.Instance.updateAdviseClientRpc(AdvisorAdvice.NoAdvice);
+        Debug.Log("Player Pass Button pressed");
+    }
+    private void AdvisorShoot()
+    {
+        if (PassAudio != null)
+            PassAudio.Play();
+
+        AdvisorManager.Instance.insertAdvise(AdvisorAdvice.Shoot);
+        AdvisorManager.Instance.updateAdviseTextServerRpc(AdvisorAdvice.Shoot);
+        Debug.Log("Advisor Shoot Button pressed");
+    }
+    private void AdvisorPass()
+    {
+        if (PassAudio != null)
+            PassAudio.Play();
+
+        AdvisorManager.Instance.insertAdvise(AdvisorAdvice.Pass);
+        AdvisorManager.Instance.updateAdviseTextServerRpc(AdvisorAdvice.Pass);
+        Debug.Log("Advisor Pass Button pressed");
     }
 }
