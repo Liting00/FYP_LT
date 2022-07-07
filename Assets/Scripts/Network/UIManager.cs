@@ -220,9 +220,11 @@ public class UIManager : NetworkSingleton<UIManager>
         
         Logger.Instance.accumlateScore();
         Logger.Instance.resetScore();
-            
-        if(GameManager.Instance.NumberOfGames < GameSettings.NUMBEROFGAMES)
+
+        if (GameManager.Instance.NumberOfGames < GameSettings.NUMBEROFGAMES)
             startGameButton.gameObject.SetActive(true);
+        else
+            Debug.Log("TODO");
     }
     //Update player Info Text
     public void playerInfo()

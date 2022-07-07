@@ -161,6 +161,11 @@ public class TargetController : NetworkSingleton<TargetController>
         if (changeTarget == true)
         {
             Debug.Log("Change Target");
+
+            // Artificial Advisor No Advise Message Delay
+            if (GameSettings.ENABLE_CHANGE_TARGET_DEAY)
+                StartCoroutine(changeTargetDelay());
+
             string previousNpcName = "";
 
             if (selectedNPC != null)
@@ -174,7 +179,7 @@ public class TargetController : NetworkSingleton<TargetController>
             }
             while (string.Compare(previousNpcName, selectedNPC.name) == 0);
 
-            changeTarget = false;
+            changeTarget = false;     
         }
 
         float npcPosX = selectedNPC.transform.position.x - 0.5f;
@@ -207,6 +212,13 @@ public class TargetController : NetworkSingleton<TargetController>
                 highlightedNPCs.Add(o.gameObject);
             }
         }*/
+    }
+    IEnumerator changeTargetDelay()
+    {
+        AdvisorManager.Instance.changeTargetDelay = true;
+        yield return new WaitForSeconds(GameSettings.CHANGE_TARGET_TARGET_DELAY);
+        Debug.Log("Processed Advise");
+        AdvisorManager.Instance.changeTargetDelay = false;
     }
     public void destroyTarget()
     {

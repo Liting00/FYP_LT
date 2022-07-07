@@ -20,9 +20,14 @@ public static class GameSettings
     public static string GREEN_BUTTON_TEXT = "Pass";
     public static string NO_ADVISE_TEXT = "No Advise";
 
-    //Advisor Update Interval
-    public static float ADVISOR_UPDATE_TIME = 0.5f;
+    //Change Target Advise Update Time
+    public static float ADVISOR_UPDATE_TIME = 0.1f;
+    
 
+    //(No Advise Message) Delay when Change Target
+    public static float CHANGE_TARGET_TARGET_DELAY = 0.5f;
+    // On/Off artifical No Advise delay
+    public static bool ENABLE_CHANGE_TARGET_DEAY = true;
     //Recommended from 2f to 15f
     public static float INFECTION_RADIUS = 8f;
     //Max is 1f

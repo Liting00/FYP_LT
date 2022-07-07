@@ -31,6 +31,8 @@ public class GameManager : MonoBehaviour
     {
         Instance = this;
         Debug.Log("Game Manager is called");
+
+        
     }
     public bool IsGameStarted
     {
@@ -59,6 +61,9 @@ public class GameManager : MonoBehaviour
                 break;
             case GameState.RoundOver:
                 roundOver();
+                break;
+            case GameState.GameOver:
+                //TODO: Run next scene
                 break;
             default:
                 throw new System.ArgumentOutOfRangeException(nameof(newState), newState, null);

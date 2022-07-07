@@ -11,8 +11,6 @@ public class GridManager : NetworkSingleton<GridManager>
     [SerializeField] 
     private Tile tilePrefab;
 
-    [SerializeField] private Transform cam;
-
     private void Awake()
     {
         Instance = this;
@@ -68,10 +66,7 @@ public class GridManager : NetworkSingleton<GridManager>
             //if (x > GameSettings.WIDTH - 1f)
              //   break;
         }
-        //move camera (offset)
-        float camX = 9f;
-        float camY = 12.5f + (1f - GameSettings.TILE_SIZE);
-        cam.transform.position = new Vector3(camX, camY, 4.5f);
+
     }
     public void despawnTiles()
     {

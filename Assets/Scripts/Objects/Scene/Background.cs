@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Background : MonoBehaviour
 {
-
     public Material[] material;
 
     public GameObject backgroundPlane;
