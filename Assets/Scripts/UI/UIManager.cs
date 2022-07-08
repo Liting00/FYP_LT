@@ -93,7 +93,7 @@ public class UIManager : NetworkSingleton<UIManager>
         playerText.gameObject.SetActive(false);
         playerInfoText.gameObject.SetActive(false);
 
-        mainMenu.SetActive(true);
+        StartCoroutine(loadAssets());
 
         //Start HOST
         startHostButton?.onClick.AddListener(async () =>
@@ -238,5 +238,13 @@ public class UIManager : NetworkSingleton<UIManager>
             $"Blue Remove: {blueRemove}\n " +
             $"Red Remove: {redRemove}\n " +
             $"Infected: {infected}";
+    }
+    IEnumerator loadAssets()
+    {
+        loadingIcon.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        loadingIcon.SetActive(false);
+        mainMenu.SetActive(true);
+        Debug.Log("Loading Complete");
     }
 }
