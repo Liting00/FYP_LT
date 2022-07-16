@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour
             return gamestart;
         }
     }
+
     public void ChangeState(GameState newState)
     {
         GameState = newState;

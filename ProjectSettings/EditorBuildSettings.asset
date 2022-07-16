@@ -11,4 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Grid Environment.unity
     guid: 08b223b075e070f4fa04f808a08e7a95
+  - enabled: 1
+    path: Assets/Scenes/Menu/Intro.unity
+    guid: 7d5e9a570bb255e49b48fe0bf6a895cd
+  - enabled: 1
+    path: Assets/Scenes/Menu/NPC.unity
+    guid: f4bbabf477f5cba40b4a249c9de29d85
   m_configObjects: {}
