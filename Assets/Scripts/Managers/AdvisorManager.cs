@@ -200,20 +200,20 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
             // Detect Single infected in the killzone
             if ((npc.name.Contains("Hostile") || npc.name.Contains("Infected"))&& !npc.name.Contains("Non"))
             {
-                Debug.Log("Detect Only Infected");
+                //Debug.Log("Detect Only Infected");
                 shootOnlyHostileNpc = true;
             }
             // Detect GreenNonHostileNPC in the killzone
             if (npc.name.Contains("GreenNonHostileNPC") && !npc.name.Contains("Infected"))
             {
-                Debug.Log("Detect Green Hostile");
+                //Debug.Log("Detect Green Hostile");
                 shootGreenNPC = true;
                 shootOnlyHostileNpc = false;
             }
             // Detect BlueNonHostileNPC in the killzone
             else if (npc.name.Contains("BlueNonHostileNPC") && !npc.name.Contains("Infected"))
             {
-                Debug.Log("Detect Blue Hostile");
+                //Debug.Log("Detect Blue Hostile");
                 shootGreenNPC = false;
                 shootOnlyHostileNpc = false;
             }

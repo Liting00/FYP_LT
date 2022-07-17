@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using DilmerGames.Core.Singletons;
 using Unity.Netcode;
+using UnityEngine.SceneManagement;
 
 public class UIManager : NetworkSingleton<UIManager>
 {
@@ -66,6 +67,8 @@ public class UIManager : NetworkSingleton<UIManager>
     [SerializeField]
     private TextMeshProUGUI playerInfoText;
 
+    private int nextSceneIndex, prevSceneIndex;
+
     private void Awake()
     {
         Cursor.visible = true;
@@ -80,6 +83,9 @@ public class UIManager : NetworkSingleton<UIManager>
     }
     private void Start()
     {
+        nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
+        prevSceneIndex = SceneManager.GetActiveScene().buildIndex - 1;
+
         //Logger.Instance.resetScore();
         mainMenu.SetActive(false);
         advisorMenu.SetActive(false);
@@ -221,10 +227,10 @@ public class UIManager : NetworkSingleton<UIManager>
         Logger.Instance.accumlateScore();
         Logger.Instance.resetScore();
 
-        if (GameManager.Instance.NumberOfGames < GameSettings.NUMBEROFGAMES)
-            startGameButton.gameObject.SetActive(true);
+        if (GameManager.Instance.NumberOfGames >= GameSettings.NUMBEROFGAMES)
+            SceneManager.LoadScene(nextSceneIndex);
         else
-            Debug.Log("TODO");
+            startGameButton.gameObject.SetActive(true);
     }
     //Update player Info Text
     public void playerInfo()

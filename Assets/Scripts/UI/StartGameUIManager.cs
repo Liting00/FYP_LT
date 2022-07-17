@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class TutorialUIManager : MonoBehaviour
+public class StartGameUIManager: MonoBehaviour
 {
     [SerializeField]
     public Button nextButton;
@@ -16,7 +16,14 @@ public class TutorialUIManager : MonoBehaviour
     [SerializeField]
     public TextMeshProUGUI tutorialMessage;
 
+    [SerializeField]
+    public Sprite[] TutorialMsg;
+
+    [SerializeField]
+    public Image Image;
+
     private int nextSceneIndex;
+    private int i = 0;
 
     private void Start()
     {
@@ -32,10 +39,21 @@ public class TutorialUIManager : MonoBehaviour
     {
         if (buttonPressed == nextButton)
         {
-            tutorialMessage.text = "Hi";
+            i++;
+            // tutorialMessage.text = "Hi";
             Debug.Log("Next Button Pressed");
-            SceneManager.LoadScene(nextSceneIndex);
+            if(i >= TutorialMsg.Length)
+                SceneManager.LoadScene(nextSceneIndex);
+            else
+                Image.GetComponent<Image>().sprite = TutorialMsg[i];
 
+        }
+        if (buttonPressed == backButton)
+        {
+            i--;
+            // tutorialMessage.text = "Hi";
+            Debug.Log("Next Button Pressed");
+            Image.GetComponent<Image>().sprite = TutorialMsg[i];
         }
     }
 }
