@@ -8,19 +8,25 @@ using UnityEngine.UI;
 public class StartGameUIManager: MonoBehaviour
 {
     [SerializeField]
-    public Button nextButton;
+    private Button nextButton;
 
     [SerializeField]
-    public Button backButton;
+    private Button backButton;
 
     [SerializeField]
-    public TextMeshProUGUI tutorialMessage;
+    private TextMeshProUGUI tutorialMessage;
 
     [SerializeField]
-    public Sprite[] TutorialMsg;
+    private Sprite[] TutorialMsg;
 
     [SerializeField]
-    public Image Image;
+    private Sprite BackgroundSprite;
+
+    [SerializeField]
+    private Image Image;
+
+    [SerializeField]
+    private Image BackgroundImage;
 
     private int nextSceneIndex;
     private int i = 0;
@@ -28,6 +34,12 @@ public class StartGameUIManager: MonoBehaviour
     private void Start()
     {
         nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
+
+        //BackgroundImage.GetComponent<Image>().sprite = BackgroundSprite;
+        Image.GetComponent<Image>().sprite = TutorialMsg[i];
+
+        Image.gameObject.SetActive(true);
+        //BackgroundImage.gameObject.SetActive(true);
     }
     void OnEnable()
     {
@@ -45,7 +57,7 @@ public class StartGameUIManager: MonoBehaviour
             if(i >= TutorialMsg.Length)
                 SceneManager.LoadScene(nextSceneIndex);
             else
-                Image.GetComponent<Image>().sprite = TutorialMsg[i];
+               Image.GetComponent<Image>().sprite = TutorialMsg[i];
 
         }
         if (buttonPressed == backButton)
