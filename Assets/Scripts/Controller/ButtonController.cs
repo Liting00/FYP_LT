@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ButtonController : MonoBehaviour
 {
@@ -16,6 +17,9 @@ public class ButtonController : MonoBehaviour
 
     [SerializeField]
     private Button advisorPassButton;
+
+    [SerializeField]
+    private Button exitButton;
 
     public AudioSource ShootAudio;
 
@@ -47,12 +51,14 @@ public class ButtonController : MonoBehaviour
         playerPassButton.onClick.AddListener(() => buttonCallBack(playerPassButton));
         advisorShootButton.onClick.AddListener(() => buttonCallBack(advisorShootButton));
         advisorPassButton.onClick.AddListener(() => buttonCallBack(advisorPassButton));
+        exitButton.onClick.AddListener(() => buttonCallBack(exitButton));
     }
     private void buttonCallBack(Button buttonPressed)
     {
         if (buttonPressed == playerShootButton)
         {
             PlayerShoot();
+            AdvisorManager.Instance.count++;
         }
         if (buttonPressed == playerPassButton)
         {
@@ -65,6 +71,10 @@ public class ButtonController : MonoBehaviour
         if (buttonPressed == advisorPassButton)
         {
             AdvisorPass();
+        }
+        if (buttonPressed == exitButton)
+        {
+            SceneManager.LoadScene("Game Over");
         }
     }
     private void PlayerShoot()

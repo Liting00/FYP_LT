@@ -22,6 +22,8 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
 
     internal List<GameObject> highlightedNPCs = new List<GameObject>();
 
+    public int count { get; set; }
+
     private void Start()
     {
         //Run Advisor Agent if Single Player
@@ -41,7 +43,28 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
         if (update > nextUpdatedTime)
         {
             update = 0f;
-            advisorAgent(selectedAgent);
+            //will increase the count if the number of hostile npc increase
+            if (count > 3)
+            {
+                if (Logger.Instance.GreenRemove > Logger.Instance.BlueRemove)
+                {
+                    Debug.Log("More green than blue removed");
+                    advisorAgent(AdvisorAgent.GreenBiasTrigger);
+                }
+                    
+                if (Logger.Instance.BlueRemove > Logger.Instance.GreenRemove)
+                {
+                    Debug.Log("More blue than green removed");
+                    advisorAgent(AdvisorAgent.BlueBiasTrigger);
+                }
+                else
+                {
+                    Debug.Log("Just shoot");
+                    advisorAgent(AdvisorAgent.Trigger);
+                }
+            }
+            else
+                advisorAgent(selectedAgent);
         }
 
     }
@@ -230,6 +253,7 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
             updateAdviseClientRpc(AdvisorAdvice.Pass);
         }
     }
+
     private void BlueBiasTrigger()
     {
         bool shootGreenNPC = false;
@@ -342,6 +366,7 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
 
         return advise;
     }
+
 }
 public enum AdvisorAgent
 {
@@ -350,7 +375,8 @@ public enum AdvisorAgent
     GreenBiasTrigger = 2,
     BlueBiasTrigger = 3,
     GreenNpcCollection = 4,
-    BlueNpcCollection = 5
+    BlueNpcCollection = 5,
+    auto = 6
 }
 public enum AdvisorAdvice
 {

@@ -69,6 +69,9 @@ public class UIManager : NetworkSingleton<UIManager>
 
     private int nextSceneIndex, prevSceneIndex;
 
+    private int i = 0;
+    int[] scorearray = new int[5];
+
     private void Awake()
     {
         Cursor.visible = true;
@@ -215,7 +218,7 @@ public class UIManager : NetworkSingleton<UIManager>
     public void roundOver()
     {
         //TODO: Might change text
-        playerText.text = "All Hostile are killed";
+        playerText.text = "All Hostile are gone";
         playerText.gameObject.SetActive(true);
 
         playerUI.gameObject.SetActive(false);
@@ -229,8 +232,15 @@ public class UIManager : NetworkSingleton<UIManager>
 
         if (GameManager.Instance.NumberOfGames >= GameSettings.NUMBEROFGAMES)
             SceneManager.LoadScene(nextSceneIndex);
+
         else
+        {
+            scorearray[i] = (GameManager.Instance.NumberOfGames);
+            Debug.Log("value "+ i +" : "+ scorearray[i]);
             startGameButton.gameObject.SetActive(true);
+            
+        }
+        i++;
     }
     //Update player Info Text
     public void playerInfo()
@@ -239,11 +249,14 @@ public class UIManager : NetworkSingleton<UIManager>
         int blueRemove = Logger.Instance.BlueRemove;
         int redRemove = Logger.Instance.RedRemove;
         int infected = Logger.Instance.Infected;
+        float time = GameManager.Instance.timer;
 
         playerInfoText.text = $"Green Remove: {greenRemove}\n " +
             $"Blue Remove: {blueRemove}\n " +
             $"Red Remove: {redRemove}\n " +
-            $"Infected: {infected}";
+            $"Infected: {infected}\n" +
+            $"Timer: {time}";
+
     }
     IEnumerator loadAssets()
     {

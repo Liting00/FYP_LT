@@ -15,10 +15,17 @@ public class GameManager : MonoBehaviour
 
     public int NumberOfGames { get; set; }
 
+    public float counter_timer;
+    private bool counter_start = false;
+    public float timer { get => counter_timer; set => counter_timer = value; }
+
     private void Update()
     {
         if (!gamestart)
             return;
+
+        if (counter_start)
+                counter_timer += Time.deltaTime;
         
         update += Time.deltaTime;
         if (update > nextUpdatedTime)
@@ -58,6 +65,8 @@ public class GameManager : MonoBehaviour
                 break;
             case GameState.Targeter:
                 TargetController.Instance.targetInit();
+                counter_start = true;
+                counter_timer = 0;
                 gamestart = true;
                 break;
             case GameState.RoundOver:
@@ -74,6 +83,7 @@ public class GameManager : MonoBehaviour
     {
         if (SpawnManager.Instance.Infected == 0)
         {
+            counter_start = false;
             ChangeState(GameState.RoundOver);
         }
     }
