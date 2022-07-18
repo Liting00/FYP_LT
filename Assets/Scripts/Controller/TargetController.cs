@@ -32,6 +32,8 @@ public class TargetController : NetworkSingleton<TargetController>
     private bool EnableTargetController { get; set; }
    
     public Material[] material;
+
+    private  bool quickJoined { get; set; }
     /*void UpdateTarget()
     {
         //Debug.Log("Start Target");
@@ -82,6 +84,12 @@ public class TargetController : NetworkSingleton<TargetController>
     {
         if (EnableTargetController == false) return;
 
+        if (PlayerManager.Instance.allowQuickJoin)
+        {
+            updateClientRpc();
+            quickJoined = false;
+        }
+            
         update += Time.deltaTime;
         if (update > nextUpdatedTime)
         {
@@ -112,17 +120,23 @@ public class TargetController : NetworkSingleton<TargetController>
     [ClientRpc]
     void targetClientRpc(float npcPosX, float npcPosZ)
     {
+        //Don't Run if your Player
         if (IsOwner) return;
 
         //colour all the tiles to black
         foreach (GameObject tile in tiles)
         {
+            if (tile == null)
+                continue;
             tile.GetComponent<Tile>().redHighlight(false);
         }
 
         //highlight selected Tile
         foreach (GameObject tile in collidedTile)
         {
+            if (tile == null)
+                continue;
+
             if (tile.transform.position.x >= npcPosX && tile.transform.position.x <= npcPosX + 1f
                 && tile.transform.position.z >= npcPosZ && tile.transform.position.z <= npcPosZ + 1f)
             {
@@ -199,7 +213,8 @@ public class TargetController : NetworkSingleton<TargetController>
                 //tile.GetComponent<Renderer>().material.color = Color.red;
                 tile.GetComponent<Tile>().redHighlight(true);
                 selectedTile = tile;
-                targetClientRpc(npcPosX, npcPosZ);
+                if(PlayerManager.Instance.PlayerInGame == 2)
+                    targetClientRpc(npcPosX, npcPosZ);
                 break;
             }
         }

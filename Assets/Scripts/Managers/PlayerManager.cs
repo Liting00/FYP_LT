@@ -1,13 +1,18 @@
 using UnityEngine;
 using Unity.Netcode;
 using DilmerGames.Core.Singletons;
+using TMPro;
 
 public class PlayerManager : NetworkSingleton<PlayerManager>
 {
+    public static new PlayerManager Instance;
+
     private NetworkVariable<int> playersInGame = new NetworkVariable<int>();
 
     [SerializeField]
-    private GameObject playerUI;
+    private TextMeshProUGUI playerInGameText;
+
+    public bool allowQuickJoin = true;
 
     public int PlayerInGame
     {
@@ -15,33 +20,29 @@ public class PlayerManager : NetworkSingleton<PlayerManager>
         {
             return playersInGame.Value;
         }
+        set
+        {
+            playersInGame.Value = value;
+        }
     }
-    public void addPlayerInGame(int value)
+
+    void Awake()
     {
-        playersInGame.Value = playersInGame.Value + value;
+        DontDestroyOnLoad(this);
+        Instance = this;
+        playerInGameText.gameObject.SetActive(true);
     }
-    public void setPlayerUIState(bool state)
-    {
-        playerUI.gameObject.SetActive(state);
-    }
-    //TODO: not used
+
     private void Start()
     {
         Debug.Log("Start Player Manager");
-
-        /*if (LevelManager.Instance.playerState == LevelManager.PlayerState.Shooter && NetworkManager.IsServer)
-        {
-            GameManager.Instance.ChangeState(GameState.GenerateGrid);
-            playerStartGame();
-            advisorStartGameClientRpc();
-        }*/
 
         NetworkManager.Singleton.OnClientConnectedCallback += (id) =>
         {
             if (NetworkManager.IsServer)
             {
                 Debug.Log($"ID {id} just connected");
-                addPlayerInGame(1);
+                PlayerInGame++;
             }   
         };
         NetworkManager.Singleton.OnClientDisconnectCallback += (id) =>
@@ -49,24 +50,32 @@ public class PlayerManager : NetworkSingleton<PlayerManager>
             if (NetworkManager.IsServer)
             {
                 Debug.Log($"ID {id} just disconnected");
-                addPlayerInGame(-1);
+                PlayerInGame--;
             }    
         };
     }
+    void Update()
+    {
+        playerInGameText.text = $"Player in Game: {PlayerInGame}";
+
+        if (playersInGame.Value < 2)
+            allowQuickJoin = true;
+        else
+            allowQuickJoin = false;
+    }
+    //TODO: Not Used
     private void playerStartGame()
     {
         AdvisorManager.Instance.setAdvisorTextBoxState(true);
-        //AdvisorManager.Instance.insertAdvise("No Instruction");
-        setPlayerUIState(true);
+        //setPlayerUIState(true);
     }
-    [ClientRpc]
+    /*[ClientRpc]
     private void advisorStartGameClientRpc()
     {
         if (IsOwner) return;
 
         AdvisorManager.Instance.setAdvisorUIState(true);
         AdvisorManager.Instance.setAdvisorTextBoxState(true);
-        //AdvisorManager.Instance.insertAdvise("No Instruction");
-    }
+    }*/
 }
 

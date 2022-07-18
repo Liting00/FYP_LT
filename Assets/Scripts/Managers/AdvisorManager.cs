@@ -148,6 +148,9 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
     }
     private void advisorAgent(AdvisorAgent advisorAgent)
     {
+        //disable advisor if host is interacting with real player or advisor player
+        if (PlayerManager.Instance.PlayerInGame == 2) return;
+
         // Change Target Delay
         if (changeTargetDelay)
         {

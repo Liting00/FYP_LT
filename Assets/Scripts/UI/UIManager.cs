@@ -20,9 +20,9 @@ public class UIManager : NetworkSingleton<UIManager>
 
     [SerializeField]
     private Button startGameButton;
-    
+
     [SerializeField]
-    private TextMeshProUGUI playersInGameText;
+    private Button backButton;
 
     private bool hasServerStarted;
 
@@ -33,10 +33,8 @@ public class UIManager : NetworkSingleton<UIManager>
     private GameObject playerUI;
 
     [SerializeField]
-    private GameObject playerMenu;
-
-    [SerializeField]
     private GameObject advisorUI;
+
     [SerializeField]
     private GameObject advisorMenu;
 
@@ -72,24 +70,41 @@ public class UIManager : NetworkSingleton<UIManager>
     private int i = 0;
     int[] scorearray = new int[5];
 
+    private bool quickJoined { get; set; }
+
     private void Awake()
     {
         Cursor.visible = true;
     }
     private void Update()
     {
-        playersInGameText.text = $"Player in Game: {PlayerManager.Instance.PlayerInGame}";
-        joinCodeText.text = RelayManager.Instance.JoinCode;
+        if(joinCodeText.gameObject.activeSelf)
+            joinCodeText.text = RelayManager.Instance.JoinCode;
 
-        if(GameManager.Instance.IsGameStarted)
+        if ((Input.GetKeyUp(KeyCode.KeypadEnter) || Input.GetKeyUp(KeyCode.Return)) && advisorMenu.activeSelf)
+        {
+            startClientButton.onClick.Invoke();
+        }
+
+        if (GameManager.Instance.IsGameStarted)
             playerInfo();
+
+        if (PlayerManager.Instance.allowQuickJoin)
+        {
+            advisorStartGameClientRpc();
+            quickJoined = false;
+        }
+
     }
     private void Start()
     {
         nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
         prevSceneIndex = SceneManager.GetActiveScene().buildIndex - 1;
 
+        inputCodeText.text = inputCodeText.text.ToUpper();
+
         //Logger.Instance.resetScore();
+        backButton.gameObject.SetActive(true);
         mainMenu.SetActive(false);
         advisorMenu.SetActive(false);
         advisorUI.SetActive(false);
@@ -110,6 +125,7 @@ public class UIManager : NetworkSingleton<UIManager>
             if (RelayManager.Instance.isRelayEnabled)
             {
                 mainMenu.SetActive(false);
+                backButton.gameObject.SetActive(false);
                 loadingIcon.SetActive(true);
 
                 await RelayManager.Instance.SetupRelay();
@@ -136,7 +152,9 @@ public class UIManager : NetworkSingleton<UIManager>
         {
             if (RelayManager.Instance.isRelayEnabled && !string.IsNullOrEmpty(inputCodeText.text))
             {
+                Debug.Log("Start Advisor");
                 advisorMenu.SetActive(false);
+                backButton.gameObject.SetActive(false);
                 loadingIcon.SetActive(true);
                 await RelayManager.Instance.JoinRelay(inputCodeText.text);
                 loadingIcon.SetActive(false);
@@ -160,12 +178,18 @@ public class UIManager : NetworkSingleton<UIManager>
         playAsAdvisorButton?.onClick.AddListener(() =>
         {
             mainMenu.SetActive(false);
+            backButton.gameObject.SetActive(false);
             advisorMenu.SetActive(true);
         });
         advisorBackButton?.onClick.AddListener(() =>
         {
             mainMenu.SetActive(true);
+            backButton.gameObject.SetActive(true);
             advisorMenu.SetActive(false);
+        });
+        backButton?.onClick.AddListener(() =>
+        {
+            SceneManager.LoadScene(prevSceneIndex);
         });
         // STATUS TYPE CALLBACKS
         NetworkManager.Singleton.OnClientConnectedCallback += (id) =>
@@ -189,10 +213,13 @@ public class UIManager : NetworkSingleton<UIManager>
                 joinCodeText.gameObject.SetActive(false);
                 numGameText.gameObject.SetActive(false);
                 playerText.gameObject.SetActive(false);
+                playerUI.SetActive(true);
                 Debug.Log("Player Start Game");
 
+                loadingIcon.SetActive(true);
                 playerStartGame();
                 advisorStartGameClientRpc();
+                loadingIcon.SetActive(false);
 
                 GameManager.Instance.ChangeState(GameState.GenerateGrid);
                 return;
@@ -202,7 +229,7 @@ public class UIManager : NetworkSingleton<UIManager>
     private void playerStartGame()
     {
         AdvisorManager.Instance.setAdvisorTextBoxState(true);
-        PlayerManager.Instance.setPlayerUIState(true);
+        //PlayerManager.Instance.setPlayerUIState(true);
         playerInfoText.gameObject.SetActive(true);
     }
     [ClientRpc]
@@ -210,9 +237,11 @@ public class UIManager : NetworkSingleton<UIManager>
     {
         if (IsOwner) return;
 
+        Debug.Log("Enable Advisor UI");
         AdvisorManager.Instance.setAdvisorUIState(true);
         AdvisorManager.Instance.setAdvisorTextBoxState(true);
         playerInfoText.gameObject.SetActive(true);
+        AdvisorManager.Instance.insertAdvise(AdvisorAdvice.NoAdvice);
     }
 
     public void roundOver()
@@ -255,7 +284,7 @@ public class UIManager : NetworkSingleton<UIManager>
             $"Blue Remove: {blueRemove}\n " +
             $"Red Remove: {redRemove}\n " +
             $"Infected: {infected}\n" +
-            $"Timer: {time}";
+            $"Timer: {((int)time)}s";
 
     }
     IEnumerator loadAssets()

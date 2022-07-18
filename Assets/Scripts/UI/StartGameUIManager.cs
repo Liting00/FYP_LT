@@ -38,6 +38,7 @@ public class StartGameUIManager: MonoBehaviour
         //BackgroundImage.GetComponent<Image>().sprite = BackgroundSprite;
         Image.GetComponent<Image>().sprite = TutorialMsg[i];
 
+        backButton.gameObject.SetActive(false);
         Image.gameObject.SetActive(true);
         //BackgroundImage.gameObject.SetActive(true);
     }
@@ -52,7 +53,8 @@ public class StartGameUIManager: MonoBehaviour
         if (buttonPressed == nextButton)
         {
             i++;
-            // tutorialMessage.text = "Hi";
+            backButton.gameObject.SetActive(true);
+
             Debug.Log("Next Button Pressed");
             if(i >= TutorialMsg.Length)
                 SceneManager.LoadScene(nextSceneIndex);
@@ -66,6 +68,9 @@ public class StartGameUIManager: MonoBehaviour
             // tutorialMessage.text = "Hi";
             Debug.Log("Next Button Pressed");
             Image.GetComponent<Image>().sprite = TutorialMsg[i];
+
+            if(i==0)
+                backButton.gameObject.SetActive(false);
         }
     }
 }

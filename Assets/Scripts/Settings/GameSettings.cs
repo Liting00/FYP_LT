@@ -11,8 +11,8 @@ public static class GameSettings
     public static int HEIGHT = 10;
 
     //Number of Spawns
-    public static int NONHOSTILE_GREEN_NPC = 50;
-    public static int NONHOSTILE_BLUE_NPC = 50;
+    public static int NONHOSTILE_GREEN_NPC = 10;
+    public static int NONHOSTILE_BLUE_NPC = 10;
     public static int HOSTILE_NPC = 4;
 
     //Advisor Text
