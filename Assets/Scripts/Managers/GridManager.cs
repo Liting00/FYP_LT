@@ -6,7 +6,7 @@ using Unity.Netcode;
 
 public class GridManager : NetworkSingleton<GridManager>
 {
-    public static GridManager Instance;
+    public static new GridManager Instance;
 
     [SerializeField] 
     private Tile tilePrefab;

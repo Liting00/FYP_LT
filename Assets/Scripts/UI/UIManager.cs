@@ -65,12 +65,13 @@ public class UIManager : NetworkSingleton<UIManager>
     [SerializeField]
     private TextMeshProUGUI playerInfoText;
 
-    private int nextSceneIndex, prevSceneIndex;
 
     private int i = 0;
     int[] scorearray = new int[5];
 
-    private bool quickJoined { get; set; }
+    //private bool quickJoined { get; set; }
+
+    public int nextSceneIndex, prevSceneIndex;
 
     private void Awake()
     {
@@ -92,9 +93,8 @@ public class UIManager : NetworkSingleton<UIManager>
         if (PlayerManager.Instance.allowQuickJoin)
         {
             advisorStartGameClientRpc();
-            quickJoined = false;
+            //quickJoined = false;
         }
-
     }
     private void Start()
     {
@@ -140,6 +140,7 @@ public class UIManager : NetworkSingleton<UIManager>
                 joinCodeText.gameObject.SetActive(true);
                 startGameButton.gameObject.SetActive(true);
                 numGameText.text = $"Game: {++GameManager.Instance.NumberOfGames}";
+                i++;
                 numGameText.gameObject.SetActive(true);
             }
             else
@@ -243,33 +244,32 @@ public class UIManager : NetworkSingleton<UIManager>
         playerInfoText.gameObject.SetActive(true);
         AdvisorManager.Instance.insertAdvise(AdvisorAdvice.NoAdvice);
     }
-
-    public void roundOver()
+    public void roundOver(GameState gameState)
     {
-        //TODO: Might change text
-        playerText.text = "All Hostile are gone";
+        playerText.text = GameResultMessage(gameState);
         playerText.gameObject.SetActive(true);
 
         playerUI.gameObject.SetActive(false);
         adviseTextBox.gameObject.SetActive(false);
 
-        numGameText.text = $"Game: {++GameManager.Instance.NumberOfGames}";
-        numGameText.gameObject.SetActive(true);
-        
         Logger.Instance.accumlateScore();
         Logger.Instance.resetScore();
 
-        if (GameManager.Instance.NumberOfGames >= GameSettings.NUMBEROFGAMES)
-            SceneManager.LoadScene(nextSceneIndex);
-
+        scorearray[i-1] = (GameManager.Instance.NumberOfGames);
+        Debug.Log("value "+ (i-1) +" : "+ scorearray[i-1]);
+        
+        if(gameState != GameState.GameOver)
+        {
+            numGameText.text = $"Game: {++GameManager.Instance.NumberOfGames}";
+            startGameButton.gameObject.SetActive(true);
+            numGameText.gameObject.SetActive(true);
+        }
         else
         {
-            scorearray[i] = (GameManager.Instance.NumberOfGames);
-            Debug.Log("value "+ i +" : "+ scorearray[i]);
-            startGameButton.gameObject.SetActive(true);
-            
+            startGameButton.gameObject.SetActive(false);
+            numGameText.gameObject.SetActive(false);
         }
-        i++;
+            
     }
     //Update player Info Text
     public void playerInfo()
@@ -295,4 +295,18 @@ public class UIManager : NetworkSingleton<UIManager>
         mainMenu.SetActive(true);
         Debug.Log("Loading Complete");
     }
+    private string GameResultMessage(GameState gameState)
+    {
+        string gameMessage = "";
+
+        if (gameState == GameState.WinRound)
+            gameMessage = GameSettings.WINGAMETEXT;
+        else if (gameState == GameState.LoseRound)
+            gameMessage = GameSettings.LOSEGAMETEXT;
+        else if (gameState == GameState.GameOver)
+            gameMessage = GameSettings.GAMEOVERTEXT;
+
+        return gameMessage;
+    }
 }
+

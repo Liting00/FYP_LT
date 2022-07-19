@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
     private bool counter_start = false;
     public float timer { get => counter_timer; set => counter_timer = value; }
 
+
+
     private void Update()
     {
         if (!gamestart)
@@ -38,8 +40,6 @@ public class GameManager : MonoBehaviour
     {
         Instance = this;
         Debug.Log("Game Manager is called");
-
-        
     }
     public bool IsGameStarted
     {
@@ -69,11 +69,17 @@ public class GameManager : MonoBehaviour
                 counter_timer = 0;
                 gamestart = true;
                 break;
-            case GameState.RoundOver:
-                roundOver();
+            case GameState.WinRound:
+                Debug.Log("Round Win");
+                GameResult(GameState.WinRound);
+                break;
+            case GameState.LoseRound:
+                Debug.Log("Round Loss");
+                GameResult(GameState.LoseRound);
                 break;
             case GameState.GameOver:
-                //TODO: Run next scene
+                Debug.Log("Game Over");
+                GameResult(GameState.GameOver);
                 break;
             default:
                 throw new System.ArgumentOutOfRangeException(nameof(newState), newState, null);
@@ -84,23 +90,32 @@ public class GameManager : MonoBehaviour
         if (SpawnManager.Instance.Infected == 0)
         {
             counter_start = false;
-            ChangeState(GameState.RoundOver);
+            ChangeState(GameState.WinRound);
+        }
+        if(SpawnManager.Instance.NonInfected == 0)
+        {
+            counter_start = false;
+            ChangeState(GameState.LoseRound);
+        }
+        if (NumberOfGames >= GameSettings.NUMBEROFGAMES && counter_start == false)
+        {
+            ChangeState(GameState.GameOver);
         }
     }
-    private void roundOver()
+    private void GameResult(GameState gameState)
     {
         gamestart = false;
 
-        //delay the game end in N sec
-        StartCoroutine(LoadFinishGameAsynchronously());
+        //delay the End Game in N sec
+        StartCoroutine(LoadFinishGameSessionAsynchronously(gameState));
     }
-    IEnumerator LoadFinishGameAsynchronously()
+    IEnumerator LoadFinishGameSessionAsynchronously(GameState gameState)
     {
         yield return new WaitForSeconds(GameSettings.ENDGAME_DELAY);
 
         SpawnManager.Instance.despawnNpcs();
         GridManager.Instance.despawnTiles();
-        UIManager.Instance.roundOver();
+        UIManager.Instance.roundOver(gameState);      
     }
 }
 
@@ -109,6 +124,7 @@ public enum GameState
     GenerateGrid = 0,
     SpawnNPC = 1,
     Targeter = 2,
-    RoundOver = 3,
-    GameOver = 4
+    WinRound = 3,
+    LoseRound = 4,
+    GameOver = 5
 }

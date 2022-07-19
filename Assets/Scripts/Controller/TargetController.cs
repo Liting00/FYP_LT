@@ -33,7 +33,7 @@ public class TargetController : NetworkSingleton<TargetController>
    
     public Material[] material;
 
-    private  bool quickJoined { get; set; }
+    //private  bool quickJoined { get; set; }
     /*void UpdateTarget()
     {
         //Debug.Log("Start Target");
@@ -79,7 +79,6 @@ public class TargetController : NetworkSingleton<TargetController>
     }*/
     // Update is called once per frame
 
-    //TODO: Add Hotkey
     void Update()
     {
         if (EnableTargetController == false) return;
@@ -87,7 +86,7 @@ public class TargetController : NetworkSingleton<TargetController>
         if (PlayerManager.Instance.allowQuickJoin)
         {
             updateClientRpc();
-            quickJoined = false;
+            //quickJoined = false;
         }
             
         update += Time.deltaTime;

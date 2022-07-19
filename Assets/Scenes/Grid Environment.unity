@@ -412,8 +412,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 18.999, y: 145.58}
-  m_SizeDelta: {x: 612.02, y: 91.1622}
+  m_AnchoredPosition: {x: 20.040703, y: 145.58}
+  m_SizeDelta: {x: 1130.7883, y: 91.1622}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &154042907
 MonoBehaviour:
@@ -5611,7 +5611,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ADIVSOR
+  m_text: ADVISOR
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
   m_sharedMaterial: {fileID: 2164040, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
@@ -6197,6 +6197,8 @@ MonoBehaviour:
   numGameText: {fileID: 469891205}
   playerText: {fileID: 154042907}
   playerInfoText: {fileID: 647252108}
+  nextSceneIndex: 0
+  prevSceneIndex: 0
 --- !u!4 &1836532757
 Transform:
   m_ObjectHideFlags: 0

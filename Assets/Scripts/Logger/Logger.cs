@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Logger : NetworkSingleton<Logger>
 {
-    public static Logger Instance;
+    public static new Logger Instance;
 
     // Total accumulate
     private NetworkVariable<int> totalGreenRemove = new NetworkVariable<int>();

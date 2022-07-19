@@ -9,10 +9,11 @@ public class SpawnManager : NetworkSingleton<SpawnManager>
 {
     //[SerializeField] private GameObject npc_civilian;
 
-    public static SpawnManager Instance;
+    public static new SpawnManager Instance;
 
     [SerializeField]
     private float _width, _height;
+
     private int greenNonhostileNPCSpawn = 0 ;
     private int blueNonhostileNPCSpawn = 0;
     private int hostileNPCSpawn = 0;

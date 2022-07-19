@@ -25,7 +25,6 @@ public class TileCollision : MonoBehaviour
             TargetController.Instance.collidedTile.Add(gameObject);
             //Debug.Log(gameObject.name + " hit!");
         }
-        //TODO: Cannot make Collision Work
         if (other.gameObject.tag == "NonHostileNPC" || other.gameObject.tag == "HostileNPC")
         {
             collidedNpcs.Add(other.gameObject);
@@ -38,7 +37,6 @@ public class TileCollision : MonoBehaviour
             TargetController.Instance.collidedTile.Remove(gameObject);
             //Debug.Log(gameObject.name + " Remove!");
         }
-        //TODO: Cannot make Collision Work
         if (other.gameObject.tag == "NonHostileNPC" || other.gameObject.tag == "HostileNPC")
         {
             collidedNpcs.Remove(other.gameObject);

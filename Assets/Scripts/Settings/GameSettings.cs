@@ -56,4 +56,9 @@ public static class GameSettings
 
     //Number of Game per Session
     public static int NUMBEROFGAMES = 5;
+
+    //Text when the game end or session end
+    public static string WINGAMETEXT = "All Hostile are gone";
+    public static string LOSEGAMETEXT = "Everyone has been infected";
+    public static string GAMEOVERTEXT = "Game Has Ended";
 }
