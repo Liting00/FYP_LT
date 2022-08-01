@@ -6,6 +6,7 @@ using TMPro;
 using DilmerGames.Core.Singletons;
 using Unity.Netcode;
 using UnityEngine.SceneManagement;
+using System;
 
 public class UIManager : NetworkSingleton<UIManager>
 {
@@ -71,7 +72,7 @@ public class UIManager : NetworkSingleton<UIManager>
 
     //private bool quickJoined { get; set; }
 
-    public int nextSceneIndex, prevSceneIndex;
+    private int nextSceneIndex, prevSceneIndex;
 
     private void Awake()
     {
@@ -156,14 +157,44 @@ public class UIManager : NetworkSingleton<UIManager>
                 Debug.Log("Start Advisor");
                 advisorMenu.SetActive(false);
                 backButton.gameObject.SetActive(false);
+                playerText.gameObject.SetActive(false);
                 loadingIcon.SetActive(true);
-                await RelayManager.Instance.JoinRelay(inputCodeText.text);
-                loadingIcon.SetActive(false);
+                try
+                {
+                    await RelayManager.Instance.JoinRelay(inputCodeText.text);
+                    loadingIcon.SetActive(false);
+                }
+                catch(Exception e)
+                {
+                    Debug.Log($"Invalid Input Code. {e}");
+                    loadingIcon.SetActive(false);
+
+                    playerText.text = "Could not Join Game. Invalid Input Code";
+                    playerText.gameObject.SetActive(true);
+                    
+                    advisorMenu.SetActive(true);
+                    backButton.gameObject.SetActive(true);
+                    return;
+                }
+            }
+            else if(string.IsNullOrEmpty(inputCodeText.text))
+            {
+                advisorMenu.SetActive(true);
+
+                playerText.text = "Could not Join Game. Empty Input Code";
+                playerText.gameObject.SetActive(true);
+
+                Debug.Log("Empty Input Code.");
+                return;
             }
             else
             {
                 advisorMenu.SetActive(true);
-                Debug.Log("Empty Input Code. Client could not be Started");
+
+                playerText.text = "Could not Join Game. Network Unable";
+                playerText.gameObject.SetActive(true);
+
+                Debug.Log("Network Unable.");
                 return;
             }
 
@@ -187,6 +218,7 @@ public class UIManager : NetworkSingleton<UIManager>
             mainMenu.SetActive(true);
             backButton.gameObject.SetActive(true);
             advisorMenu.SetActive(false);
+            playerText.gameObject.SetActive(false);
         });
         backButton?.onClick.AddListener(() =>
         {
