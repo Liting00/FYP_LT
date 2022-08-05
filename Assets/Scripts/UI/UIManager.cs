@@ -7,6 +7,7 @@ using DilmerGames.Core.Singletons;
 using Unity.Netcode;
 using UnityEngine.SceneManagement;
 using System;
+using System.Linq;
 
 public class UIManager : NetworkSingleton<UIManager>
 {
@@ -81,7 +82,7 @@ public class UIManager : NetworkSingleton<UIManager>
     private void Update()
     {
         if(joinCodeText.gameObject.activeSelf)
-            joinCodeText.text = RelayManager.Instance.JoinCode;
+            joinCodeText.text = "Lobby Code: " + RelayManager.Instance.JoinCode;
 
         if ((Input.GetKeyUp(KeyCode.KeypadEnter) || Input.GetKeyUp(KeyCode.Return)) && advisorMenu.activeSelf)
         {
@@ -212,6 +213,23 @@ public class UIManager : NetworkSingleton<UIManager>
             mainMenu.SetActive(false);
             backButton.gameObject.SetActive(false);
             advisorMenu.SetActive(true);
+            //TODO: Get Request
+            try 
+            {
+                string json = JoinCodeRestAPI.GetJoinCodes();
+                List<JoinCode> playerList = new List<JoinCode>();
+                playerList = JoinCodeRestAPI.Deserialize<JoinCode>(json);
+                for(int i=0; i < playerList.Count(); i++)
+                {
+                    Debug.Log(playerList[i].joinCode);
+                }
+                //JoinCode joinCode = JoinCodeRestAPI.GetJoinCode("JKAWEDI");
+                //Debug.Log(joinCode.joinCode);
+            }
+            catch(Exception e)
+            {
+                Debug.Log("Cannot Get Join Codes" + e);
+            }
         });
         advisorBackButton?.onClick.AddListener(() =>
         {

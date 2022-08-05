@@ -18,20 +18,13 @@ public class RelayManager : Singleton<RelayManager>
     [SerializeField]
     private int maxConnection = 2;
 
-    private string joinCode;
-
     public bool isRelayEnabled => Transport != null &&
         Transport.Protocol == UnityTransport.ProtocolType.RelayUnityTransport;
 
     public UnityTransport Transport => NetworkManager.Singleton.gameObject.GetComponent<UnityTransport>();
 
-    public string JoinCode
-    {
-        get
-        {
-            return joinCode;
-        }
-    }
+    public string JoinCode { get; set; }
+    public string AllocationID { get; set; }
 
     public async Task<RelayHostData> SetupRelay()
     {
@@ -71,9 +64,11 @@ public class RelayManager : Singleton<RelayManager>
         Transport.SetRelayServerData(relayHostData.IPv4Address, relayHostData.Port, relayHostData.AllocationIDBytes,
             relayHostData.Key, relayHostData.ConnectionData);
 
-        joinCode = $"Lobby Code: {relayHostData.JoinCode}";
+        JoinCode = relayHostData.JoinCode;
+        AllocationID = relayHostData.AllocationID.ToString();
 
         Debug.Log($"Relay Server generated with a join code {relayHostData.JoinCode}");
+        //TODO: PUT
 
         return relayHostData;
     }

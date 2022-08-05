@@ -29,7 +29,7 @@ public class LevelManager : NetworkSingleton<LevelManager>
 
         SceneManager.LoadScene(newGame);
 
-        if (playerState == PlayerState.Shooter)
+        /*if (playerState == PlayerState.Shooter)
         {
             //Debug.Log("Player Start Game");
             //GameObject advisorManager = GameObject.Find("Advisor Manager");
@@ -38,7 +38,7 @@ public class LevelManager : NetworkSingleton<LevelManager>
         else if(playerState == PlayerState.Advisor)
         {
             //do something
-        }
+        }*/
     }
     public void MainMenu()
     {

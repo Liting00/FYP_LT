@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
 
     public int NumberOfGames { get; set; }
 
-    public float counter_timer;
+    private float counter_timer;
     private bool counter_start = false;
     public float timer { get => counter_timer; set => counter_timer = value; }
 
@@ -35,6 +35,10 @@ public class GameManager : MonoBehaviour
             update = 0f;
             checkGame();
         }
+    }
+    private void OnApplicationQuit()
+    {
+        Debug.Log("Application is closed");
     }
     private void Awake()
     {
