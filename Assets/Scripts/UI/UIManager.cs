@@ -121,7 +121,7 @@ public class UIManager : NetworkSingleton<UIManager>
 
         StartCoroutine(loadAssets());
 
-        //Start HOST
+        //Start HOST (Shooter)
         startHostButton?.onClick.AddListener(async () =>
         {
             if (RelayManager.Instance.isRelayEnabled)
@@ -138,19 +138,24 @@ public class UIManager : NetworkSingleton<UIManager>
             if (NetworkManager.Singleton.StartHost())
             {
                 Debug.Log("Host Started...");
+
+                PlayerManager.Instance.playerState = PlayerState.Shooter;
+
+                numGameText.text = $"Game: {++GameManager.Instance.NumberOfGames}";
+
                 mainMenu.SetActive(false);
                 joinCodeText.gameObject.SetActive(true);
                 startGameButton.gameObject.SetActive(true);
-                numGameText.text = $"Game: {++GameManager.Instance.NumberOfGames}";
-                i++;
                 numGameText.gameObject.SetActive(true);
+
+                i++;
             }
             else
             {
                 Debug.Log("Host could not be Started...");
             }
         });
-        //Start Client
+        //Start Client (Advisor)
         startClientButton?.onClick.AddListener(async () =>
         {
             if (RelayManager.Instance.isRelayEnabled && !string.IsNullOrEmpty(inputCodeText.text))
@@ -162,6 +167,7 @@ public class UIManager : NetworkSingleton<UIManager>
                 loadingIcon.SetActive(true);
                 try
                 {
+                    PlayerManager.Instance.playerState = PlayerState.Advisor;
                     await RelayManager.Instance.JoinRelay(inputCodeText.text);
                     loadingIcon.SetActive(false);
                 }
@@ -216,6 +222,7 @@ public class UIManager : NetworkSingleton<UIManager>
             //TODO: Get Request
             try 
             {
+                //StartCoroutine(JoinCodeRestAPI.GetRequest());
                 string json = JoinCodeRestAPI.GetJoinCodes();
                 List<JoinCode> playerList = new List<JoinCode>();
                 playerList = JoinCodeRestAPI.Deserialize<JoinCode>(json);

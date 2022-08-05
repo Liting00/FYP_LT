@@ -8,6 +8,7 @@ using TMPro;
 
 namespace Assets.Scripts.Network
 {
+    /*
     public class MenuUIManager : NetworkSingleton<MenuUIManager>
     {
         //TODO: not used
@@ -156,5 +157,5 @@ namespace Assets.Scripts.Network
 
             loadingIcon.SetActive(false);
         }
-    }
+    }*/
 }

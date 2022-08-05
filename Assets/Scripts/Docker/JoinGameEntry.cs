@@ -14,7 +14,7 @@ public class JoinGameEntry : MonoBehaviour
     }
 
     public void joinGame()
-    {
+    {   
 
     }
 }

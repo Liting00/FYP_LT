@@ -26,11 +26,14 @@ public class PlayerManager : NetworkSingleton<PlayerManager>
         }
     }
 
+    public PlayerState playerState { get; set; }
+
     void Awake()
     {
         DontDestroyOnLoad(this);
         Instance = this;
         playerInGameText.gameObject.SetActive(true);
+        playerState = PlayerState.NoState;
     }
 
     private void Start()
@@ -64,11 +67,12 @@ public class PlayerManager : NetworkSingleton<PlayerManager>
             allowQuickJoin = false;
     }
     //TODO: Not Used
+    /*
     private void playerStartGame()
     {
         AdvisorManager.Instance.setAdvisorTextBoxState(true);
         //setPlayerUIState(true);
-    }
+    }*/
     /*[ClientRpc]
     private void advisorStartGameClientRpc()
     {
@@ -77,5 +81,11 @@ public class PlayerManager : NetworkSingleton<PlayerManager>
         AdvisorManager.Instance.setAdvisorUIState(true);
         AdvisorManager.Instance.setAdvisorTextBoxState(true);
     }*/
+}
+public enum PlayerState
+{
+    Shooter = 0,
+    Advisor = 1,
+    NoState = 2
 }
 

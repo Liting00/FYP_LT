@@ -38,6 +38,14 @@ public class GameManager : MonoBehaviour
     }
     private void OnApplicationQuit()
     {
+        //TODO: Delete
+        if(PlayerManager.Instance.playerState == PlayerState.Shooter)
+        {
+            string joinCode = RelayManager.Instance.JoinCode;
+            Debug.Log("Deleting Join Code " + joinCode);
+            StartCoroutine(JoinCodeRestAPI.Delete(joinCode));
+        }
+
         Debug.Log("Application is closed");
     }
     private void Awake()
