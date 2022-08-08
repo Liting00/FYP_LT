@@ -553,9 +553,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ProtocolType: 1
-  m_MaxPacketQueueSize: 128
-  m_MaxPayloadSize: 65535
-  m_MaxSendQueueSize: 98331
+  m_MaxPacketQueueSize: 1024
+  m_MaxPayloadSize: 10000000
+  m_MaxSendQueueSize: 98304
   m_HeartbeatTimeoutMS: 500
   m_ConnectTimeoutMS: 1000
   m_MaxConnectAttempts: 60
@@ -626,7 +626,7 @@ MonoBehaviour:
       SourcePrefabToOverride: {fileID: 0}
       SourceHashToOverride: 0
       OverridingTargetPrefab: {fileID: 0}
-    TickRate: 30
+    TickRate: 10
     ClientConnectionBufferTimeout: 10
     ConnectionApproval: 0
     ConnectionData: 

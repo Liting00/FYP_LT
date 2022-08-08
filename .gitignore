@@ -60,3 +60,19 @@ crashlytics-build.properties
 
 build Version/My project_Data/sharedassets0.assets.resS
 *.resS
+build Version/My project_Data/sharedassets3.assets
+build Version/My project_Data/sharedassets2.assets
+build Version/My project_Data/sharedassets1.assets
+build Version/My project_Data/sharedassets0.assets.resS
+build Version/My project_Data/sharedassets0.assets
+build Version/My project_Data/resources.assets
+build Version/My project_Data/Plugins/x86_64/lib_burst_generated.dll
+build Version/My project_Data/Managed/Assembly-CSharp.dll
+build Version/My project_Data/level3
+build Version/My project_Data/level2
+build Version/My project_Data/level1
+build Version/My project_Data/level0
+build Version/My project_Data/globalgamemanagers.assets
+build Version/My project_Data/globalgamemanagers
+build Version/My project_BurstDebugInformation_DoNotShip/Data/Plugins/x86_64/lib_burst_generated.txt
+Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Roboto-Bold SDF.asset
