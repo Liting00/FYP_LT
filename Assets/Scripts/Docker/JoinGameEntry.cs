@@ -5,24 +5,22 @@ using UnityEngine.UI;
 public class JoinGameEntry : MonoBehaviour
 {
     public Button enterBtn;
-    public TextMeshProUGUI enterBtnText;
-    public string joinCode;
+    public GameObject TextBox;
+    public string joinCode { get; set; }
 
     private void Start()
     {
         Button btn = enterBtn.GetComponent<Button>();
         btn.onClick.AddListener(TaskOnClick);
-        Debug.Log("Start Join Game Entry");
-
-        joinCode = RelayManager.Instance.JoinCode;
+        Debug.Log("Join Game Entry");
     }
     private void TaskOnClick()
     {
-        Debug.Log("You have clicked the button!");
+        Debug.Log("You have Enter Btn Join Code:" + joinCode);
 
-        EnterCode();
+        //EnterCode();
     }
-    public void SetJoinCodeData()
+    public void SetInputField()
     {
         if (joinCode == null || joinCode == "")
             enterBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Empty";
@@ -33,6 +31,9 @@ public class JoinGameEntry : MonoBehaviour
     private void EnterCode()
     {
         //TODO: Enter the code onto inputTextfield
-        //GameObject.Find("InputCodeTextField").GetComponent<InputField>().text = joinCode;
+        GameObject inputCodeTextField = GameObject.Find("InputCodeTextField");
+        Graphic graphic = inputCodeTextField.GetComponent<InputField>().placeholder;
+        ((TextMeshProUGUI)graphic).text = joinCode;
+        InputField inputField = inputCodeTextField.GetComponent<InputField>();
     }
 }

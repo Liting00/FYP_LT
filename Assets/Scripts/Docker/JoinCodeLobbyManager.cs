@@ -29,19 +29,17 @@ public class JoinCodeLobbyManager : MonoBehaviour
     {
         Debug.Log("Displaying Lobbies");
         //TODO: Display lobbies
-        for (int i = 0; i < playerList.Count(); i++)
+        /*for (int i = 0; i < playerList.Count(); i++)
         {
             Debug.Log(playerList[i].joinCode);
-        }
+        }*/
 
         for(int i = 0; i < playerList.Count(); i++)
         {
             GameObject createdItem = Instantiate(joinCodeEntryPrefab);
-            //playerList[i].joinCode
 
+            createdItem.GetComponent<JoinGameEntry>().joinCode = playerList[i].joinCode;
             createdItem.GetComponent<JoinGameEntry>().enterBtn.GetComponentInChildren<TextMeshProUGUI>().text = playerList[i].joinCode;
-
-            createdItem.GetComponent<JoinGameEntry>().SetJoinCodeData();
 
             createdItem.transform.SetParent(JoinCodeListContent.transform);
             createdItem.transform.localScale = Vector3.one;

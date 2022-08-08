@@ -30,7 +30,6 @@ public class PlayerManager : NetworkSingleton<PlayerManager>
 
     void Awake()
     {
-        DontDestroyOnLoad(this);
         Instance = this;
         playerInGameText.gameObject.SetActive(true);
         playerState = PlayerState.NoState;
