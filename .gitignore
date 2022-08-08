@@ -61,3 +61,23 @@ crashlytics-build.properties
 build Version/My project_Data
 My Project.exe
 *.resS
+Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Roboto-Bold SDF.asset
+build Version/MonoBleedingEdge/etc/mono/2.0/Browsers/Compat.browser
+build Version/MonoBleedingEdge/etc/mono/2.0/DefaultWsdlHelpGenerator.aspx
+build Version/MonoBleedingEdge/etc/mono/2.0/machine.config
+build Version/MonoBleedingEdge/etc/mono/2.0/settings.map
+build Version/MonoBleedingEdge/etc/mono/2.0/web.config
+build Version/MonoBleedingEdge/etc/mono/4.0/Browsers/Compat.browser
+build Version/MonoBleedingEdge/etc/mono/4.0/DefaultWsdlHelpGenerator.aspx
+build Version/MonoBleedingEdge/etc/mono/4.0/machine.config
+build Version/MonoBleedingEdge/etc/mono/4.0/settings.map
+build Version/MonoBleedingEdge/etc/mono/4.0/web.config
+build Version/MonoBleedingEdge/etc/mono/4.5/Browsers/Compat.browser
+build Version/MonoBleedingEdge/etc/mono/4.5/DefaultWsdlHelpGenerator.aspx
+build Version/MonoBleedingEdge/etc/mono/4.5/machine.config
+build Version/MonoBleedingEdge/etc/mono/4.5/settings.map
+build Version/MonoBleedingEdge/etc/mono/4.5/web.config
+build Version/MonoBleedingEdge/etc/mono/browscap.ini
+build Version/MonoBleedingEdge/etc/mono/config
+build Version/MonoBleedingEdge/etc/mono/mconfig/config.xml
+build Version/My project_BurstDebugInformation_DoNotShip/Data/Plugins/x86_64/lib_burst_generated.txt
