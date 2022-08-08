@@ -58,8 +58,5 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
-build Version
+build Version/
 *.resS
-Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Roboto-Bold SDF.asset
-*.assets
-build Version/My project_Data/sharedassets0.assets
