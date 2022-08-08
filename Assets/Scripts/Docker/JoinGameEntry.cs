@@ -1,20 +1,38 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class JoinGameEntry : MonoBehaviour
 {
-    internal string joinCode;
-    private TextMeshProUGUI joinCodeText;
+    public Button enterBtn;
+    public TextMeshProUGUI enterBtnText;
+    public string joinCode;
 
-    public void setJoinCodeData()
+    private void Start()
     {
-        joinCodeText.text = joinCode;
+        Button btn = enterBtn.GetComponent<Button>();
+        btn.onClick.AddListener(TaskOnClick);
+        Debug.Log("Start Join Game Entry");
+
+        joinCode = RelayManager.Instance.JoinCode;
+    }
+    private void TaskOnClick()
+    {
+        Debug.Log("You have clicked the button!");
+
+        EnterCode();
+    }
+    public void SetJoinCodeData()
+    {
+        if (joinCode == null || joinCode == "")
+            enterBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Empty";
+        else
+            enterBtn.GetComponentInChildren<TextMeshProUGUI>().text = joinCode;
     }
 
-    public void joinGame()
-    {   
-
+    private void EnterCode()
+    {
+        //TODO: Enter the code onto inputTextfield
+        //GameObject.Find("InputCodeTextField").GetComponent<InputField>().text = joinCode;
     }
 }

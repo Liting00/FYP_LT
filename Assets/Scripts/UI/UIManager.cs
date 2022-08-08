@@ -8,6 +8,8 @@ using Unity.Netcode;
 using UnityEngine.SceneManagement;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Threading;
 
 public class UIManager : NetworkSingleton<UIManager>
 {
@@ -59,6 +61,9 @@ public class UIManager : NetworkSingleton<UIManager>
     private GameObject loadingIcon;
 
     [SerializeField]
+    private GameObject joinCodeloadingIcon;
+
+    [SerializeField]
     private TextMeshProUGUI numGameText;
 
     [SerializeField]
@@ -68,12 +73,18 @@ public class UIManager : NetworkSingleton<UIManager>
     private TextMeshProUGUI playerInfoText;
 
 
-    private int i = 0;
+    private int GameNum = 0;
     int[] scorearray = new int[5];
 
     //private bool quickJoined { get; set; }
 
     private int nextSceneIndex, prevSceneIndex;
+
+    //Join Code List
+    List<JoinCode> playerList = null;
+    
+    //Thread Lock
+    public object _lock = new object();
 
     private void Awake()
     {
@@ -148,7 +159,7 @@ public class UIManager : NetworkSingleton<UIManager>
                 startGameButton.gameObject.SetActive(true);
                 numGameText.gameObject.SetActive(true);
 
-                i++;
+                GameNum++;
             }
             else
             {
@@ -216,27 +227,12 @@ public class UIManager : NetworkSingleton<UIManager>
         });
         playAsAdvisorButton?.onClick.AddListener(() =>
         {
+            Debug.Log("Player As Advisor");
+            StartCoroutine(loadJoinCodes());
             mainMenu.SetActive(false);
             backButton.gameObject.SetActive(false);
             advisorMenu.SetActive(true);
             //TODO: Get Request
-            try 
-            {
-                //StartCoroutine(JoinCodeRestAPI.GetRequest());
-                string json = JoinCodeRestAPI.GetJoinCodes();
-                List<JoinCode> playerList = new List<JoinCode>();
-                playerList = JoinCodeRestAPI.Deserialize<JoinCode>(json);
-                for(int i=0; i < playerList.Count(); i++)
-                {
-                    Debug.Log(playerList[i].joinCode);
-                }
-                //JoinCode joinCode = JoinCodeRestAPI.GetJoinCode("JKAWEDI");
-                //Debug.Log(joinCode.joinCode);
-            }
-            catch(Exception e)
-            {
-                Debug.Log("Cannot Get Join Codes" + e);
-            }
         });
         advisorBackButton?.onClick.AddListener(() =>
         {
@@ -312,8 +308,8 @@ public class UIManager : NetworkSingleton<UIManager>
         Logger.Instance.accumlateScore();
         Logger.Instance.resetScore();
 
-        scorearray[i-1] = (GameManager.Instance.NumberOfGames);
-        Debug.Log("value "+ (i-1) +" : "+ scorearray[i-1]);
+        scorearray[GameNum - 1] = (GameManager.Instance.NumberOfGames);
+        Debug.Log("value "+ (GameNum - 1) +" : "+ scorearray[GameNum - 1]);
         
         if(gameState != GameState.GameOver)
         {
@@ -343,6 +339,62 @@ public class UIManager : NetworkSingleton<UIManager>
             $"Infected: {infected}\n" +
             $"Timer: {((int)time)}s";
 
+    }
+    IEnumerator loadJoinCodes()
+    {
+        Debug.Log("Loading Join Codes");
+        var stopWatch = new System.Diagnostics.Stopwatch();
+        stopWatch.Restart();
+
+        var thread = new Thread(JoinCodeListThread);
+        thread.Start();
+
+        joinCodeloadingIcon.SetActive(true);
+
+        //If http resquest has no response. Artifical delay 2.5 secs
+        while (!JoinCodeListReceived() && stopWatch.IsRunning)
+        {
+            Debug.Log("Wait for Join Code " + stopWatch.ElapsedMilliseconds.ToString() + "s");
+            yield return new WaitForSeconds(0.1f);
+        }
+        stopWatch.Stop();
+        Debug.Log("Thread Time Taken: " + stopWatch.ElapsedMilliseconds.ToString());
+
+        yield return new WaitForSeconds(1f);
+        joinCodeloadingIcon.SetActive(false);
+
+        if(playerList != null)
+            JoinCodeLobbyManager.instance.DisplayLobbies(playerList);
+
+        //JoinCode joinCode = JoinCodeRestAPI.GetJoinCode("JKAWEDI");
+        //Debug.Log(joinCode.joinCode);
+    }
+    private bool JoinCodeListReceived()
+    {
+        lock(_lock)
+            return playerList != null;
+    }
+    private void JoinCodeListThread()
+    {
+        try
+        {
+            //List<JoinCode> playerList = new List<JoinCode>();
+            playerList = new List<JoinCode>();
+            string json = JoinCodeRestAPI.GetJoinCodes();
+            
+            lock (_lock)
+            {
+                playerList = JoinCodeRestAPI.Deserialize<JoinCode>(json);
+            }
+
+            Debug.Log("BackgroundThread: Finished getting player list");
+            
+        }
+        catch (Exception e)
+        {
+            playerList = null;
+            Debug.Log("Error Cannot Get Join Codes. " + e);
+        }
     }
     IEnumerator loadAssets()
     {

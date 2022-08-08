@@ -34,8 +34,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -1.6979065, y: 0}
-  m_SizeDelta: {x: -37.3519, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -55.1229, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &718514051860854461
 CanvasRenderer:
@@ -145,7 +145,7 @@ GameObject:
   - component: {fileID: 718514051870970052}
   - component: {fileID: -3129865896908216515}
   m_Layer: 5
-  m_Name: JoinEntry
+  m_Name: JoinCodeEntry
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -183,6 +183,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f1738e14b4256b40ac2104282a2272a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enterBtn: {fileID: 718514052429875232}
+  enterBtnText: {fileID: 718514051860854460}
+  joinCode: 
 --- !u!1 &718514052429875234
 GameObject:
   m_ObjectHideFlags: 0
