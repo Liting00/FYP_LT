@@ -81,3 +81,4 @@ build Version/MonoBleedingEdge/etc/mono/browscap.ini
 build Version/MonoBleedingEdge/etc/mono/config
 build Version/MonoBleedingEdge/etc/mono/mconfig/config.xml
 build Version/My project_BurstDebugInformation_DoNotShip/Data/Plugins/x86_64/lib_burst_generated.txt
+build Version/My project_BurstDebugInformation_DoNotShip/Data/Plugins/x86_64/lib_burst_generated.txt
