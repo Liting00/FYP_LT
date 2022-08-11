@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class bullet : MonoBehaviour
 {
+    //Not Used
     private void Awake()
     {
         Destroy(gameObject, 2);

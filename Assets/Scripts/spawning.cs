@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class spawning : MonoBehaviour
 {
+    //Not Used
     public GameObject[] npcs;
     public Transform npc_transform;
 
