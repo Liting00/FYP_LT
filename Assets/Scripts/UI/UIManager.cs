@@ -99,7 +99,7 @@ public class UIManager : NetworkSingleton<UIManager>
         }
 
         if (GameManager.Instance.IsGameStarted)
-            playerInfo();
+            playerInfoLogger();
 
         if (PlayerManager.Instance.allowQuickJoin)
         {
@@ -230,7 +230,6 @@ public class UIManager : NetworkSingleton<UIManager>
             mainMenu.SetActive(false);
             backButton.gameObject.SetActive(false);
             advisorMenu.SetActive(true);
-            //TODO: Get Request
         });
         advisorBackButton?.onClick.AddListener(() =>
         {
@@ -292,8 +291,9 @@ public class UIManager : NetworkSingleton<UIManager>
         Debug.Log("Enable Advisor UI");
         AdvisorManager.Instance.setAdvisorUIState(true);
         AdvisorManager.Instance.setAdvisorTextBoxState(true);
-        playerInfoText.gameObject.SetActive(true);
-        AdvisorManager.Instance.insertAdvise(AdvisorAdvice.NoAdvice);
+        //AdvisorManager.Instance.insertAdvise(AdvisorAdvice.NoAdvice);
+
+        playerInfoText.gameObject.SetActive(false);
     }
     public void roundOver(GameState gameState)
     {
@@ -323,7 +323,7 @@ public class UIManager : NetworkSingleton<UIManager>
             
     }
     //Update player Info Text
-    public void playerInfo()
+    public void playerInfoLogger()
     {
         int greenRemove = Logger.Instance.GreenRemove;
         int blueRemove = Logger.Instance.BlueRemove;
@@ -335,7 +335,7 @@ public class UIManager : NetworkSingleton<UIManager>
             $"Blue Remove: {blueRemove}\n " +
             $"Red Remove: {redRemove}\n " +
             $"Infected: {infected}\n" +
-            $"Timer: {((int)time)}s";
+            $"Timer: {(int)time}s";
 
     }
     IEnumerator loadJoinCodes()

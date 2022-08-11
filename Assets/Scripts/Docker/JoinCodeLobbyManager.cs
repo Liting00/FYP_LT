@@ -28,11 +28,6 @@ public class JoinCodeLobbyManager : MonoBehaviour
     public void DisplayLobbies(List<JoinCode> playerList)
     {
         Debug.Log("Displaying Lobbies");
-        //TODO: Display lobbies
-        /*for (int i = 0; i < playerList.Count(); i++)
-        {
-            Debug.Log(playerList[i].joinCode);
-        }*/
 
         for(int i = 0; i < playerList.Count(); i++)
         {

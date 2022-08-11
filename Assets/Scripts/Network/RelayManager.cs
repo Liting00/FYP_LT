@@ -69,7 +69,6 @@ public class RelayManager : Singleton<RelayManager>
 
         Debug.Log($"Relay Server generated with a join code {relayHostData.JoinCode}");
 
-        //TODO: PUT Request (Done)
         StartCoroutine(JoinCodeRestAPI.PutJoinCode(JoinCode, AllocationID));
 
         return relayHostData;

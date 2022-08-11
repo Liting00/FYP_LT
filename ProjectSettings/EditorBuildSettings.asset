@@ -14,7 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Experimental Environment.unity
     guid: 08b223b075e070f4fa04f808a08e7a95
-  - enabled: 1
-    path: Assets/Scenes/Game Over Menu.unity
+  - enabled: 0
+    path: Assets/Scenes/Game Over Menu (Not Used).unity
     guid: 3b8232a528218c04a953635acd90d9d9
   m_configObjects: {}

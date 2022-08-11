@@ -65,21 +65,6 @@ public class PlayerManager : NetworkSingleton<PlayerManager>
         else
             allowQuickJoin = false;
     }
-    //TODO: Not Used
-    /*
-    private void playerStartGame()
-    {
-        AdvisorManager.Instance.setAdvisorTextBoxState(true);
-        //setPlayerUIState(true);
-    }*/
-    /*[ClientRpc]
-    private void advisorStartGameClientRpc()
-    {
-        if (IsOwner) return;
-
-        AdvisorManager.Instance.setAdvisorUIState(true);
-        AdvisorManager.Instance.setAdvisorTextBoxState(true);
-    }*/
 }
 public enum PlayerState
 {
