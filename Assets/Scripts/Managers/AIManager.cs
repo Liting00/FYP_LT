@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
-public class AiController : MonoBehaviour
+public class AIManager : MonoBehaviour
 {
     public NavMeshAgent agent;
 
