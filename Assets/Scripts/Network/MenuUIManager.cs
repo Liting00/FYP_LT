@@ -1,4 +1,4 @@
-﻿using DilmerGames.Core.Singletons;
+﻿using Network.Singletons;
 using System.Collections;
 using System.Threading.Tasks;
 using UnityEngine;

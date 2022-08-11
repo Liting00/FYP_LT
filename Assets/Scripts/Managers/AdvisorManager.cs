@@ -1,6 +1,6 @@
 using UnityEngine;
 using Unity.Netcode;
-using DilmerGames.Core.Singletons;
+using Network.Singletons;
 using TMPro;
 using System;
 using System.Collections.Generic;

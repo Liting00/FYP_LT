@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using DilmerGames.Core.Singletons;
+using Network.Singletons;
 public class BasedNPC : NetworkSingleton<BasedNPC>
 {
     public float moveSpeed = 0.25f;

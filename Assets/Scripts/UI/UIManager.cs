@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using DilmerGames.Core.Singletons;
+using Network.Singletons;
 using Unity.Netcode;
 using UnityEngine.SceneManagement;
 using System;

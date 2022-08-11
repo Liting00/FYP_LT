@@ -31,7 +31,6 @@ public class ButtonController : MonoBehaviour
     }
     private void KeyPressed()
     {
-        Debug.Log(GameManager.Instance.IsGameStarted);
         if (!GameSettings.ENABLE_SHOOT_PASS_KEYPRESSED || !GameManager.Instance.IsGameStarted)
             return;
 

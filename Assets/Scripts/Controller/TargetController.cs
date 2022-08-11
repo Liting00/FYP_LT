@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DilmerGames.Core.Singletons;
+using Network.Singletons;
 using UnityEngine.Networking;
 using Unity.Netcode;
 

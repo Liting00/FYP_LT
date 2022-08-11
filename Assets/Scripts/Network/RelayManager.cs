@@ -1,5 +1,5 @@
 using UnityEngine;
-using DilmerGames.Core.Singletons;
+using Network.Singletons;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using System.Threading.Tasks;
