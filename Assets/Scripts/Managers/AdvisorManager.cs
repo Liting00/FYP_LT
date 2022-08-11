@@ -33,7 +33,7 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
         selectedAgent = (AdvisorAgent)values.GetValue(random.Next(values.Length));
 
         //For testing purpose
-        selectedAgent = AdvisorAgent.GreenBiasTrigger;
+        //selectedAgent = AdvisorAgent.GreenBiasTrigger;
 
         Debug.Log(selectedAgent);
     }

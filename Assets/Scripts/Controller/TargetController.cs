@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Network.Singletons;
-using UnityEngine.Networking;
 using Unity.Netcode;
 
 public class TargetController : NetworkSingleton<TargetController>
@@ -176,7 +175,7 @@ public class TargetController : NetworkSingleton<TargetController>
             Debug.Log("Change Target");
 
             // Artificial Advisor No Advise Message Delay
-            if (GameSettings.ENABLE_CHANGE_TARGET_DEAY)
+            if (GameSettings.ENABLE_CHANGE_TARGET_DELAY)
                 StartCoroutine(changeTargetDelay());
 
             string previousNpcName = "";

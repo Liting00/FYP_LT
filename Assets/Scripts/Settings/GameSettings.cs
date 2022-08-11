@@ -23,11 +23,11 @@ public static class GameSettings
     //Change Target Advise Update Time
     public static float ADVISOR_UPDATE_TIME = 0.1f;
     
-    //(No Advise Message) Delay when Change Target
+    //(No Advise Message) Artifical Delay when Target is Changed
     public static float CHANGE_TARGET_TARGET_DELAY = 0.5f;
-    
-    // On/Off artifical No Advise delay
-    public static bool ENABLE_CHANGE_TARGET_DEAY = true;
+
+    //Artificial Delay For Advisor No Advise Message
+    public static bool ENABLE_CHANGE_TARGET_DELAY = true;
     
     //Recommended from 2f to 15f
     public static float INFECTION_RADIUS = 8f;
@@ -62,7 +62,9 @@ public static class GameSettings
     public static string LOSEGAMETEXT = "Everyone has been infected";
     public static string GAMEOVERTEXT = "Game Has Ended";
 
+    //Docker HTTP
     public static string BASE = "http://127.0.0.1:5000";
 
+    //Enable KeyPress
     public static bool ENABLE_SHOOT_PASS_KEYPRESSED = true;
 }

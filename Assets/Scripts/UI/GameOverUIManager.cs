@@ -10,12 +10,6 @@ public class GameOverUIManager : MonoBehaviour
         TerminateTimer();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     IEnumerator TerminateTimer()
     {
         yield return new WaitForSeconds(3f);

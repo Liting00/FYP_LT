@@ -7,8 +7,6 @@ using Network.Singletons;
 using Unity.Netcode;
 using UnityEngine.SceneManagement;
 using System;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Threading;
 
 public class UIManager : NetworkSingleton<UIManager>
