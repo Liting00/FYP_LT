@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     private float nextUpdatedTime = 0.1f;
     private float update = 0f;
 
-    public bool gamestart = false;
+    private bool gamestart = false;
 
     public int NumberOfGames { get; set; }
 
