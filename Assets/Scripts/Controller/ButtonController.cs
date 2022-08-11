@@ -25,21 +25,21 @@ public class ButtonController : MonoBehaviour
 
     public AudioSource PassAudio;
 
-    private void Awake()
-    {
-        Debug.Log("Button Controller is called");
-    }
-    private void Start()
-    {
-        //GameObject AManager = GameObject.Find("Advisor Manager");
-    }
     private void Update()
     {
-        if(Input.GetKeyUp(KeyCode.Space))
+        KeyPressed();
+    }
+    private void KeyPressed()
+    {
+        Debug.Log(GameManager.Instance.IsGameStarted);
+        if (!GameSettings.ENABLE_SHOOT_PASS_KEYPRESSED || !GameManager.Instance.IsGameStarted)
+            return;
+
+        if (Input.GetKeyUp(KeyCode.Space))
         {
             PlayerShoot();
         }
-        if(Input.GetKeyUp(KeyCode.DownArrow) || Input.GetKeyUp(KeyCode.UpArrow) || Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.RightArrow))
+        if (Input.GetKeyUp(KeyCode.DownArrow) || Input.GetKeyUp(KeyCode.UpArrow) || Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.RightArrow))
         {
             PlayerPass();
         }

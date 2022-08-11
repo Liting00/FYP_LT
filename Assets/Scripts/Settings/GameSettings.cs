@@ -52,7 +52,7 @@ public static class GameSettings
     public static int TILE_SELECT = 2;
 
     //Delay for Game Over screen to appear after all red npcs is removed
-    public static float ENDGAME_DELAY = 1.2f;
+    public static float ENDGAME_SCENE_DELAY = 1.2f;
 
     //Number of Game per Session
     public static int NUMBEROFGAMES = 5;
@@ -63,4 +63,6 @@ public static class GameSettings
     public static string GAMEOVERTEXT = "Game Has Ended";
 
     public static string BASE = "http://127.0.0.1:5000";
+
+    public static bool ENABLE_SHOOT_PASS_KEYPRESSED = true;
 }

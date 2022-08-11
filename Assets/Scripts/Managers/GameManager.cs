@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     private float nextUpdatedTime = 0.1f;
     private float update = 0f;
 
-    private bool gamestart = false;
+    public bool gamestart = false;
 
     public int NumberOfGames { get; set; }
 
@@ -118,12 +118,12 @@ public class GameManager : MonoBehaviour
     {
         gamestart = false;
 
-        //delay the End Game in N sec
+        //Artifical Delay the End Game Scene for N sec
         StartCoroutine(LoadFinishGameSessionAsynchronously(gameState));
     }
     IEnumerator LoadFinishGameSessionAsynchronously(GameState gameState)
     {
-        yield return new WaitForSeconds(GameSettings.ENDGAME_DELAY);
+        yield return new WaitForSeconds(GameSettings.ENDGAME_SCENE_DELAY);
 
         SpawnManager.Instance.despawnNpcs();
         GridManager.Instance.despawnTiles();

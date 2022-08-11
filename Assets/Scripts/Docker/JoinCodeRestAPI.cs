@@ -42,7 +42,7 @@ public static class JoinCodeRestAPI
 
             if (webRequest.result != UnityWebRequest.Result.Success)
             {
-                Debug.Log("Error: " + webRequest.error);
+                Debug.Log("Error HTTP Put: " + webRequest.error);
             }
             else
             {
@@ -86,7 +86,7 @@ public static class JoinCodeRestAPI
 
             if (webRequest.result != UnityWebRequest.Result.Success)
             {
-                Debug.Log("Error: " + webRequest.error);
+                Debug.Log("Error HTTP Delete: " + webRequest.error);
             }
             else
             {
