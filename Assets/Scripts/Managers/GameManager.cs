@@ -38,7 +38,6 @@ public class GameManager : MonoBehaviour
     }
     private void OnApplicationQuit()
     {
-        //TODO: Delete (Done)
         if(PlayerManager.Instance.playerState == PlayerState.Shooter)
         {
             string joinCode = RelayManager.Instance.JoinCode;

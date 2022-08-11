@@ -25,7 +25,6 @@ public static class JoinCodeRestAPI
         string json = reader.ReadToEnd();
         return JsonUtility.FromJson<JoinCode>(json);
     }
-    //TODO: Delete and Put
     public static IEnumerator PutJoinCode(string joinCode, string allocationID)
     {
         string data = "{\"allocationID\":\"" + allocationID + "\"}";

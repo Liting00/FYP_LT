@@ -30,7 +30,6 @@ public class JoinGameEntry : MonoBehaviour
 
     private void EnterCode()
     {
-        //TODO: Enter the code onto inputTextfield
         GameObject inputCodeTextField = GameObject.Find("InputCodeTextField");
         Graphic graphic = inputCodeTextField.GetComponent<InputField>().placeholder;
         ((TextMeshProUGUI)graphic).text = joinCode;
