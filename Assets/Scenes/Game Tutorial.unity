@@ -263,12 +263,14 @@ MonoBehaviour:
   backButton: {fileID: 1159150463}
   tutorialMessage: {fileID: 625681918}
   TutorialMsg:
-  - {fileID: 21300000, guid: f2ce088dae8d5be46aec62948a514688, type: 3}
-  - {fileID: 21300000, guid: 139b9534d2ce73f4a8f999287721a691, type: 3}
-  - {fileID: 21300000, guid: b461b1a715fd34f4f8552b232f127e44, type: 3}
-  - {fileID: 21300000, guid: 367531a70ecda764b9c091d2f59b98ed, type: 3}
-  - {fileID: 21300000, guid: 85ae26213578ca64fb1ac1ac2e1ebd63, type: 3}
-  - {fileID: 21300000, guid: 8811929f61ea5eb4d8c4a66e53076ed8, type: 3}
+  - {fileID: 21300000, guid: b282c5852b0726a4d85d1a337bba60c0, type: 3}
+  - {fileID: 21300000, guid: 9d96d21d83cc4204784b24df5b7b5c0f, type: 3}
+  - {fileID: 21300000, guid: 2ce76fd3a57349f4cbfcd12e8e82ae64, type: 3}
+  - {fileID: 21300000, guid: 2e3746d5d0faa8f4b88f14289f6bd300, type: 3}
+  - {fileID: 21300000, guid: 60c1d53006c023b4db9c9795fd757565, type: 3}
+  - {fileID: 21300000, guid: a4677ed21d33cc64abc6aa7327413ed4, type: 3}
+  - {fileID: 21300000, guid: 1ce95283265a93e4ab844d5596ddcde3, type: 3}
+  - {fileID: 21300000, guid: e9a391de6ae12d645aab1d107b5b3ba1, type: 3}
   BackgroundSprite: {fileID: 21300000, guid: 43d462773aeafb9499ff8e0363ac04cd, type: 3}
   Image: {fileID: 1288951018}
   BackgroundImage: {fileID: 768517223}
