@@ -7,12 +7,13 @@ public class GameOverUIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        TerminateTimer();
+        StartCoroutine(TerminateTimer());
     }
 
     IEnumerator TerminateTimer()
     {
         yield return new WaitForSeconds(3f);
+        Debug.Log("Application Quit");
         Application.Quit();
     }
 }

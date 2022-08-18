@@ -26,6 +26,9 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
 
     private void Start()
     {
+        //Inital Advise
+        insertAdvise(AdvisorAdvice.NoAdvice);
+
         //Run Advisor Agent if Single Player
         Array values = Enum.GetValues(typeof(AdvisorAgent));
         System.Random random = new System.Random();
@@ -148,7 +151,7 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
     }
     private void advisorAgent(AdvisorAgent advisorAgent)
     {
-        //disable advisor if host is interacting with real player or advisor player
+        //disable advisor if host is interacting with real player
         if (PlayerManager.Instance.PlayerInGame == 2) return;
 
         // Change Target Delay

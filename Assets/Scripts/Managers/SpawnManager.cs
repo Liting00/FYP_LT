@@ -59,7 +59,7 @@ public class SpawnManager : NetworkSingleton<SpawnManager>
     {
         if (NetworkManager.IsServer)
             spawnNPCs();
-        GameManager.Instance.ChangeState(GameState.Targeter);
+        GameManager.Instance.ChangeState(GameState.TargeterOn);
     }
     private void spawnNPCs()
     {

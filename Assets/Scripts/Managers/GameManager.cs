@@ -1,12 +1,14 @@
+using Network.Singletons;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public class GameManager : NetworkSingleton<GameManager>
 {
-    public static GameManager Instance;
-    public GameState GameState;
+    //public static GameManager Instance;
+    public GameState GameState = GameState.NoState;
 
     private float nextUpdatedTime = 0.1f;
     private float update = 0f;
@@ -18,8 +20,6 @@ public class GameManager : MonoBehaviour
     private float counter_timer;
     private bool counter_start = false;
     public float timer { get => counter_timer; set => counter_timer = value; }
-
-
 
     private void Update()
     {
@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
         if (update > nextUpdatedTime)
         {
             update = 0f;
+            updateGameStateClientRPC(GameState);
             checkGame();
         }
     }
@@ -49,7 +50,7 @@ public class GameManager : MonoBehaviour
     }
     private void Awake()
     {
-        Instance = this;
+        //Instance = this;
         Debug.Log("Game Manager is called");
     }
     public bool IsGameStarted
@@ -63,6 +64,7 @@ public class GameManager : MonoBehaviour
     public void ChangeState(GameState newState)
     {
         GameState = newState;
+        updateGameStateClientRPC(GameState);
         Debug.Log("State Change: " + GameState);
         switch (newState)
         {
@@ -74,7 +76,7 @@ public class GameManager : MonoBehaviour
                 Debug.Log("Generate Spawn State");
                 SpawnManager.Instance.generateNPCs();
                 break;
-            case GameState.Targeter:
+            case GameState.TargeterOn:
                 TargetController.Instance.targetInit();
                 counter_start = true;
                 counter_timer = 0;
@@ -128,14 +130,23 @@ public class GameManager : MonoBehaviour
         GridManager.Instance.despawnTiles();
         UIManager.Instance.roundOver(gameState);      
     }
+    [ClientRpc]
+    private void updateGameStateClientRPC(GameState gameState)
+    {
+        if (IsOwner) return;
+
+        GameState = gameState;
+    }
+
 }
 
 public enum GameState
 {
-    GenerateGrid = 0,
-    SpawnNPC = 1,
-    Targeter = 2,
-    WinRound = 3,
-    LoseRound = 4,
-    GameOver = 5
+    NoState = 0,
+    GenerateGrid = 1,
+    SpawnNPC = 2,
+    TargeterOn = 3,
+    WinRound = 4,
+    LoseRound = 5,
+    GameOver = 6
 }

@@ -6392,7 +6392,6 @@ MonoBehaviour:
   playerPassButton: {fileID: 401084180}
   advisorShootButton: {fileID: 141031720}
   advisorPassButton: {fileID: 635302550}
-  exitButton: {fileID: 1900169545}
   ShootAudio: {fileID: 1423692283}
   PassAudio: {fileID: 806776907}
 --- !u!1 &1617812135
@@ -6831,6 +6830,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: feccdb1f2f9fc434bb9fb649af0961f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  quitButton: {fileID: 1900169545}
   startServerButton: {fileID: 1933271577}
   startHostButton: {fileID: 177783161}
   startClientButton: {fileID: 211456308}

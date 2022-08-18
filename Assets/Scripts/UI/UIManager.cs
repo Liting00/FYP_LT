@@ -12,6 +12,9 @@ using System.Threading;
 public class UIManager : NetworkSingleton<UIManager>
 {
     [SerializeField]
+    private Button quitButton;
+
+    [SerializeField]
     private Button startServerButton;
 
     [SerializeField]
@@ -130,6 +133,12 @@ public class UIManager : NetworkSingleton<UIManager>
 
         StartCoroutine(loadAssets());
 
+        //Quit Game Button
+        quitButton?.onClick.AddListener(() =>
+        {
+            Debug.Log("Quit Game Button Pressed");
+            SceneManager.LoadScene(nextSceneIndex);
+        });
         //Start HOST (Shooter)
         startHostButton?.onClick.AddListener(async () =>
         {
@@ -187,7 +196,8 @@ public class UIManager : NetworkSingleton<UIManager>
 
                     playerText.text = "Could not Join Game. Invalid Input Code";
                     playerText.gameObject.SetActive(true);
-                    
+                    StartCoroutine(JoinCodeError());
+
                     advisorMenu.SetActive(true);
                     backButton.gameObject.SetActive(true);
                     return;
@@ -199,6 +209,7 @@ public class UIManager : NetworkSingleton<UIManager>
 
                 playerText.text = "Could not Join Game. Empty Input Code";
                 playerText.gameObject.SetActive(true);
+                StartCoroutine(JoinCodeError());
 
                 Debug.Log("Empty Input Code.");
                 return;
@@ -209,6 +220,7 @@ public class UIManager : NetworkSingleton<UIManager>
 
                 playerText.text = "Could not Join Game. Network Unable";
                 playerText.gameObject.SetActive(true);
+                StartCoroutine(JoinCodeError());
 
                 Debug.Log("Network Unable.");
                 return;
@@ -269,13 +281,23 @@ public class UIManager : NetworkSingleton<UIManager>
 
                 loadingIcon.SetActive(true);
                 playerStartGame();
-                advisorStartGameClientRpc();
                 loadingIcon.SetActive(false);
 
                 GameManager.Instance.ChangeState(GameState.GenerateGrid);
+                Debug.Log("Start Advisor keys");
+                advisorStartGameClientRpc();
                 return;
             }
         });
+    }
+    IEnumerator JoinCodeError()
+    {
+        RectTransform assign_text_1RT = playerText.GetComponent<RectTransform>();
+        assign_text_1RT.anchoredPosition = new Vector3(29.60201f, 300f, 0f);
+
+        yield return new WaitForSeconds(3f);
+        assign_text_1RT.anchoredPosition = new Vector3(29.60201f, 156.5f, 0f);
+        playerText.gameObject.SetActive(false);
     }
     private void playerStartGame()
     {
@@ -288,15 +310,35 @@ public class UIManager : NetworkSingleton<UIManager>
     {
         if (IsOwner) return;
 
-        Debug.Log("Enable Advisor UI");
-        AdvisorManager.Instance.setAdvisorUIState(true);
-        AdvisorManager.Instance.setAdvisorTextBoxState(true);
-        //AdvisorManager.Instance.insertAdvise(AdvisorAdvice.NoAdvice);
-
+        //blue,red,green elimination
         playerInfoText.gameObject.SetActive(false);
+        Debug.Log(GameManager.Instance.GameState);
+        if (GameManager.Instance.GameState == GameState.WinRound || GameManager.Instance.GameState == GameState.NoState
+            || GameManager.Instance.GameState == GameState.LoseRound)
+        {
+            Debug.Log("Shooter Waiting to Start Game");
+            AdvisorManager.Instance.setAdvisorUIState(false);
+            AdvisorManager.Instance.setAdvisorTextBoxState(false);
+            playerText.text = GameSettings.ADVISORWAITTEXT;
+            playerText.gameObject.SetActive(true);
+        }
+        else 
+        {
+            Debug.Log("Shooter Start Game");
+            Debug.Log("Enable Advisor UI");
+            AdvisorManager.Instance.setAdvisorUIState(true);
+            AdvisorManager.Instance.setAdvisorTextBoxState(true);
+            //TODO: Add or not Add when Human Advisor enters the game
+            AdvisorManager.Instance.insertAdvise(AdvisorAdvice.NoAdvice);
+            AdvisorManager.Instance.updateAdviseTextServerRpc(AdvisorAdvice.NoAdvice);
+            playerText.gameObject.SetActive(false);
+        }
     }
     public void roundOver(GameState gameState)
     {
+        //Send to Advisor
+        AdvisorRoundOverClientRPC(gameState);
+
         playerText.text = GameResultMessage(gameState);
         playerText.gameObject.SetActive(true);
 
@@ -321,6 +363,23 @@ public class UIManager : NetworkSingleton<UIManager>
             numGameText.gameObject.SetActive(false);
         }
             
+    }
+    [ClientRpc]
+    private void AdvisorRoundOverClientRPC(GameState gameState)
+    {
+        if (IsOwner) return;
+
+        Debug.Log("Disable Advisor UI");
+        AdvisorManager.Instance.setAdvisorUIState(false);
+        AdvisorManager.Instance.setAdvisorTextBoxState(false);
+
+        Debug.Log(gameState);
+        if (gameState == GameState.WinRound || gameState == GameState.LoseRound)
+        {
+            Debug.Log("Show Advisor Message");
+            playerText.text = GameSettings.ADVISORWAITTEXT;
+            playerText.gameObject.SetActive(true);
+        }
     }
     //Update player Info Text
     public void playerInfoLogger()

@@ -18,9 +18,6 @@ public class ButtonController : MonoBehaviour
     [SerializeField]
     private Button advisorPassButton;
 
-    [SerializeField]
-    private Button exitButton;
-
     public AudioSource ShootAudio;
 
     public AudioSource PassAudio;
@@ -50,7 +47,6 @@ public class ButtonController : MonoBehaviour
         playerPassButton.onClick.AddListener(() => buttonCallBack(playerPassButton));
         advisorShootButton.onClick.AddListener(() => buttonCallBack(advisorShootButton));
         advisorPassButton.onClick.AddListener(() => buttonCallBack(advisorPassButton));
-        exitButton.onClick.AddListener(() => buttonCallBack(exitButton));
     }
     private void buttonCallBack(Button buttonPressed)
     {
@@ -70,10 +66,6 @@ public class ButtonController : MonoBehaviour
         if (buttonPressed == advisorPassButton)
         {
             AdvisorPass();
-        }
-        if (buttonPressed == exitButton)
-        {
-            SceneManager.LoadScene("Game Over");
         }
     }
     private void PlayerShoot()
