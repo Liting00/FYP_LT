@@ -35,8 +35,8 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
 
         selectedAgent = (AdvisorAgent)values.GetValue(random.Next(values.Length));
 
-        //For testing purpose
-        selectedAgent = AdvisorAgent.BlueBias;
+        //Round 1 always start with Green Bias
+        selectedAgent = AdvisorAgent.Auto;
 
         Debug.Log(selectedAgent);
     }
@@ -46,7 +46,43 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
         if (update > nextUpdatedTime)
         {
             update = 0f;
+            if (GameManager.Instance.NumberOfGames == 1)
+            {
+                if (Logger.Instance.GreenRemove < SpawnManager.Instance.Infected)
+                {
+
+                    selectedAgent = AdvisorAgent.GreenTrigger;
+                }
+                else
+                {
+
+                    selectedAgent = AdvisorAgent.GreenBias;
+                }
+                Debug.Log("Round " + GameManager.Instance.NumberOfGames + "selected agent: " + selectedAgent);
+            }
+            else if (GameManager.Instance.NumberOfGames == 2)
+            {
+                if (Logger.Instance.BlueRemove < SpawnManager.Instance.Infected)
+                {
+
+                    selectedAgent = AdvisorAgent.BlueTrigger;
+                }
+                else
+                {
+
+                    selectedAgent = AdvisorAgent.BlueBias;
+                }
+                Debug.Log("Round " + GameManager.Instance.NumberOfGames + "selected agent: " + selectedAgent);
+            }
+            else if (GameManager.Instance.NumberOfGames == 3)
+            {
+                selectedAgent = AdvisorAgent.RedTrigger;
+                Debug.Log("Round " + GameManager.Instance.NumberOfGames + "selected agent: " + selectedAgent);
+            }
+            else
+                selectedAgent = AdvisorAgent.Auto;
             advisorAgent(selectedAgent);
+
         }
 
     }
@@ -575,9 +611,35 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
         }
     }
 
+    //Need to edit
     private void AutoAdvice()
     {
-        
+        bool RedBiasNPC = true;
+        bool GreenBiasNPC = false;
+        bool BlueBiasNPC = false;
+
+        if (GameManager.Instance.score[1, 0] > GameManager.Instance.score[1, 1] && GameManager.Instance.score[2, 0] < GameManager.Instance.score[2, 1])
+        {
+            Debug.Log("Round 1 Green removed : Blue removed" + GameManager.Instance.score[1, 0] + GameManager.Instance.score[1, 1]);
+            GreenBiasNPC = true;
+        }
+        else if ((GameManager.Instance.score[1, 0] < GameManager.Instance.score[1, 1] && GameManager.Instance.score[2, 0] > GameManager.Instance.score[2, 1]))
+        {
+            Debug.Log("Round 1 Green removed : Blue removed" + GameManager.Instance.score[1, 0] + GameManager.Instance.score[1, 1]);
+            BlueBiasNPC = true;
+        }
+        else
+        {
+            Debug.Log("Round 1 Green removed : Blue removed" + GameManager.Instance.score[1, 0] + GameManager.Instance.score[1, 1]);
+            RedBiasNPC = true;
+        }
+        if (GreenBiasNPC)
+            GreenBiasAdvice();
+        if (BlueBiasNPC)
+            BlueBiasAdvice();
+        if (RedBiasNPC)
+            RedTriggerAdvice();
+
     }
     private string Advise(AdvisorAdvice advisorAdvice)
     {
