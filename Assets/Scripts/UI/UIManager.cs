@@ -404,7 +404,7 @@ public class UIManager : NetworkSingleton<UIManager>
             playerInfoText.text = $"Green Remove: {greenRemove}\n " +
             $"Blue Remove: {blueRemove}\n " +
             $"Red Remove: {redRemove}\n " +
-            $"<color=#00FF00>Infected: {infected}</color>\n" +
+            $"<color=#FFFF00>Infected: {infected}</color>\n" +
             $"Timer: {(int)time}s";
         }
         else
@@ -412,7 +412,7 @@ public class UIManager : NetworkSingleton<UIManager>
             playerInfoText.text = $"Green Remove: {greenRemove}\n " +
             $"Blue Remove: {blueRemove}\n " +
             $"Red Remove: {redRemove}\n " +
-            $"<color=#00FF00>Infected: {infected}</color>\n" +
+            $"<color=#FF0000>Infected: {infected}</color>\n" +
             $"Timer: {(int)time}s";
         }
 

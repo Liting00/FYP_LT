@@ -36,7 +36,7 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
         selectedAgent = (AdvisorAgent)values.GetValue(random.Next(values.Length));
 
         //For testing purpose
-        //selectedAgent = AdvisorAgent.GreenBiasTrigger;
+        selectedAgent = AdvisorAgent.BlueBias;
 
         Debug.Log(selectedAgent);
     }
@@ -359,10 +359,11 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
         }
     }*/
 
+    //Shoot when there is green in it or red alone 
     private void GreenBiasAdvice()
     {
         bool shootGreenNPC = false;
-        bool shootOnlyHostileNpc = false;
+        bool shootRedNPC = true;
 
         if (SpawnManager.Instance.Infected == 0)
         {
@@ -375,29 +376,23 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
             if (npc == null)
                 continue;
 
-            // Detect Single infected in the killzone
-            if ((npc.name.Contains("Hostile") || npc.name.Contains("Infected")) && !npc.name.Contains("Non"))
-            {
-                //Debug.Log("Detect Only Infected");
-                shootOnlyHostileNpc = true;
-            }
             // Detect GreenNonHostileNPC in the killzone
             if (npc.name.Contains("GreenNonHostileNPC") && !npc.name.Contains("Infected"))
             {
                 //Debug.Log("Detect Green Hostile");
                 shootGreenNPC = true;
-                shootOnlyHostileNpc = false;
+                shootRedNPC = false;
             }
             // Detect BlueNonHostileNPC in the killzone
             else if (npc.name.Contains("BlueNonHostileNPC") && !npc.name.Contains("Infected"))
             {
                 //Debug.Log("Detect Blue Hostile");
                 shootGreenNPC = false;
-                shootOnlyHostileNpc = false;
+                shootRedNPC = false;
             }
         }
         //true if the tile only has a Hostile Npc or green npc
-        if (shootOnlyHostileNpc || shootGreenNPC)
+        if (shootGreenNPC|| shootRedNPC)
         {
             insertAdvise(AdvisorAdvice.Shoot);
             updateAdviseClientRpc(AdvisorAdvice.Shoot);
@@ -409,24 +404,175 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
         }
     }
 
+    //shoot when there is blue in it or red alone
     private void BlueBiasAdvice()
     {
-        
+        bool shootBlueNPC = false;
+        bool shootRedNPC = true;
+
+        if (SpawnManager.Instance.Infected == 0)
+        {
+            insertAdvise(AdvisorAdvice.NoAdvice);
+            return;
+        }
+
+        foreach (GameObject npc in TargetController.Instance.highlightedNPCs)
+        {
+            if (npc == null)
+                continue;
+
+            // Detect GreenNonHostileNPC in the killzone
+            if (npc.name.Contains("BlueNonHostileNPC") && !npc.name.Contains("Infected"))
+            {
+                //Debug.Log("Detect Green Hostile");
+                shootBlueNPC = true;
+                shootRedNPC = false;
+            }
+            // Detect BlueNonHostileNPC in the killzone
+            else if (npc.name.Contains("GreenNonHostileNPC") && !npc.name.Contains("Infected"))
+            {
+                //Debug.Log("Detect Blue Hostile");
+                shootBlueNPC = false;
+                shootRedNPC = false;
+            }
+        }
+        //true if the tile only has a Hostile Npc or green npc
+        if (shootBlueNPC || shootRedNPC)
+        {
+            insertAdvise(AdvisorAdvice.Shoot);
+            updateAdviseClientRpc(AdvisorAdvice.Shoot);
+        }
+        else
+        {
+            insertAdvise(AdvisorAdvice.Pass);
+            updateAdviseClientRpc(AdvisorAdvice.Pass);
+        }
     }
 
+    //Only shot when there is green in it
     private void GreenTriggerAdvice()
     {
-        
+        bool shootGreenNPC = false;
+
+        if (SpawnManager.Instance.Infected == 0)
+        {
+            insertAdvise(AdvisorAdvice.NoAdvice);
+            return;
+        }
+
+        foreach (GameObject npc in TargetController.Instance.highlightedNPCs)
+        {
+            if (npc == null)
+                continue;
+
+            // Detect GreenNonHostileNPC in the killzone
+            if (npc.name.Contains("GreenNonHostileNPC") && !npc.name.Contains("Infected"))
+            {
+                //Debug.Log("Detect Green Hostile");
+                shootGreenNPC = true;
+            }
+            // Detect BlueNonHostileNPC in the killzone
+            else if (npc.name.Contains("BlueNonHostileNPC") && !npc.name.Contains("Infected"))
+            {
+                //Debug.Log("Detect Blue Hostile");
+                shootGreenNPC = false;
+            }
+        }
+        //true if the tile only has a Hostile Npc or green npc
+        if (shootGreenNPC)
+        {
+            insertAdvise(AdvisorAdvice.Shoot);
+            updateAdviseClientRpc(AdvisorAdvice.Shoot);
+        }
+        else
+        {
+            insertAdvise(AdvisorAdvice.Pass);
+            updateAdviseClientRpc(AdvisorAdvice.Pass);
+        }
     }
 
+    //shot only when there is blue in it
     private void BlueTriggerAdvice()
     {
-        
+        bool shootBlueNPC = false;
+
+        if (SpawnManager.Instance.Infected == 0)
+        {
+            insertAdvise(AdvisorAdvice.NoAdvice);
+            return;
+        }
+
+        foreach (GameObject npc in TargetController.Instance.highlightedNPCs)
+        {
+            if (npc == null)
+                continue;
+
+            // Detect GreenNonHostileNPC in the killzone
+            if (npc.name.Contains("BlueNonHostileNPC") && !npc.name.Contains("Infected"))
+            {
+                //Debug.Log("Detect Green Hostile");
+                shootBlueNPC = true;
+            }
+            // Detect BlueNonHostileNPC in the killzone
+            else if (npc.name.Contains("GreenNonHostileNPC") && !npc.name.Contains("Infected"))
+            {
+                //Debug.Log("Detect Blue Hostile");
+                shootBlueNPC = false;
+            }
+        }
+        //true if the tile only has a Hostile Npc or green npc
+        if (shootBlueNPC)
+        {
+            insertAdvise(AdvisorAdvice.Shoot);
+            updateAdviseClientRpc(AdvisorAdvice.Shoot);
+        }
+        else
+        {
+            insertAdvise(AdvisorAdvice.Pass);
+            updateAdviseClientRpc(AdvisorAdvice.Pass);
+        }
     }
 
+    //Only shoot when red is alone
     private void RedTriggerAdvice()
     {
-        
+        bool shootRedNPC = true;
+
+        if (SpawnManager.Instance.Infected == 0)
+        {
+            insertAdvise(AdvisorAdvice.NoAdvice);
+            return;
+        }
+
+        foreach (GameObject npc in TargetController.Instance.highlightedNPCs)
+        {
+            if (npc == null)
+                continue;
+
+            // Detect GreenNonHostileNPC in the killzone
+            if (npc.name.Contains("BlueNonHostileNPC") && !npc.name.Contains("Infected"))
+            {
+                //Debug.Log("Detect Green Hostile");
+                shootRedNPC = false;
+            }
+            // Detect BlueNonHostileNPC in the killzone
+            else if (npc.name.Contains("GreenNonHostileNPC") && !npc.name.Contains("Infected"))
+            {
+                //Debug.Log("Detect Blue Hostile");
+                shootRedNPC = false;
+            }
+        }
+        //true if the tile only has a Hostile Npc or green npc
+        if (shootRedNPC)
+        {
+            insertAdvise(AdvisorAdvice.Shoot);
+            updateAdviseClientRpc(AdvisorAdvice.Shoot);
+        }
+        else
+        {
+            insertAdvise(AdvisorAdvice.Pass);
+            updateAdviseClientRpc(AdvisorAdvice.Pass);
+        }
     }
 
     private void AutoAdvice()
