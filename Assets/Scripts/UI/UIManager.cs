@@ -387,14 +387,34 @@ public class UIManager : NetworkSingleton<UIManager>
         int greenRemove = Logger.Instance.GreenRemove;
         int blueRemove = Logger.Instance.BlueRemove;
         int redRemove = Logger.Instance.RedRemove;
-        int infected = Logger.Instance.Infected;
+        //int infected = Logger.Instance.Infected;
+        int infected = SpawnManager.Instance.Infected;
         float time = GameManager.Instance.timer;
 
-        playerInfoText.text = $"Green Remove: {greenRemove}\n " +
+        if (infected <= 4)
+        {
+            playerInfoText.text = $"Green Remove: {greenRemove}\n " +
             $"Blue Remove: {blueRemove}\n " +
             $"Red Remove: {redRemove}\n " +
-            $"Infected: {infected}\n" +
+            $"<color=#00FF00>Infected: {infected}</color>\n" +
             $"Timer: {(int)time}s";
+        }
+        else if (infected >4 && infected<=12)
+        {
+            playerInfoText.text = $"Green Remove: {greenRemove}\n " +
+            $"Blue Remove: {blueRemove}\n " +
+            $"Red Remove: {redRemove}\n " +
+            $"<color=#00FF00>Infected: {infected}</color>\n" +
+            $"Timer: {(int)time}s";
+        }
+        else
+        {
+            playerInfoText.text = $"Green Remove: {greenRemove}\n " +
+            $"Blue Remove: {blueRemove}\n " +
+            $"Red Remove: {redRemove}\n " +
+            $"<color=#00FF00>Infected: {infected}</color>\n" +
+            $"Timer: {(int)time}s";
+        }
 
     }
     IEnumerator loadJoinCodes()

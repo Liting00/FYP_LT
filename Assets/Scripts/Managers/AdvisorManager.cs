@@ -46,28 +46,7 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
         if (update > nextUpdatedTime)
         {
             update = 0f;
-            //will increase the count if the number of hostile npc increase
-            if (count > 3)
-            {
-                if (Logger.Instance.GreenRemove > Logger.Instance.BlueRemove)
-                {
-                    Debug.Log("More green than blue removed");
-                    advisorAgent(AdvisorAgent.GreenBiasTrigger);
-                }
-                    
-                if (Logger.Instance.BlueRemove > Logger.Instance.GreenRemove)
-                {
-                    Debug.Log("More blue than green removed");
-                    advisorAgent(AdvisorAgent.BlueBiasTrigger);
-                }
-                else
-                {
-                    Debug.Log("Just shoot");
-                    advisorAgent(AdvisorAgent.Trigger);
-                }
-            }
-            else
-                advisorAgent(selectedAgent);
+            advisorAgent(selectedAgent);
         }
 
     }
@@ -163,6 +142,7 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
 
         switch (advisorAgent)
         {
+            /*
             case AdvisorAgent.Pacifist:
                 Pacifist();
                 break;
@@ -181,8 +161,29 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
             case AdvisorAgent.BlueNpcCollection:
                 BlueBiasCollection();
                 break;
+            */
+
+            case AdvisorAgent.GreenBias:
+                GreenBiasAdvice();
+                break;
+            case AdvisorAgent.BlueBias:
+                BlueBiasAdvice();
+                break;
+            case AdvisorAgent.GreenTrigger:
+                GreenTriggerAdvice();
+                break;
+            case AdvisorAgent.BlueTrigger:
+                BlueTriggerAdvice();
+                break;
+            case AdvisorAgent.RedTrigger:
+                RedTriggerAdvice();
+                break;
+            case AdvisorAgent.Auto:
+                AutoAdvice();
+                break;
         }
     }
+    /*
     private void Pacifist()
     {
         if (highlightedNPCs.Count >= 1)
@@ -356,6 +357,81 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
             insertAdvise(AdvisorAdvice.Pass);
             updateAdviseClientRpc(AdvisorAdvice.Pass);
         }
+    }*/
+
+    private void GreenBiasAdvice()
+    {
+        bool shootGreenNPC = false;
+        bool shootOnlyHostileNpc = false;
+
+        if (SpawnManager.Instance.Infected == 0)
+        {
+            insertAdvise(AdvisorAdvice.NoAdvice);
+            return;
+        }
+
+        foreach (GameObject npc in TargetController.Instance.highlightedNPCs)
+        {
+            if (npc == null)
+                continue;
+
+            // Detect Single infected in the killzone
+            if ((npc.name.Contains("Hostile") || npc.name.Contains("Infected")) && !npc.name.Contains("Non"))
+            {
+                //Debug.Log("Detect Only Infected");
+                shootOnlyHostileNpc = true;
+            }
+            // Detect GreenNonHostileNPC in the killzone
+            if (npc.name.Contains("GreenNonHostileNPC") && !npc.name.Contains("Infected"))
+            {
+                //Debug.Log("Detect Green Hostile");
+                shootGreenNPC = true;
+                shootOnlyHostileNpc = false;
+            }
+            // Detect BlueNonHostileNPC in the killzone
+            else if (npc.name.Contains("BlueNonHostileNPC") && !npc.name.Contains("Infected"))
+            {
+                //Debug.Log("Detect Blue Hostile");
+                shootGreenNPC = false;
+                shootOnlyHostileNpc = false;
+            }
+        }
+        //true if the tile only has a Hostile Npc or green npc
+        if (shootOnlyHostileNpc || shootGreenNPC)
+        {
+            insertAdvise(AdvisorAdvice.Shoot);
+            updateAdviseClientRpc(AdvisorAdvice.Shoot);
+        }
+        else
+        {
+            insertAdvise(AdvisorAdvice.Pass);
+            updateAdviseClientRpc(AdvisorAdvice.Pass);
+        }
+    }
+
+    private void BlueBiasAdvice()
+    {
+        
+    }
+
+    private void GreenTriggerAdvice()
+    {
+        
+    }
+
+    private void BlueTriggerAdvice()
+    {
+        
+    }
+
+    private void RedTriggerAdvice()
+    {
+        
+    }
+
+    private void AutoAdvice()
+    {
+        
     }
     private string Advise(AdvisorAdvice advisorAdvice)
     {
@@ -376,6 +452,7 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
 }
 public enum AdvisorAgent
 {
+    /*
     Pacifist = 0,
     Trigger = 1,
     GreenBiasTrigger = 2,
@@ -383,6 +460,13 @@ public enum AdvisorAgent
     GreenNpcCollection = 4,
     BlueNpcCollection = 5,
     auto = 6
+    */
+    GreenBias = 0,
+    BlueBias = 1,
+    GreenTrigger = 2,
+    BlueTrigger = 3,
+    RedTrigger = 4,
+    Auto = 5
 }
 public enum AdvisorAdvice
 {
