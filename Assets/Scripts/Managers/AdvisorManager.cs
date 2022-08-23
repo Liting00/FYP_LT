@@ -36,7 +36,7 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
         selectedAgent = (AdvisorAgent)values.GetValue(random.Next(values.Length));
 
         //Round 1 always start with Green Bias
-        selectedAgent = AdvisorAgent.Auto;
+        selectedAgent = AdvisorAgent.GreenBias;
 
         Debug.Log(selectedAgent);
     }
@@ -48,29 +48,29 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
             update = 0f;
             if (GameManager.Instance.NumberOfGames == 1)
             {
-                if (Logger.Instance.GreenRemove < SpawnManager.Instance.Infected)
+                if (Logger.Instance.GreenRemove >= Logger.Instance.RedRemove)
                 {
 
-                    selectedAgent = AdvisorAgent.GreenTrigger;
+                    selectedAgent = AdvisorAgent.GreenBias;
                 }
                 else
                 {
 
-                    selectedAgent = AdvisorAgent.GreenBias;
+                    selectedAgent = AdvisorAgent.GreenTrigger;
                 }
                 Debug.Log("Round " + GameManager.Instance.NumberOfGames + "selected agent: " + selectedAgent);
             }
             else if (GameManager.Instance.NumberOfGames == 2)
             {
-                if (Logger.Instance.BlueRemove < SpawnManager.Instance.Infected)
+                if (Logger.Instance.BlueRemove >= SpawnManager.Instance.Infected)
                 {
 
-                    selectedAgent = AdvisorAgent.BlueTrigger;
+                    selectedAgent = AdvisorAgent.BlueBias;
                 }
                 else
                 {
 
-                    selectedAgent = AdvisorAgent.BlueBias;
+                    selectedAgent = AdvisorAgent.BlueTrigger;
                 }
                 Debug.Log("Round " + GameManager.Instance.NumberOfGames + "selected agent: " + selectedAgent);
             }
@@ -428,10 +428,15 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
             }
         }
         //true if the tile only has a Hostile Npc or green npc
-        if (shootGreenNPC|| shootRedNPC)
+        if (shootGreenNPC)
         {
             insertAdvise(AdvisorAdvice.Shoot);
             updateAdviseClientRpc(AdvisorAdvice.Shoot);
+        }
+        else if (shootRedNPC)
+        {
+            insertAdvise(AdvisorAdvice.NoAdvice);
+            updateAdviseClientRpc(AdvisorAdvice.NoAdvice);
         }
         else
         {
@@ -473,10 +478,15 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
             }
         }
         //true if the tile only has a Hostile Npc or green npc
-        if (shootBlueNPC || shootRedNPC)
+        if (shootBlueNPC)
         {
             insertAdvise(AdvisorAdvice.Shoot);
             updateAdviseClientRpc(AdvisorAdvice.Shoot);
+        }
+        else if (shootRedNPC)
+        {
+            insertAdvise(AdvisorAdvice.NoAdvice);
+            updateAdviseClientRpc(AdvisorAdvice.NoAdvice);
         }
         else
         {
