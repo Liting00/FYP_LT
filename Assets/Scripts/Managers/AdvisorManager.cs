@@ -7,6 +7,7 @@ using System.Collections.Generic;
 
 public class AdvisorManager : NetworkSingleton<AdvisorManager>
 {
+
     [SerializeField]
     private GameObject advisorUI;
 
@@ -18,7 +19,8 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
     private float update = 0f;
     private float nextUpdatedTime = GameSettings.ADVISOR_UPDATE_TIME;
 
-    public bool changeTargetDelay {get; set;}
+    public bool changeTargetDelay { get; set; }
+    public bool AutoButtonPressed { get; set; }
 
     internal List<GameObject> highlightedNPCs = new List<GameObject>();
 
@@ -48,50 +50,23 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
             update = 0f;
             if (GameManager.Instance.NumberOfGames == 1)
             {
-                if (Logger.Instance.RedRemove == Logger.Instance.BlueRemove && Logger.Instance.RedRemove > Logger.Instance.GreenRemove)
-                {
-                    Debug.Log("Red removed == Blue removed");
-                    selectedAgent = AdvisorAgent.GreenOnly;
-                }
-
-                else if (Logger.Instance.GreenRemove < Logger.Instance.BlueRemove)
-                {
-                    Debug.Log("Blue removed more than green");
-                    selectedAgent = AdvisorAgent.GreenOnly;
-                }
-                else if (Logger.Instance.GreenRemove < Logger.Instance.RedRemove)
-                {
-                    Debug.Log("Red removed more than green");
-                    selectedAgent = AdvisorAgent.GreenTrigger;
-                }
-                else
-                {
-                    selectedAgent = AdvisorAgent.GreenBias;
-                }
-                Debug.Log("Round " + GameManager.Instance.NumberOfGames + "selected agent: " + selectedAgent);
+                selectedAgent = AdvisorAgent.GreenBias;
             }
             else if (GameManager.Instance.NumberOfGames == 2)
-            {/*
-                if (Logger.Instance.BlueRemove >= SpawnManager.Instance.Infected)
-                {
-
-                    selectedAgent = AdvisorAgent.BlueBias;
-                }
-                else
-                {
-
-                    selectedAgent = AdvisorAgent.BlueTrigger;
-                }*/
-                selectedAgent = AdvisorAgent.GreenTrigger;
-                Debug.Log("Round " + GameManager.Instance.NumberOfGames + "selected agent: " + selectedAgent);
+            {
+                selectedAgent = AdvisorAgent.BlueBias;
             }
             else if (GameManager.Instance.NumberOfGames == 3)
             {
-                selectedAgent = AdvisorAgent.RedTrigger;
-                Debug.Log("Round " + GameManager.Instance.NumberOfGames + "selected agent: " + selectedAgent);
+                selectedAgent = AdvisorAgent.GreenOnly;
+            }
+            else if (GameManager.Instance.NumberOfGames == 4)
+            {
+                selectedAgent = AdvisorAgent.BlueOnly;
             }
             else
-                selectedAgent = AdvisorAgent.Auto;
+                selectedAgent = AdvisorAgent.RedTrigger;
+            Debug.Log("Round " + GameManager.Instance.NumberOfGames + " advisor used: " + selectedAgent);
             advisorAgent(selectedAgent);
 
         }
@@ -178,7 +153,7 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
     private void advisorAgent(AdvisorAgent advisorAgent)
     {
         //disable advisor if host is interacting with real player
-        if (PlayerManager.Instance.PlayerInGame == 2) return;
+        if (PlayerManager.Instance.PlayerInGame == 2 && !AutoButtonPressed) return;
 
         // Change Target Delay
         if (changeTargetDelay)
@@ -216,24 +191,24 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
             case AdvisorAgent.BlueBias:
                 BlueBiasAdvice();
                 break;
-            case AdvisorAgent.GreenTrigger:
-                GreenTriggerAdvice();
-                break;
-            case AdvisorAgent.BlueTrigger:
-                BlueTriggerAdvice();
-                break;
+            //case AdvisorAgent.GreenTrigger:
+            //GreenTriggerAdvice();
+            //break;
+            //case AdvisorAgent.BlueTrigger:
+            //BlueTriggerAdvice();
+            //break;
             case AdvisorAgent.GreenOnly:
                 GreenOnlyAdvice();
                 break;
             case AdvisorAgent.BlueOnly:
-                    BlueOnlyAdvice();
+                BlueOnlyAdvice();
                 break;
             case AdvisorAgent.RedTrigger:
                 RedTriggerAdvice();
                 break;
-            //case AdvisorAgent.Auto:
-                //AutoAdvice();
-                //break;
+            case AdvisorAgent.Auto:
+                AutoAdvice();
+                break;
         }
     }
     /*
@@ -418,7 +393,7 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
         bool shootGreenNPC = false;
         bool shootRedNPC = true;
 
-        if (SpawnManager.Instance.Infected == 0)
+        if (SpawnManager.Instance.Infected == 0 || SpawnManager.Instance.Infected == 1)
         {
             insertAdvise(AdvisorAdvice.NoAdvice);
             return;
@@ -444,17 +419,11 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
                 shootRedNPC = false;
             }
         }
-        //true if the tile has green npc
-        if (shootGreenNPC)
+        //true if the tile has green npc or only red npc
+        if (shootGreenNPC || shootRedNPC)
         {
             insertAdvise(AdvisorAdvice.Shoot);
             updateAdviseClientRpc(AdvisorAdvice.Shoot);
-        }
-        //true if the tile only has red npc
-        else if (shootRedNPC)
-        {
-            insertAdvise(AdvisorAdvice.NoAdvice);
-            updateAdviseClientRpc(AdvisorAdvice.NoAdvice);
         }
         //tile does not has any green npc 
         else
@@ -470,7 +439,7 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
         bool shootBlueNPC = false;
         bool shootRedNPC = true;
 
-        if (SpawnManager.Instance.Infected == 0)
+        if (SpawnManager.Instance.Infected == 0 || SpawnManager.Instance.Infected == 1)
         {
             insertAdvise(AdvisorAdvice.NoAdvice);
             return;
@@ -496,17 +465,11 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
                 shootRedNPC = false;
             }
         }
-        //true if the tile has blue npc 
-        if (shootBlueNPC)
+        //true if the tile has blue npc or only red npc
+        if (shootBlueNPC || shootRedNPC)
         {
             insertAdvise(AdvisorAdvice.Shoot);
             updateAdviseClientRpc(AdvisorAdvice.Shoot);
-        }
-        //true if the tile only has red npc 
-        else if (shootRedNPC)
-        {
-            insertAdvise(AdvisorAdvice.NoAdvice);
-            updateAdviseClientRpc(AdvisorAdvice.NoAdvice);
         }
         //tile does not contain any blue npc
         else
@@ -516,6 +479,7 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
         }
     }
 
+    /*
     //Only shot when there is green in it
     private void GreenTriggerAdvice()
     {
@@ -601,13 +565,14 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
             updateAdviseClientRpc(AdvisorAdvice.Pass);
         }
     }
-
+    */
     //Shoot when there is only green in it
     private void GreenOnlyAdvice()
     {
         bool shootGreenNPC = false;
+        bool shootRedNPC = true;
 
-        if (SpawnManager.Instance.Infected == 0)
+        if (SpawnManager.Instance.Infected == 0 || SpawnManager.Instance.Infected == 1)
         {
             insertAdvise(AdvisorAdvice.NoAdvice);
             return;
@@ -621,21 +586,29 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
             // Detect GreenNonHostileNPC in the killzone
             if (npc.name.Contains("GreenNonHostileNPC") && !npc.name.Contains("Infected"))
             {
-                if(npc.name.Contains("BlueNonHostileNPC") && !npc.name.Contains("Infected"))
-                //Debug.Log("Detect Green Hostile");
-                shootGreenNPC = false;
+                if (npc.name.Contains("BlueNonHostileNPC") && !npc.name.Contains("Infected"))
+                {
+                    //Debug.Log("Detect Green Hostile");
+                    shootGreenNPC = false;
+                    shootRedNPC = false;
+                }
                 else
+                {
+                    //Debug.Log("Detect Green Hostile");
                     shootGreenNPC = true;
+                    shootRedNPC = false;
+                }
             }
             // Detect BlueNonHostileNPC in the killzone
             else if (npc.name.Contains("BlueNonHostileNPC") && !npc.name.Contains("Infected"))
             {
                 //Debug.Log("Detect Blue Hostile");
                 shootGreenNPC = false;
+                shootRedNPC = false;
             }
         }
         //true if the tile only has green npc 
-        if (shootGreenNPC)
+        if (shootGreenNPC || shootRedNPC)
         {
             insertAdvise(AdvisorAdvice.Shoot);
             updateAdviseClientRpc(AdvisorAdvice.Shoot);
@@ -652,8 +625,9 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
     private void BlueOnlyAdvice()
     {
         bool shootBlueNPC = false;
+        bool shootRedNPC = true;
 
-        if (SpawnManager.Instance.Infected == 0)
+        if (SpawnManager.Instance.Infected == 0 || SpawnManager.Instance.Infected == 1)
         {
             insertAdvise(AdvisorAdvice.NoAdvice);
             return;
@@ -668,20 +642,27 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
             if (npc.name.Contains("BlueNonHostileNPC") && !npc.name.Contains("Infected"))
             {
                 if (npc.name.Contains("GreenNonHostileNPC") && !npc.name.Contains("Infected"))
+                {
                     //Debug.Log("Detect Green Hostile");
                     shootBlueNPC = false;
+                    shootRedNPC = false;
+                }
                 else
+                {
                     shootBlueNPC = true;
+                    shootRedNPC = false;
+                }
             }
             // Detect GreenNonHostileNPC in the killzone
             else if (npc.name.Contains("GreenNonHostileNPC") && !npc.name.Contains("Infected"))
             {
                 //Debug.Log("Detect Green Hostile");
                 shootBlueNPC = false;
+                shootRedNPC = false;
             }
         }
         //true if the tile only has blue npc
-        if (shootBlueNPC)
+        if (shootBlueNPC || shootRedNPC)
         {
             insertAdvise(AdvisorAdvice.Shoot);
             updateAdviseClientRpc(AdvisorAdvice.Shoot);
@@ -699,7 +680,7 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
     {
         bool shootRedNPC = true;
 
-        if (SpawnManager.Instance.Infected == 0)
+        if (SpawnManager.Instance.Infected == 0 || SpawnManager.Instance.Infected == 1)
         {
             insertAdvise(AdvisorAdvice.NoAdvice);
             return;
@@ -740,32 +721,37 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
     //Need to edit
     private void AutoAdvice()
     {
-        bool RedBiasNPC = true;
-        bool GreenBiasNPC = false;
-        bool BlueBiasNPC = false;
-
-        if (GameManager.Instance.score[1, 0] > GameManager.Instance.score[1, 1] && GameManager.Instance.score[2, 0] < GameManager.Instance.score[2, 1])
+        //Removed Green more than blue
+        if (Logger.Instance.GreenRemove >= Logger.Instance.BlueRemove)
         {
-            Debug.Log("Round 1 Green removed : Blue removed" + GameManager.Instance.score[1, 0] + GameManager.Instance.score[1, 1]);
-            GreenBiasNPC = true;
+            Debug.Log("Green Bias advice called: " + GameManager.Instance.NumberOfGames + " , " + Logger.Instance.GreenRemove + " , " + Logger.Instance.BlueRemove);
+            GreenBiasAdvice();
         }
-        else if ((GameManager.Instance.score[1, 0] < GameManager.Instance.score[1, 1] && GameManager.Instance.score[2, 0] > GameManager.Instance.score[2, 1]))
+        else if (2 * Logger.Instance.GreenRemove >= Logger.Instance.BlueRemove)
         {
-            Debug.Log("Round 1 Green removed : Blue removed" + GameManager.Instance.score[1, 0] + GameManager.Instance.score[1, 1]);
-            BlueBiasNPC = true;
+            Debug.Log("Green Bias advice called: " + GameManager.Instance.NumberOfGames + " , " + Logger.Instance.GreenRemove + " , " + Logger.Instance.BlueRemove);
+            GreenOnlyAdvice();
+        }
+        else if (Logger.Instance.GreenRemove <= Logger.Instance.BlueRemove)
+        {
+            Debug.Log("Green Bias advice called: " + GameManager.Instance.NumberOfGames + " , " + Logger.Instance.GreenRemove + " , " + Logger.Instance.BlueRemove);
+            BlueBiasAdvice();
+        }
+        else if (2 * Logger.Instance.GreenRemove <= Logger.Instance.BlueRemove)
+        {
+            Debug.Log("Green Bias advice called: " + GameManager.Instance.NumberOfGames + " , " + Logger.Instance.GreenRemove + " , " + Logger.Instance.BlueRemove);
+            BlueOnlyAdvice();
+        }
+        else if (Logger.Instance.GreenRemove == Logger.Instance.BlueRemove && Logger.Instance.GreenRemove < Logger.Instance.RedRemove)
+        {
+            Debug.Log("Green Bias advice called: " + GameManager.Instance.NumberOfGames + " , " + Logger.Instance.GreenRemove + " , " + Logger.Instance.BlueRemove);
+            RedTriggerAdvice();
         }
         else
         {
-            Debug.Log("Round 1 Green removed : Blue removed" + GameManager.Instance.score[1, 0] + GameManager.Instance.score[1, 1]);
-            RedBiasNPC = true;
-        }
-        if (GreenBiasNPC)
+            Debug.Log("Green Bias advice called: " + GameManager.Instance.NumberOfGames + " , " + Logger.Instance.GreenRemove + " , " + Logger.Instance.BlueRemove);
             GreenBiasAdvice();
-        if (BlueBiasNPC)
-            BlueBiasAdvice();
-        if (RedBiasNPC)
-            RedTriggerAdvice();
-
+        }
     }
     private string Advise(AdvisorAdvice advisorAdvice)
     {
@@ -797,12 +783,10 @@ public enum AdvisorAgent
     */
     GreenBias = 0,
     BlueBias = 1,
-    GreenTrigger = 2,
-    BlueTrigger = 3,
-    RedTrigger = 4,
-    GreenOnly = 5,
-    BlueOnly = 6,
-    Auto = 7
+    RedTrigger = 2,
+    GreenOnly = 3,
+    BlueOnly = 4,
+    Auto = 5
 }
 public enum AdvisorAdvice
 {
