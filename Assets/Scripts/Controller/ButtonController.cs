@@ -18,6 +18,9 @@ public class ButtonController : MonoBehaviour
     [SerializeField]
     private Button advisorPassButton;
 
+    [SerializeField]
+    private Button advisorAutoButton;
+
     public AudioSource ShootAudio;
 
     public AudioSource PassAudio;
@@ -47,6 +50,7 @@ public class ButtonController : MonoBehaviour
         playerPassButton.onClick.AddListener(() => buttonCallBack(playerPassButton));
         advisorShootButton.onClick.AddListener(() => buttonCallBack(advisorShootButton));
         advisorPassButton.onClick.AddListener(() => buttonCallBack(advisorPassButton));
+        advisorAutoButton.onClick.AddListener(() => buttonCallBack(advisorAutoButton));
     }
     private void buttonCallBack(Button buttonPressed)
     {
@@ -66,6 +70,10 @@ public class ButtonController : MonoBehaviour
         if (buttonPressed == advisorPassButton)
         {
             AdvisorPass();
+        }
+        if (buttonPressed == advisorAutoButton)
+        {
+            AdvisorAuto();
         }
     }
     private void PlayerShoot()
@@ -95,6 +103,7 @@ public class ButtonController : MonoBehaviour
         if (PassAudio != null)
             PassAudio.Play();
 
+        AdvisorManager.Instance.AutoButtonPressed = false;
         AdvisorManager.Instance.insertAdvise(AdvisorAdvice.Shoot);
         AdvisorManager.Instance.updateAdviseTextServerRpc(AdvisorAdvice.Shoot);
         Debug.Log("Advisor Shoot Button pressed");
@@ -104,8 +113,20 @@ public class ButtonController : MonoBehaviour
         if (PassAudio != null)
             PassAudio.Play();
 
+        AdvisorManager.Instance.AutoButtonPressed = false;
         AdvisorManager.Instance.insertAdvise(AdvisorAdvice.Pass);
         AdvisorManager.Instance.updateAdviseTextServerRpc(AdvisorAdvice.Pass);
         Debug.Log("Advisor Pass Button pressed");
+
+    }
+
+    private void AdvisorAuto()
+    {
+        if (PassAudio != null)
+            PassAudio.Play();
+
+        AdvisorManager.Instance.AutoButtonPressed = true;
+
+        Debug.Log("Advisor Auto Button pressed");
     }
 }

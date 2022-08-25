@@ -48,7 +48,11 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
         if (update > nextUpdatedTime)
         {
             update = 0f;
-            if (GameManager.Instance.NumberOfGames == 1)
+            if (AutoButtonPressed)
+            {
+                selectedAgent = AdvisorAgent.Auto;
+            }
+            else if (GameManager.Instance.NumberOfGames == 1)
             {
                 selectedAgent = AdvisorAgent.GreenBias;
             }
@@ -422,14 +426,32 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
         //true if the tile has green npc or only red npc
         if (shootGreenNPC || shootRedNPC)
         {
-            insertAdvise(AdvisorAdvice.Shoot);
-            updateAdviseClientRpc(AdvisorAdvice.Shoot);
+            if (AutoButtonPressed)
+            {
+                insertAdvise(AdvisorAdvice.Shoot);
+                updateAdviseClientRpc(AdvisorAdvice.Shoot);
+                updateAdviseTextServerRpc(AdvisorAdvice.Shoot);
+            }
+            else
+            {
+                insertAdvise(AdvisorAdvice.Shoot);
+                updateAdviseClientRpc(AdvisorAdvice.Shoot);
+            }
         }
         //tile does not has any green npc 
         else
         {
-            insertAdvise(AdvisorAdvice.Pass);
-            updateAdviseClientRpc(AdvisorAdvice.Pass);
+            if (AutoButtonPressed)
+            {
+                insertAdvise(AdvisorAdvice.Pass);
+                updateAdviseClientRpc(AdvisorAdvice.Pass);
+                updateAdviseTextServerRpc(AdvisorAdvice.Pass);
+            }
+            else
+            {
+                insertAdvise(AdvisorAdvice.Pass);
+                updateAdviseClientRpc(AdvisorAdvice.Pass);
+            }
         }
     }
 
@@ -468,14 +490,33 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
         //true if the tile has blue npc or only red npc
         if (shootBlueNPC || shootRedNPC)
         {
-            insertAdvise(AdvisorAdvice.Shoot);
-            updateAdviseClientRpc(AdvisorAdvice.Shoot);
+            if (AutoButtonPressed)
+            {
+                insertAdvise(AdvisorAdvice.Shoot);
+                updateAdviseClientRpc(AdvisorAdvice.Shoot);
+                updateAdviseTextServerRpc(AdvisorAdvice.Shoot);
+            }
+            else 
+            {
+                insertAdvise(AdvisorAdvice.Shoot);
+                updateAdviseClientRpc(AdvisorAdvice.Shoot);
+            }
+            
         }
         //tile does not contain any blue npc
         else
         {
-            insertAdvise(AdvisorAdvice.Pass);
-            updateAdviseClientRpc(AdvisorAdvice.Pass);
+            if (AutoButtonPressed)
+            {
+                insertAdvise(AdvisorAdvice.Pass);
+                updateAdviseClientRpc(AdvisorAdvice.Pass);
+                updateAdviseTextServerRpc(AdvisorAdvice.Pass);
+            }
+            else 
+            {
+                insertAdvise(AdvisorAdvice.Pass);
+                updateAdviseClientRpc(AdvisorAdvice.Pass);
+            }
         }
     }
 
@@ -610,14 +651,34 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
         //true if the tile only has green npc 
         if (shootGreenNPC || shootRedNPC)
         {
-            insertAdvise(AdvisorAdvice.Shoot);
-            updateAdviseClientRpc(AdvisorAdvice.Shoot);
+            if (AutoButtonPressed)
+            {
+                insertAdvise(AdvisorAdvice.Shoot);
+                updateAdviseClientRpc(AdvisorAdvice.Shoot);
+                updateAdviseTextServerRpc(AdvisorAdvice.Shoot);
+            }
+            else
+            {
+                insertAdvise(AdvisorAdvice.Shoot);
+                updateAdviseClientRpc(AdvisorAdvice.Shoot);
+            }
+            
         }
         //tile contain blue npc or only red npc 
         else
         {
-            insertAdvise(AdvisorAdvice.Pass);
-            updateAdviseClientRpc(AdvisorAdvice.Pass);
+            if (AutoButtonPressed)
+            {
+                insertAdvise(AdvisorAdvice.Pass);
+                updateAdviseClientRpc(AdvisorAdvice.Pass);
+                updateAdviseTextServerRpc(AdvisorAdvice.Pass);
+            }
+            else 
+            {
+
+                insertAdvise(AdvisorAdvice.Pass);
+                updateAdviseClientRpc(AdvisorAdvice.Pass);
+            }
         }
     }
 
@@ -664,14 +725,34 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
         //true if the tile only has blue npc
         if (shootBlueNPC || shootRedNPC)
         {
-            insertAdvise(AdvisorAdvice.Shoot);
-            updateAdviseClientRpc(AdvisorAdvice.Shoot);
+            if (AutoButtonPressed)
+            {
+
+                insertAdvise(AdvisorAdvice.Shoot);
+                updateAdviseClientRpc(AdvisorAdvice.Shoot);
+                updateAdviseTextServerRpc(AdvisorAdvice.Shoot);
+            }
+            else 
+            {
+                insertAdvise(AdvisorAdvice.Shoot);
+                updateAdviseClientRpc(AdvisorAdvice.Shoot);
+            }
         }
         //if the tile contain green npc or only red npc
         else
         {
-            insertAdvise(AdvisorAdvice.Pass);
-            updateAdviseClientRpc(AdvisorAdvice.Pass);
+            if (AutoButtonPressed)
+            {
+                insertAdvise(AdvisorAdvice.Pass);
+                updateAdviseClientRpc(AdvisorAdvice.Pass);
+                updateAdviseTextServerRpc(AdvisorAdvice.Shoot);
+
+            }
+            else
+            {
+                insertAdvise(AdvisorAdvice.Pass);
+                updateAdviseClientRpc(AdvisorAdvice.Pass);
+            }
         }
     }
 
@@ -707,14 +788,32 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
         //true if the tile only has red npc
         if (shootRedNPC)
         {
-            insertAdvise(AdvisorAdvice.Shoot);
-            updateAdviseClientRpc(AdvisorAdvice.Shoot);
+            if (AutoButtonPressed)
+            {
+                insertAdvise(AdvisorAdvice.Shoot);
+                updateAdviseClientRpc(AdvisorAdvice.Shoot);
+                updateAdviseTextServerRpc(AdvisorAdvice.Shoot);
+            }
+            else
+            {
+                insertAdvise(AdvisorAdvice.Shoot);
+                updateAdviseClientRpc(AdvisorAdvice.Shoot);
+            }
         }
         //if the tile contain green or blue npc
         else
         {
-            insertAdvise(AdvisorAdvice.Pass);
-            updateAdviseClientRpc(AdvisorAdvice.Pass);
+            if (AutoButtonPressed)
+            {
+                insertAdvise(AdvisorAdvice.Pass);
+                updateAdviseClientRpc(AdvisorAdvice.Pass);
+                updateAdviseTextServerRpc(AdvisorAdvice.Pass);
+            }
+            else
+            {
+                insertAdvise(AdvisorAdvice.Pass);
+                updateAdviseClientRpc(AdvisorAdvice.Pass);
+            }
         }
     }
 
