@@ -24,8 +24,6 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
 
     internal List<GameObject> highlightedNPCs = new List<GameObject>();
 
-    public int count { get; set; }
-
     private void Start()
     {
         //Inital Advise
@@ -68,8 +66,14 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
             {
                 selectedAgent = AdvisorAgent.BlueOnly;
             }
-            else
+            else if (GameManager.Instance.NumberOfGames == 5)
+            {
                 selectedAgent = AdvisorAgent.RedTrigger;
+            }
+            else 
+            {
+                selectedAgent = AdvisorAgent.AgentAuto;
+            }
             Debug.Log("Round " + GameManager.Instance.NumberOfGames + " advisor used: " + selectedAgent);
             advisorAgent(selectedAgent);
 
@@ -209,6 +213,9 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
                 break;
             case AdvisorAgent.RedTrigger:
                 RedTriggerAdvice();
+                break;
+            case AdvisorAgent.AgentAuto:
+                AgentAutoAdvice();
                 break;
             case AdvisorAgent.Auto:
                 AutoAdvice();
@@ -818,6 +825,11 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
     }
 
     //Need to edit
+    private void AgentAutoAdvice()
+    {
+        
+    }
+
     private void AutoAdvice()
     {
         //Removed Green more than blue
@@ -885,7 +897,8 @@ public enum AdvisorAgent
     RedTrigger = 2,
     GreenOnly = 3,
     BlueOnly = 4,
-    Auto = 5
+    AgentAuto,
+    Auto = 6
 }
 public enum AdvisorAdvice
 {

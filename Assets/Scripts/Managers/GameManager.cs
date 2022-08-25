@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.IO;
 
 public class GameManager : NetworkSingleton<GameManager>
 {
@@ -61,7 +62,7 @@ public class GameManager : NetworkSingleton<GameManager>
         }
     }
 
-    public int[,] score = new int[10, 5];
+    public int[,] score = new int[10, 10];
     public void ChangeState(GameState newState)
     {
         GameState = newState;
@@ -86,20 +87,12 @@ public class GameManager : NetworkSingleton<GameManager>
             case GameState.WinRound:
                 Debug.Log("Round Win");
                 GameResult(GameState.WinRound);
-                score[NumberOfGames, 0] = Logger.Instance.GreenRemove;
-                score[NumberOfGames, 1] = Logger.Instance.BlueRemove;
-                score[NumberOfGames, 2] = Logger.Instance.RedRemove;
-                score[NumberOfGames, 3] = SpawnManager.Instance.Infected;
-                score[NumberOfGames, 4] = (int)timer;
+                ScoreperRound();
                 break;
             case GameState.LoseRound:
                 Debug.Log("Round Loss");
                 GameResult(GameState.LoseRound);
-                score[NumberOfGames, 0] = Logger.Instance.GreenRemove;
-                score[NumberOfGames, 1] = Logger.Instance.BlueRemove;
-                score[NumberOfGames, 2] = Logger.Instance.RedRemove;
-                score[NumberOfGames, 3] = SpawnManager.Instance.Infected;
-                score[NumberOfGames, 4] = (int)timer;
+                ScoreperRound();
                 break;
             case GameState.GameOver:
                 Debug.Log("Game Over");
@@ -126,6 +119,16 @@ public class GameManager : NetworkSingleton<GameManager>
             ChangeState(GameState.GameOver);
         }
     }
+    private void ScoreperRound()
+    {
+        score[NumberOfGames, 0] = Logger.Instance.GreenRemove;
+        score[NumberOfGames, 1] = Logger.Instance.BlueRemove;
+        score[NumberOfGames, 2] = Logger.Instance.RedRemove;
+        score[NumberOfGames, 3] = SpawnManager.Instance.Infected;
+        score[NumberOfGames, 4] = (int)timer;
+        score[NumberOfGames, 5] = ButtonController.Instance.AdvisorAutoBtnPressed;
+    }
+
     private void GameResult(GameState gameState)
     {
         gamestart = false;
@@ -133,6 +136,7 @@ public class GameManager : NetworkSingleton<GameManager>
         //Artifical Delay the End Game Scene for N sec
         StartCoroutine(LoadFinishGameSessionAsynchronously(gameState));
     }
+
     IEnumerator LoadFinishGameSessionAsynchronously(GameState gameState)
     {
         yield return new WaitForSeconds(GameSettings.ENDGAME_SCENE_DELAY);

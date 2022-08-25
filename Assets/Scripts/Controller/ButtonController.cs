@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Network.Singletons;
 using UnityEngine.SceneManagement;
 
-public class ButtonController : MonoBehaviour
+public class ButtonController : NetworkSingleton<ButtonController>
 {
     [SerializeField]
     private Button playerShootButton;
@@ -25,6 +26,8 @@ public class ButtonController : MonoBehaviour
 
     public AudioSource PassAudio;
 
+    public int AdvisorAutoBtnPressed { get; set;}
+
     private void Update()
     {
         KeyPressed();
@@ -43,6 +46,7 @@ public class ButtonController : MonoBehaviour
             PlayerPass();
         }
     }
+
     void OnEnable()
     {
         //Register Button Events
@@ -57,7 +61,6 @@ public class ButtonController : MonoBehaviour
         if (buttonPressed == playerShootButton)
         {
             PlayerShoot();
-            AdvisorManager.Instance.count++;
         }
         if (buttonPressed == playerPassButton)
         {
@@ -125,8 +128,8 @@ public class ButtonController : MonoBehaviour
         if (PassAudio != null)
             PassAudio.Play();
 
+        AdvisorAutoBtnPressed += 1;
         AdvisorManager.Instance.AutoButtonPressed = true;
-
-        Debug.Log("Advisor Auto Button pressed");
+        Debug.Log("Advisor Auto Button pressed" + AdvisorAutoBtnPressed);
     }
 }
