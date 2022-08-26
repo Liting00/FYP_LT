@@ -7,8 +7,8 @@ public class AIManager : MonoBehaviour
 {
     public NavMeshAgent agent;
 
-    float speed = GameSettings.NPC_SPEED;
-    float walkRadius = GameSettings.NPC_WALKRADIUS;
+    private float speed = GameSettings.NPC_SPEED;
+    private float walkRadius = GameSettings.NPC_WALKRADIUS;
 
     // Start is called before the first frame update
     void Start()
@@ -16,6 +16,8 @@ public class AIManager : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         if (agent != null)
         {
+            //Random Speed
+            //agent.speed =  Mathf.Round(Random.Range(0.05f, speed)* 1000f) / 1000f;
             agent.speed = speed;
             agent.SetDestination(RandomNavMeshLocation());
         }

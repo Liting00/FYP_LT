@@ -36,7 +36,7 @@ public static class GameSettings
     public static int NONHOSTILE_BLUE_NPC = 100;
     public static int HOSTILE_NPC = 4;
 
-    //Range: 0.1f to 1f
+    //Range: 0.1f to 0.5f
     public static float NPC_SPEED = 0.2F;
     //Range: 10 to 100
     public static float NPC_WALKRADIUS = 30;
