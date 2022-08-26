@@ -40,7 +40,7 @@ public class BasedNPC : NetworkSingleton<BasedNPC>
         // TODO: Adjust this
         int rotTime = Random.Range(1, 3);
         float rotateWait = Random.Range(1f, 4f);
-        int rotateLorR = Random.Range(0, 3);
+        int rotateLorR = Random.Range(1, 2);
         float walkWait = Random.Range(1f, 5f);
         float walkTime = Random.Range(1f, 5f);
 
