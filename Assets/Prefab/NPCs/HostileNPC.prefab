@@ -283,7 +283,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 3088670746666952263}
-  walkRadius: 25
 --- !u!195 &3088670746666952263
 NavMeshAgent:
   m_ObjectHideFlags: 0

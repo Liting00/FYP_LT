@@ -250,7 +250,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 2950412123053136056}
-  walkRadius: 125
 --- !u!114 &-3875782246404465219
 MonoBehaviour:
   m_ObjectHideFlags: 0

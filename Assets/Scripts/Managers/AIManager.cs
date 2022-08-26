@@ -1,18 +1,18 @@
 using UnityEngine;
 using UnityEngine.AI;
+
+[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(NavMeshAgent))]
 public class AIManager : MonoBehaviour
 {
     public NavMeshAgent agent;
 
-    [Range(0, 100)] private float speed;
-    [Range(0, 500)] public float walkRadius;
+    float speed = GameSettings.NPC_SPEED;
+    float walkRadius = GameSettings.NPC_WALKRADIUS;
 
     // Start is called before the first frame update
     void Start()
     {
-        //custom movement for all npcs
-        speed = Random.Range(0.1f, 0.25f);
-
         agent = GetComponent<NavMeshAgent>();
         if (agent != null)
         {

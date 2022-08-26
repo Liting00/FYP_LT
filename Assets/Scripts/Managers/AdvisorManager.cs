@@ -827,7 +827,26 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
     //Need to edit
     private void AgentAutoAdvice()
     {
-        
+        if (GameManager.Instance.score[5, 0] + GameManager.Instance.score[5, 1] <= 0.9 * GameManager.Instance.score[5, 2])
+        {
+            RedTriggerAdvice();
+        }
+        else if (GameManager.Instance.score[1, 0] + GameManager.Instance.score[1, 1] > GameManager.Instance.score[1, 2] && GameManager.Instance.score[3, 0] + GameManager.Instance.score[3, 1] > GameManager.Instance.score[3, 2])
+        {
+            if (GameManager.Instance.score[1, 0] > GameManager.Instance.score[1, 1])
+                GreenBiasAdvice();
+            else
+                BlueBiasAdvice();
+        }
+        else if (GameManager.Instance.score[2, 0] == 0 || GameManager.Instance.score[4, 1] == 0)
+        {
+            if (GameManager.Instance.score[2, 2] > 1.5 * GameManager.Instance.score[2, 0])
+                GreenOnlyAdvice();
+            else if (GameManager.Instance.score[4, 2] > 1.5 * GameManager.Instance.score[4, 1])
+                BlueOnlyAdvice();
+        }
+        else //Make machine learning using reward system
+            GreenBiasAdvice();
     }
 
     private void AutoAdvice()
