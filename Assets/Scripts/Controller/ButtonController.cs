@@ -86,7 +86,7 @@ public class ButtonController : NetworkSingleton<ButtonController>
             ShootAudio.Play();
 
         // Record Player follow or not follow Shoot advice
-        string playerShoot = AdvisorManager.Instance.AdviceText(AdvisorAdvice.Shoot);    
+        string playerShoot = GameSettings.RED_BUTTON_TEXT;    
         AdviceLogger(playerShoot);
 
         TargetController.Instance.destroyTarget();
@@ -102,7 +102,7 @@ public class ButtonController : NetworkSingleton<ButtonController>
             PassAudio.Play();
 
         // Record Player follow or not follow Pass advice
-        string playerPass = AdvisorManager.Instance.AdviceText(AdvisorAdvice.Pass);
+        string playerPass = GameSettings.GREEN_BUTTON_TEXT;
         AdviceLogger(playerPass);
 
         TargetController.Instance.changeTarget = true;
