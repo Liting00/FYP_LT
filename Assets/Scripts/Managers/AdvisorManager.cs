@@ -12,7 +12,7 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
     private GameObject advisorUI;
 
     [SerializeField]
-    private TextMeshProUGUI adviseTextBox;
+    public TextMeshProUGUI adviseTextBox;
 
     private AdvisorAgent selectedAgent;
 
@@ -883,7 +883,7 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
             GreenBiasAdvice();
         }
     }
-    private string Advise(AdvisorAdvice advisorAdvice)
+    public string Advise(AdvisorAdvice advisorAdvice)
     {
         string advise;
 

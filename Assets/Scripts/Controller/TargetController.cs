@@ -247,18 +247,22 @@ public class TargetController : NetworkSingleton<TargetController>
             {
                 Logger.Instance.GreenRemove++;
                 SpawnManager.Instance.NonInfected--;
+                Logger.Instance.GreenNPC++;
             }
             else if(npc.name.Contains("BlueNonHostile") && !npc.name.Contains("Infected"))
             {
                 Logger.Instance.BlueRemove++;
                 SpawnManager.Instance.NonInfected--;
+                Logger.Instance.BlueNPC++;
             }
             else
             {
                 Logger.Instance.RedRemove++;
                 SpawnManager.Instance.Infected--;
+                Logger.Instance.RedNPC++;
+                Debug.Log("Red removed: " + Logger.Instance.RedNPC);
             }
-                
+            Logger.Instance.NPC();
             //Debug.Log(npc.name);
             Destroy(npc.gameObject);
         }

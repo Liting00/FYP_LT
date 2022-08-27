@@ -89,6 +89,10 @@ public class ButtonController : NetworkSingleton<ButtonController>
         //string advise = AdvisorManager.Instance.Advise(AdvisorAdvice.NoAdvice);
         AdvisorManager.Instance.insertAdvise(AdvisorAdvice.NoAdvice);
         AdvisorManager.Instance.updateAdviseClientRpc(AdvisorAdvice.NoAdvice);
+        if (AdvisorManager.Instance.adviseTextBox.text == AdvisorManager.Instance.Advise(AdvisorAdvice.Shoot))
+        {
+            Debug.Log("Player followed shoot advice");
+        }
         Debug.Log("Player Shoot Button pressed");
     }
     private void PlayerPass()

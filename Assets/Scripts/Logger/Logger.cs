@@ -18,6 +18,11 @@ public class Logger : NetworkSingleton<Logger>
     public int BlueRemove { get; set; }
     public int RedRemove { get; set; }
     public int Infected { get; set; }
+
+    public int GreenNPC { get; set; }
+    public int BlueNPC{ get; set; }
+    public int RedNPC { get; set; }
+
     public void Awake()
     {
         Instance = this;
@@ -35,5 +40,12 @@ public class Logger : NetworkSingleton<Logger>
         BlueRemove = 0;
         RedRemove = 0;
         Infected = 0;
+    }
+
+    public void NPC()
+    {
+        GreenNPC = 0;
+        BlueNPC = 0;
+        RedNPC = 0;
     }
 }
