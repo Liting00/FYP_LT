@@ -53,7 +53,7 @@ public class StartGameUIManager: MonoBehaviour
             i++;
             backButton.gameObject.SetActive(true);
 
-            Debug.Log("Next Button Pressed");
+            Debug.Log("Next Button For Tutorial is Pressed ");
             if(i >= TutorialMsg.Length)
                 SceneManager.LoadScene(nextSceneIndex);
             else

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Network.Singletons;
 using UnityEngine.SceneManagement;
+using System;
 
 public class ButtonController : NetworkSingleton<ButtonController>
 {
@@ -84,15 +85,15 @@ public class ButtonController : NetworkSingleton<ButtonController>
         if(ShootAudio != null)
             ShootAudio.Play();
 
+        // Record Player follow or not follow Shoot advice
+        string advisorAdvice = AdvisorManager.Instance.Advise(AdvisorAdvice.Shoot);    
+        AdviceLogger(advisorAdvice);
+
         TargetController.Instance.destroyTarget();
         TargetController.Instance.changeTarget = true;
-        //string advise = AdvisorManager.Instance.Advise(AdvisorAdvice.NoAdvice);
         AdvisorManager.Instance.insertAdvise(AdvisorAdvice.NoAdvice);
         AdvisorManager.Instance.updateAdviseClientRpc(AdvisorAdvice.NoAdvice);
-        if (AdvisorManager.Instance.adviseTextBox.text == AdvisorManager.Instance.Advise(AdvisorAdvice.Shoot))
-        {
-            Debug.Log("Player followed shoot advice");
-        }
+        
         Debug.Log("Player Shoot Button pressed");
     }
     private void PlayerPass()
@@ -100,10 +101,22 @@ public class ButtonController : NetworkSingleton<ButtonController>
         if (PassAudio != null)
             PassAudio.Play();
 
+        // Record Player follow or not follow Pass advice
+        string advisorAdvice = AdvisorManager.Instance.Advise(AdvisorAdvice.Pass);
+        AdviceLogger(advisorAdvice);
+
         TargetController.Instance.changeTarget = true;
         AdvisorManager.Instance.insertAdvise(AdvisorAdvice.NoAdvice);
         AdvisorManager.Instance.updateAdviseClientRpc(AdvisorAdvice.NoAdvice);
         Debug.Log("Player Pass Button pressed");
+    }
+    private void AdviceLogger(string AdvisorAdvice)
+    {
+        string currentAdvise = AdvisorManager.Instance.adviseTextBox.text;
+        if (String.Equals(currentAdvise, AdvisorAdvice))
+            Debug.Log($"Player followed {AdvisorAdvice} advice");
+        else
+            Debug.Log($"Player did not follow {AdvisorAdvice} advice");
     }
     private void AdvisorShoot()
     {

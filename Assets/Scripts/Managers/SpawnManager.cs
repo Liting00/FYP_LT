@@ -46,7 +46,7 @@ public class SpawnManager : NetworkSingleton<SpawnManager>
         set
         {
             nonInfected.Value = value;
-            Debug.Log($"Infected:  {infected.Value}");
+            //Debug.Log($"Infected:  {infected.Value}");
         }
     }
     private void Awake()

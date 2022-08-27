@@ -68,7 +68,7 @@ public class HostileNPC : BasedNPC
         {
             //chances of infection
             if (Random.Range(0.0000f, 1f) <= GameSettings.INFECTION_RATE && npc != null) { 
-                Debug.Log("Infect!");
+                //Debug.Log("Infect!");
                 Vector3 spanLoc = npc.transform.position;
                 Quaternion spawnRot = npc.transform.rotation;
 
