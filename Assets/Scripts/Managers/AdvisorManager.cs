@@ -95,15 +95,15 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
         switch (advisorAdvice)
         {
             case AdvisorAdvice.Shoot:
-                adviseTextBox.text = Advise(AdvisorAdvice.Shoot);
+                adviseTextBox.text = AdviceText(AdvisorAdvice.Shoot);
                 adviseTextBox.color = Color.red;
                 break;
             case AdvisorAdvice.Pass:
-                adviseTextBox.text = Advise(AdvisorAdvice.Pass);
+                adviseTextBox.text = AdviceText(AdvisorAdvice.Pass);
                 adviseTextBox.color = Color.green;
                 break;
             case AdvisorAdvice.NoAdvice:
-                adviseTextBox.text = Advise(AdvisorAdvice.NoAdvice);
+                adviseTextBox.text = AdviceText(AdvisorAdvice.NoAdvice);
                 adviseTextBox.color = Color.white;
                 break;
         }
@@ -116,15 +116,15 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
         switch (advisorAdvice)
         {
             case AdvisorAdvice.Shoot:
-                adviseTextBox.text = Advise(AdvisorAdvice.Shoot);
+                adviseTextBox.text = AdviceText(AdvisorAdvice.Shoot);
                 adviseTextBox.color = Color.red;
                 break;
             case AdvisorAdvice.Pass:
-                adviseTextBox.text = Advise(AdvisorAdvice.Pass);
+                adviseTextBox.text = AdviceText(AdvisorAdvice.Pass);
                 adviseTextBox.color = Color.green;
                 break;
             case AdvisorAdvice.NoAdvice:
-                adviseTextBox.text = Advise(AdvisorAdvice.NoAdvice);
+                adviseTextBox.text = AdviceText(AdvisorAdvice.NoAdvice);
                 adviseTextBox.color = Color.white;
                 break;
         }
@@ -137,15 +137,15 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
         switch (advisorAdvice)
         {
             case AdvisorAdvice.Shoot:
-                adviseTextBox.text = Advise(AdvisorAdvice.Shoot);
+                adviseTextBox.text = AdviceText(AdvisorAdvice.Shoot);
                 adviseTextBox.color = Color.red;
                 break;
             case AdvisorAdvice.Pass:
-                adviseTextBox.text = Advise(AdvisorAdvice.Pass);
+                adviseTextBox.text = AdviceText(AdvisorAdvice.Pass);
                 adviseTextBox.color = Color.green;
                 break;
             case AdvisorAdvice.NoAdvice:
-                adviseTextBox.text = Advise(AdvisorAdvice.NoAdvice);
+                adviseTextBox.text = AdviceText(AdvisorAdvice.NoAdvice);
                 adviseTextBox.color = Color.white;
                 break;
         }
@@ -883,7 +883,7 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
             GreenBiasAdvice();
         }
     }
-    public string Advise(AdvisorAdvice advisorAdvice)
+    public string AdviceText(AdvisorAdvice advisorAdvice)
     {
         string advise;
 

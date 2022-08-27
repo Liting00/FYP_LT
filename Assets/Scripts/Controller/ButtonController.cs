@@ -86,8 +86,8 @@ public class ButtonController : NetworkSingleton<ButtonController>
             ShootAudio.Play();
 
         // Record Player follow or not follow Shoot advice
-        string advisorAdvice = AdvisorManager.Instance.Advise(AdvisorAdvice.Shoot);    
-        AdviceLogger(advisorAdvice);
+        string playerShoot = AdvisorManager.Instance.AdviceText(AdvisorAdvice.Shoot);    
+        AdviceLogger(playerShoot);
 
         TargetController.Instance.destroyTarget();
         TargetController.Instance.changeTarget = true;
@@ -102,21 +102,21 @@ public class ButtonController : NetworkSingleton<ButtonController>
             PassAudio.Play();
 
         // Record Player follow or not follow Pass advice
-        string advisorAdvice = AdvisorManager.Instance.Advise(AdvisorAdvice.Pass);
-        AdviceLogger(advisorAdvice);
+        string playerPass = AdvisorManager.Instance.AdviceText(AdvisorAdvice.Pass);
+        AdviceLogger(playerPass);
 
         TargetController.Instance.changeTarget = true;
         AdvisorManager.Instance.insertAdvise(AdvisorAdvice.NoAdvice);
         AdvisorManager.Instance.updateAdviseClientRpc(AdvisorAdvice.NoAdvice);
         Debug.Log("Player Pass Button pressed");
     }
-    private void AdviceLogger(string AdvisorAdvice)
+    private void AdviceLogger(string playerChoice)
     {
         string currentAdvise = AdvisorManager.Instance.adviseTextBox.text;
-        if (String.Equals(currentAdvise, AdvisorAdvice))
-            Debug.Log($"Player followed {AdvisorAdvice} advice");
+        if (String.Equals(currentAdvise, playerChoice))
+            Debug.Log($"Player followed {playerChoice} advice");
         else
-            Debug.Log($"Player did not follow {AdvisorAdvice} advice");
+            Debug.Log($"Player did not follow {playerChoice} advice");
     }
     private void AdvisorShoot()
     {
