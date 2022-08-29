@@ -74,7 +74,7 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
             {
                 selectedAgent = AdvisorAgent.AgentAuto;
             }
-            Debug.Log("Round " + GameManager.Instance.NumberOfGames + " advisor used: " + selectedAgent);
+            // Debug.Log("Round " + GameManager.Instance.NumberOfGames + " advisor used: " + selectedAgent);
             advisorAgent(selectedAgent);
 
         }

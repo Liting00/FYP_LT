@@ -73,10 +73,10 @@ public static class GameSettings
     public static string WINGAMETEXT = "All Hostile are gone";
     public static string LOSEGAMETEXT = "Everyone has been infected";
     public static string GAMEOVERTEXT = "Game Has Ended";
-    public static string ADVISORWAITTEXT = "Please Wait for Game to Start";
+    public static string ADVISORWAITTEXT = "Please Wait for Shooter to Start";
 
     //Docker HTTP
-    public static string BASE = "http://127.0.0.1:5000";
+    public static string BASE = "http://159.223.65.52:5000";
 
     //Enable KeyPress
     public static bool ENABLE_SHOOT_PASS_KEYPRESSED = true;

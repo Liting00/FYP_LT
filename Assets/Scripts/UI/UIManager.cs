@@ -464,7 +464,7 @@ public class UIManager : NetworkSingleton<UIManager>
                 playerList = JoinCodeRestAPI.Deserialize<JoinCode>(json);
             }
 
-            Debug.Log("BackgroundThread: Finished getting player list");
+            Debug.Log("BackgroundThread: Finished getting Shooter's list");
             
         }
         catch (Exception e)

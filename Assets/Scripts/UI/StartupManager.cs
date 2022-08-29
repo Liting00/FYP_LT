@@ -19,13 +19,14 @@ public class StartupManager : MonoBehaviour
         nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
 
         StartCoroutine(InitialLoad());
+     
     }
     IEnumerator InitialLoad()
     {
         playInGameUI.gameObject.SetActive(false);
         loadingIcon.gameObject.SetActive(true);
         yield return new WaitForSeconds(1);
-        playInGameUI.gameObject.SetActive(true);
+        playInGameUI.gameObject.SetActive(false);
         loadingIcon.gameObject.SetActive(false);
         SceneManager.LoadScene(nextSceneIndex);
     }
