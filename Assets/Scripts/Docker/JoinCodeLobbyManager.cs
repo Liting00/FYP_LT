@@ -41,4 +41,14 @@ public class JoinCodeLobbyManager : MonoBehaviour
             listOfJoinCode.Add(createdItem);
         }
     }
+    public void DestroyLobby()
+    {
+        foreach (GameObject item in listOfJoinCode)
+        {
+            if (item == null)
+                continue;
+
+            Destroy(item.gameObject);
+        }
+    }
 }

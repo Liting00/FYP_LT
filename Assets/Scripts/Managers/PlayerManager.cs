@@ -60,10 +60,18 @@ public class PlayerManager : NetworkSingleton<PlayerManager>
     {
         playerInGameText.text = $"Player in Game: {PlayerInGame}";
 
-        if (playersInGame.Value == 2)
-            allowQuickJoin = false;
-        else
+        //Human Advisor left Mid Game
+        if (PlayerInGame < 2 && !allowQuickJoin)
+        {
+            GameManager.Instance.ChangeState(GameState.Interrupted);
+            Logger.Instance.LogInterrupt(GameManager.Instance.NumberOfGames);
+        }
+            
+
+        if (playersInGame.Value < 2)
             allowQuickJoin = true;
+        else
+            allowQuickJoin = false;
     }
 }
 public enum PlayerState

@@ -67,15 +67,18 @@ public static class GameSettings
     //Rate of Infection Interval Min to Max
     public static float INFECTION_INTERVAL_MIN = 5f;
     public static float INFECTION_INTERVAL_MAX = 10f;
-    
+
+    //Human Advisor additional Goal
+    public static string ADDITIONALGOALTEXT = $"Additional Instruction: ";
 
     //Text when the game end or session end
-    public static string WINGAMETEXT = "All Hostile are gone";
-    public static string LOSEGAMETEXT = "Everyone has been infected";
-    public static string GAMEOVERTEXT = "Game Has Ended";
-    public static string ADVISORWAITTEXT = "Please Wait for Shooter to Start";
+    public static string WINGAMETEXT = "All Hostile are Removed. \nPlease Start the Next Round.";
+    public static string LOSEGAMETEXT = "All NPCs has been Infected. \nPlease Start the Next Round.";
+    public static string GAMEOVERTEXT = "You Have Completed the Experiment. \nThank You for Your Participation. \nPlease Wait for the Survey.";
+    public static string ADVISORWAITTEXT = "Please Wait for Shooter to Start Experiment";
+    public static string INTERRUPTEDTEXT = "Game has been Interrupted. \nPlease Start The Next Round.";
 
-    //Docker HTTP
+    //Digital Ocean HTTP
     public static string BASE = "http://159.223.65.52:5000";
 
     //Enable KeyPress

@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -29,6 +30,7 @@ public class StartGameUIManager: MonoBehaviour
     private int nextSceneIndex;
     private int i = 0;
 
+
     private void Start()
     {
         nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
@@ -38,6 +40,7 @@ public class StartGameUIManager: MonoBehaviour
 
         backButton.gameObject.SetActive(false);
         Image.gameObject.SetActive(true);
+
         //BackgroundImage.gameObject.SetActive(true);
     }
     void OnEnable()
@@ -72,3 +75,4 @@ public class StartGameUIManager: MonoBehaviour
         }
     }
 }
+

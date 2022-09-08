@@ -29,7 +29,7 @@ public class GameManager : NetworkSingleton<GameManager>
 
         if (counter_start)
                 counter_timer += Time.deltaTime;
-        
+
         update += Time.deltaTime;
         if (update > nextUpdatedTime)
         {
@@ -98,6 +98,11 @@ public class GameManager : NetworkSingleton<GameManager>
                 Debug.Log("Game Over");
                 GameResult(GameState.GameOver);
                 break;
+            case GameState.Interrupted:
+                Debug.Log("Interrupted");
+                GameResult(GameState.Interrupted);
+
+                break;
             default:
                 throw new System.ArgumentOutOfRangeException(nameof(newState), newState, null);
         }
@@ -163,5 +168,6 @@ public enum GameState
     TargeterOn = 3,
     WinRound = 4,
     LoseRound = 5,
-    GameOver = 6
+    GameOver = 6,
+    Interrupted = 7
 }

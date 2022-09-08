@@ -37,7 +37,6 @@ public class BasedNPC : NetworkSingleton<BasedNPC>
 
     IEnumerator Wander()
     {
-        // TODO: Adjust this
         int rotTime = Random.Range(1, 3);
         float rotateWait = Random.Range(1f, 4f);
         int rotateLorR = Random.Range(1, 2);

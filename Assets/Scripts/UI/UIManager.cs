@@ -71,6 +71,12 @@ public class UIManager : NetworkSingleton<UIManager>
     private TextMeshProUGUI playerText;
 
     [SerializeField]
+    private TextMeshProUGUI additionalInst;
+
+    [SerializeField]
+    private TextMeshProUGUI additionalInstTop;
+
+    [SerializeField]
     private TextMeshProUGUI playerInfoText;
 
 
@@ -84,6 +90,9 @@ public class UIManager : NetworkSingleton<UIManager>
     
     //Thread Lock
     public object _lock = new object();
+
+    //Human Advisor additional Instruction
+    string additionalGoalText = "";
 
     private void Awake()
     {
@@ -127,6 +136,8 @@ public class UIManager : NetworkSingleton<UIManager>
         numGameText.gameObject.SetActive(false);
         playerText.gameObject.SetActive(false);
         playerInfoText.gameObject.SetActive(false);
+        additionalInst.gameObject.SetActive(false);
+        additionalInstTop.gameObject.SetActive(false);
 
         StartCoroutine(loadAssets());
 
@@ -183,12 +194,15 @@ public class UIManager : NetworkSingleton<UIManager>
                 advisorMenu.SetActive(false);
                 backButton.gameObject.SetActive(false);
                 playerText.gameObject.SetActive(false);
+                additionalInst.gameObject.SetActive(false);
                 loadingIcon.SetActive(true);
                 try
                 {
                     PlayerManager.Instance.playerState = PlayerState.Advisor;
                     await RelayManager.Instance.JoinRelay(inputCodeText.text);
                     loadingIcon.SetActive(false);
+                    additionalInstTop.text = additionalGoalText;
+                    additionalInstTop.gameObject.SetActive(true);
                 }
                 catch(Exception e)
                 {
@@ -243,6 +257,16 @@ public class UIManager : NetworkSingleton<UIManager>
             mainMenu.SetActive(false);
             backButton.gameObject.SetActive(false);
             advisorMenu.SetActive(true);
+            additionalInst.gameObject.SetActive(true);
+            
+            if (AdvisorManager.Instance.roleplay == Roleplay.BlueBias)
+                additionalGoalText = GameSettings.ADDITIONALGOALTEXT + "Remove Blue NPCs and Red NPCs";
+            else if (AdvisorManager.Instance.roleplay == Roleplay.GreenBias)
+                additionalGoalText = GameSettings.ADDITIONALGOALTEXT + "Remove Green & Red NPCs";
+            else
+                additionalInst.gameObject.SetActive(false);
+
+            additionalInst.text = additionalGoalText;
         });
         advisorBackButton?.onClick.AddListener(() =>
         {
@@ -250,6 +274,7 @@ public class UIManager : NetworkSingleton<UIManager>
             backButton.gameObject.SetActive(true);
             advisorMenu.SetActive(false);
             playerText.gameObject.SetActive(false);
+            JoinCodeLobbyManager.instance.DestroyLobby();
         });
         backButton?.onClick.AddListener(() =>
         {
@@ -493,6 +518,8 @@ public class UIManager : NetworkSingleton<UIManager>
             gameMessage = GameSettings.LOSEGAMETEXT;
         else if (gameState == GameState.GameOver)
             gameMessage = GameSettings.GAMEOVERTEXT;
+        else if (gameState == GameState.Interrupted)
+            gameMessage = GameSettings.INTERRUPTEDTEXT;
 
         return gameMessage;
     }

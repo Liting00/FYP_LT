@@ -6,6 +6,8 @@ class ParticipantExpInfo
 {
     public string ID;
     public string Advisor;
+    public string HARoleplay;
+    public string DateTime;
 
     public Game game1;
     public Game game2;

@@ -59,6 +59,8 @@ public class Logger : NetworkSingleton<Logger>
         participantExpInfo = new ParticipantExpInfo();
         participantExpInfo.Advisor = AdvisorManager.Instance.selectedAgent.ToString();
         participantExpInfo.ID = generateID();
+        participantExpInfo.DateTime = System.DateTime.Now.ToString();
+        participantExpInfo.HARoleplay = "nill";
 
         Debug.Log("Init Log");
     }
@@ -67,8 +69,38 @@ public class Logger : NetworkSingleton<Logger>
         RedNPC = 0;
         BlueNPC = 0;
         GreenNPC = 0;
-        decision = "";
-        advice = "";
+        decision = "nill";
+        advice = "nill";
+    }
+    public void LogInterrupt(int game)
+    {
+        switch (game)
+        {
+            case 1:
+                participantExpInfo.game1.Interrupted = true;
+                break;
+            case 2:
+                participantExpInfo.game2.Interrupted = true;
+                break;
+            case 3:
+                participantExpInfo.game3.Interrupted = true;
+                break;
+            case 4:
+                participantExpInfo.game4.Interrupted = true;
+                break;
+            case 5:
+                participantExpInfo.game5.Interrupted = true;
+                break;
+            case 6:
+                participantExpInfo.game6.Interrupted = true;
+                break;
+            case 7:
+                participantExpInfo.game7.Interrupted = true;
+                break;
+            case 8:
+                participantExpInfo.game8.Interrupted = true;
+                break;
+        }
     }
     public void startGameLog(int game)
     {
@@ -81,7 +113,6 @@ public class Logger : NetworkSingleton<Logger>
                 else
                     participantExpInfo.game1.HumanAdvisor = false;
 
-                //TODO
                 participantExpInfo.game1.Interrupted = false;
                 break;
             case 2:
@@ -91,7 +122,6 @@ public class Logger : NetworkSingleton<Logger>
                 else
                     participantExpInfo.game2.HumanAdvisor = false;
 
-                //TODO
                 participantExpInfo.game2.Interrupted = false;
                 break;
             case 3:
@@ -101,7 +131,6 @@ public class Logger : NetworkSingleton<Logger>
                 else
                     participantExpInfo.game3.HumanAdvisor = false;
 
-                //TODO
                 participantExpInfo.game3.Interrupted = false;
                 break;
             case 4:
@@ -111,7 +140,6 @@ public class Logger : NetworkSingleton<Logger>
                 else
                     participantExpInfo.game4.HumanAdvisor = false;
 
-                //TODO
                 participantExpInfo.game4.Interrupted = false;
                 break;
             case 5:
@@ -121,7 +149,6 @@ public class Logger : NetworkSingleton<Logger>
                 else
                     participantExpInfo.game5.HumanAdvisor = false;
 
-                //TODO
                 participantExpInfo.game5.Interrupted = false;
                 break;
             case 6:
@@ -131,7 +158,6 @@ public class Logger : NetworkSingleton<Logger>
                 else
                     participantExpInfo.game6.HumanAdvisor = false;
 
-                //TODO
                 participantExpInfo.game6.Interrupted = false;
                 break;
             case 7:
@@ -141,7 +167,6 @@ public class Logger : NetworkSingleton<Logger>
                 else
                     participantExpInfo.game7.HumanAdvisor = false;
 
-                //TODO
                 participantExpInfo.game7.Interrupted = false;
                 break;
             case 8:
@@ -151,7 +176,6 @@ public class Logger : NetworkSingleton<Logger>
                 else
                     participantExpInfo.game8.HumanAdvisor = false;
 
-                //TODO
                 participantExpInfo.game8.Interrupted = false;
                 break;
 

@@ -16,6 +16,8 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
 
     public AdvisorAgent selectedAgent;
 
+    public Roleplay roleplay;
+
     private float update = 0f;
     private float nextUpdatedTime = GameSettings.ADVISOR_UPDATE_TIME;
 
@@ -29,16 +31,22 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
         //Inital Advise
         insertAdvise(AdvisorAdvice.NoAdvice);
 
+        System.Random random = new System.Random();
+
+        //Roleplay or Freeplay
+        Array type = Enum.GetValues(typeof(Roleplay));
+        roleplay = (Roleplay)type.GetValue(random.Next(type.Length));
+        Debug.Log("Human Advisor is Bias Against - " + roleplay);
+
         //Run Advisor Agent if Single Player
         Array values = Enum.GetValues(typeof(AdvisorAgent));
-        System.Random random = new System.Random();
 
         selectedAgent = (AdvisorAgent)values.GetValue(random.Next(values.Length));
 
         //Round 1 always start with Green Bias
         selectedAgent = AdvisorAgent.GreenBias;
 
-        Debug.Log(selectedAgent);
+        Debug.Log("Ai Advisor is Bias Against - " + selectedAgent);
     }
     private void Update()
     {
@@ -924,4 +932,10 @@ public enum AdvisorAdvice
     Pass,
     Shoot,
     NoAdvice
+}
+public enum Roleplay
+{
+    FreePlay,
+    GreenBias,
+    BlueBias,
 }
