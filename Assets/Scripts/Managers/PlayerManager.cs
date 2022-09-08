@@ -28,6 +28,8 @@ public class PlayerManager : NetworkSingleton<PlayerManager>
 
     public PlayerState playerState { get; set; }
 
+    private bool seal = false;
+
     void Awake()
     {
         Instance = this;
@@ -61,13 +63,14 @@ public class PlayerManager : NetworkSingleton<PlayerManager>
         playerInGameText.text = $"Player in Game: {PlayerInGame}";
 
         //Human Advisor left Mid Game
-        if (PlayerInGame < 2 && !allowQuickJoin)
+        if (PlayerInGame < 2 && !allowQuickJoin && !seal)
         {
             GameManager.Instance.ChangeState(GameState.Interrupted);
+            Debug.Log("Game:" + GameManager.Instance.NumberOfGames);
             Logger.Instance.LogInterrupt(GameManager.Instance.NumberOfGames);
+            seal = true;
         }
             
-
         if (playersInGame.Value < 2)
             allowQuickJoin = true;
         else

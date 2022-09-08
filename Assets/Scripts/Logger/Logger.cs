@@ -64,6 +64,10 @@ public class Logger : NetworkSingleton<Logger>
 
         Debug.Log("Init Log");
     }
+    public void LogRolePlay(string roleplay)
+    {
+        participantExpInfo.HARoleplay = roleplay.ToString();
+    }
     public void resetLogger()
     {
         RedNPC = 0;
@@ -104,6 +108,7 @@ public class Logger : NetworkSingleton<Logger>
     }
     public void startGameLog(int game)
     {
+        Debug.Log("Game:" + game);
         switch (game)
         {
             case 1:

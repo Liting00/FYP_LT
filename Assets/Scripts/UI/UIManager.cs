@@ -79,6 +79,8 @@ public class UIManager : NetworkSingleton<UIManager>
     [SerializeField]
     private TextMeshProUGUI playerInfoText;
 
+    private bool seal = false;
+
 
     private int GameNum = 0;
     int[] scorearray = new int[5];
@@ -167,7 +169,8 @@ public class UIManager : NetworkSingleton<UIManager>
 
                 PlayerManager.Instance.playerState = PlayerState.Shooter;
 
-                numGameText.text = $"Game: {++GameManager.Instance.NumberOfGames}";
+                numGameText.text = $"Game: {1+GameManager.Instance.NumberOfGames}";
+                Debug.Log(numGameText.text);
 
                 mainMenu.SetActive(false);
                 joinCodeText.gameObject.SetActive(true);
@@ -203,6 +206,9 @@ public class UIManager : NetworkSingleton<UIManager>
                     loadingIcon.SetActive(false);
                     additionalInstTop.text = additionalGoalText;
                     additionalInstTop.gameObject.SetActive(true);
+
+                    //Send Roleplay state to Host
+                    updateRoleplayServerRpc(AdvisorManager.Instance.roleplay);
                 }
                 catch(Exception e)
                 {
@@ -298,6 +304,7 @@ public class UIManager : NetworkSingleton<UIManager>
             }
             if (IsServer)
             {
+                ++GameManager.Instance.NumberOfGames;
                 startGameButton.gameObject.SetActive(false);
                 joinCodeText.gameObject.SetActive(false);
                 numGameText.gameObject.SetActive(false);
@@ -313,6 +320,20 @@ public class UIManager : NetworkSingleton<UIManager>
                 GameManager.Instance.ChangeState(GameState.GenerateGrid);
                 Debug.Log("Start Advisor keys");
                 advisorStartGameClientRpc();
+                //Add Logger for 2 player roleplay
+                if (PlayerManager.Instance.PlayerInGame == 2 && !seal)
+                {
+                    string roleplay = AdvisorManager.Instance.roleplay.ToString();
+                    Logger.Instance.LogRolePlay(roleplay);
+                    seal = true;
+                }    
+                else if(!seal)
+                {
+                    Logger.Instance.LogRolePlay("nill");
+                }
+                    
+
+
                 return;
             }
         });
@@ -376,11 +397,11 @@ public class UIManager : NetworkSingleton<UIManager>
         Logger.Instance.resetScore();
 
         scorearray[GameNum - 1] = (GameManager.Instance.NumberOfGames);
-        Debug.Log("value "+ (GameNum - 1) +" : "+ scorearray[GameNum - 1]);
+        //Debug.Log("value "+ (GameNum - 1) +" : "+ scorearray[GameNum - 1]);
         
         if(gameState != GameState.GameOver)
         {
-            numGameText.text = $"Game: {++GameManager.Instance.NumberOfGames}";
+            numGameText.text = $"Game: {1+GameManager.Instance.NumberOfGames}";
             startGameButton.gameObject.SetActive(true);
             numGameText.gameObject.SetActive(true);
         }
@@ -523,5 +544,13 @@ public class UIManager : NetworkSingleton<UIManager>
 
         return gameMessage;
     }
+    [ServerRpc(RequireOwnership = false)]
+    public void updateRoleplayServerRpc(Roleplay roleplay)
+    {
+        Debug.Log("Send Roleplay to Host");
+        AdvisorManager.Instance.roleplay = roleplay;
+
+    }
+
 }
 
