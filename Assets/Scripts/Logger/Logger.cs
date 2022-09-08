@@ -60,12 +60,6 @@ public class Logger : NetworkSingleton<Logger>
         participantExpInfo.Advisor = AdvisorManager.Instance.selectedAgent.ToString();
         participantExpInfo.ID = generateID();
 
-        participantExpInfo.game1 = new ParticipantExpInfo.Game();
-        participantExpInfo.game2 = new ParticipantExpInfo.Game();
-        participantExpInfo.game3 = new ParticipantExpInfo.Game();
-        participantExpInfo.game4 = new ParticipantExpInfo.Game();
-        participantExpInfo.game5 = new ParticipantExpInfo.Game();
-
         Debug.Log("Init Log");
     }
     public void resetLogger()
@@ -81,6 +75,7 @@ public class Logger : NetworkSingleton<Logger>
         switch (game)
         {
             case 1:
+                participantExpInfo.game1 = new ParticipantExpInfo.Game();
                 if (PlayerManager.Instance.PlayerInGame == 2)
                     participantExpInfo.game1.HumanAdvisor = true;
                 else
@@ -90,6 +85,7 @@ public class Logger : NetworkSingleton<Logger>
                 participantExpInfo.game1.Interrupted = false;
                 break;
             case 2:
+                participantExpInfo.game2 = new ParticipantExpInfo.Game();
                 if (PlayerManager.Instance.PlayerInGame == 2)
                     participantExpInfo.game2.HumanAdvisor = true;
                 else
@@ -99,6 +95,7 @@ public class Logger : NetworkSingleton<Logger>
                 participantExpInfo.game2.Interrupted = false;
                 break;
             case 3:
+                participantExpInfo.game3 = new ParticipantExpInfo.Game();
                 if (PlayerManager.Instance.PlayerInGame == 2)
                     participantExpInfo.game3.HumanAdvisor = true;
                 else
@@ -108,6 +105,7 @@ public class Logger : NetworkSingleton<Logger>
                 participantExpInfo.game3.Interrupted = false;
                 break;
             case 4:
+                participantExpInfo.game4 = new ParticipantExpInfo.Game();
                 if (PlayerManager.Instance.PlayerInGame == 2)
                     participantExpInfo.game4.HumanAdvisor = true;
                 else
@@ -117,6 +115,7 @@ public class Logger : NetworkSingleton<Logger>
                 participantExpInfo.game4.Interrupted = false;
                 break;
             case 5:
+                participantExpInfo.game5 = new ParticipantExpInfo.Game();
                 if (PlayerManager.Instance.PlayerInGame == 2)
                     participantExpInfo.game5.HumanAdvisor = true;
                 else
