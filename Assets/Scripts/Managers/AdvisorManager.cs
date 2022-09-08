@@ -14,7 +14,7 @@ public class AdvisorManager : NetworkSingleton<AdvisorManager>
     [SerializeField]
     public TextMeshProUGUI adviseTextBox;
 
-    private AdvisorAgent selectedAgent;
+    public AdvisorAgent selectedAgent;
 
     private float update = 0f;
     private float nextUpdatedTime = GameSettings.ADVISOR_UPDATE_TIME;

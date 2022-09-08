@@ -60,10 +60,10 @@ public class PlayerManager : NetworkSingleton<PlayerManager>
     {
         playerInGameText.text = $"Player in Game: {PlayerInGame}";
 
-        if (playersInGame.Value < 2)
-            allowQuickJoin = true;
-        else
+        if (playersInGame.Value == 2)
             allowQuickJoin = false;
+        else
+            allowQuickJoin = true;
     }
 }
 public enum PlayerState

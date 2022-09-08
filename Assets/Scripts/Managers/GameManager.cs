@@ -14,7 +14,7 @@ public class GameManager : NetworkSingleton<GameManager>
     private float nextUpdatedTime = 0.1f;
     private float update = 0f;
 
-    private bool gamestart = false;
+    public bool gamestart = false;
 
     public int NumberOfGames { get; set; }
 

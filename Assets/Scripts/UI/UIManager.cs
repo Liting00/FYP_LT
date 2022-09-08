@@ -77,8 +77,6 @@ public class UIManager : NetworkSingleton<UIManager>
     private int GameNum = 0;
     int[] scorearray = new int[5];
 
-    //private bool quickJoined { get; set; }
-
     private int nextSceneIndex, prevSceneIndex;
 
     //Join Code List
@@ -107,7 +105,6 @@ public class UIManager : NetworkSingleton<UIManager>
         if (PlayerManager.Instance.allowQuickJoin)
         {
             advisorStartGameClientRpc();
-            //quickJoined = false;
         }
     }
     private void Start()
@@ -166,7 +163,11 @@ public class UIManager : NetworkSingleton<UIManager>
                 startGameButton.gameObject.SetActive(true);
                 numGameText.gameObject.SetActive(true);
 
+                //Game Number 1
                 GameNum++;
+
+                //Initalize Logger
+                Logger.Instance.initLogging();
             }
             else
             {
@@ -281,6 +282,7 @@ public class UIManager : NetworkSingleton<UIManager>
 
                 loadingIcon.SetActive(true);
                 playerStartGame();
+                Logger.Instance.startGameLog(GameManager.Instance.NumberOfGames);
                 loadingIcon.SetActive(false);
 
                 GameManager.Instance.ChangeState(GameState.GenerateGrid);

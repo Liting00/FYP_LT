@@ -85,15 +85,29 @@ public class ButtonController : NetworkSingleton<ButtonController>
         if(ShootAudio != null)
             ShootAudio.Play();
 
-        // Record Player follow or not follow Shoot advice
-        string playerShoot = GameSettings.RED_BUTTON_TEXT;    
-        AdviceLogger(playerShoot);
+        if (GameManager.Instance.gamestart == false) return;
 
+        // Record Player follow or not follow Shoot advice
+        Logger.Instance.advice = AdvisorManager.Instance.adviseTextBox.text;
+        Logger.Instance.decision = GameSettings.RED_BUTTON_TEXT;
+
+        //Log Decision and Advice and NPCs
+        Logger.Instance.LogGame(GameManager.Instance.NumberOfGames);
+
+        //Destroy Target and change Target
         TargetController.Instance.destroyTarget();
         TargetController.Instance.changeTarget = true;
+
+        //No Advice
         AdvisorManager.Instance.insertAdvise(AdvisorAdvice.NoAdvice);
         AdvisorManager.Instance.updateAdviseClientRpc(AdvisorAdvice.NoAdvice);
-        
+
+        //FOR TESTING
+        Logger.Instance.writeToJSON();
+
+        //Reset Logger
+        Logger.Instance.resetLogger();
+
         Debug.Log("Player Shoot Button pressed");
     }
     private void PlayerPass()
@@ -101,23 +115,42 @@ public class ButtonController : NetworkSingleton<ButtonController>
         if (PassAudio != null)
             PassAudio.Play();
 
-        // Record Player follow or not follow Pass advice
-        string playerPass = GameSettings.GREEN_BUTTON_TEXT;
-        AdviceLogger(playerPass);
+        if (GameManager.Instance.gamestart == false) return;
 
+        // Record Player follow or not follow Pass advice
+        Logger.Instance.advice = AdvisorManager.Instance.adviseTextBox.text;
+        Logger.Instance.decision = GameSettings.GREEN_BUTTON_TEXT;
+
+        //Record NPCs
+        TargetController.Instance.recordNPCs();
+
+        //Log Decision and Advice and NPCs
+        Logger.Instance.LogGame(GameManager.Instance.NumberOfGames);
+
+        //Change Target
         TargetController.Instance.changeTarget = true;
+
+        //No Advice
         AdvisorManager.Instance.insertAdvise(AdvisorAdvice.NoAdvice);
         AdvisorManager.Instance.updateAdviseClientRpc(AdvisorAdvice.NoAdvice);
+
+        //FOR TESTING
+        Logger.Instance.writeToJSON();
+
+        //Reset Logger
+        Logger.Instance.resetLogger();
+
         Debug.Log("Player Pass Button pressed");
     }
-    private void AdviceLogger(string playerChoice)
-    {
-        string currentAdvise = AdvisorManager.Instance.adviseTextBox.text;
-        if (String.Equals(currentAdvise, playerChoice))
-            Debug.Log($"Player followed {playerChoice} advice");
-        else
-            Debug.Log($"Player did not follow {playerChoice} advice");
-    }
+    //private string AdviceLogger(string playerChoice)
+    //{
+    //    string currentAdvise = AdvisorManager.Instance.adviseTextBox.text;
+    //    if (String.Equals(currentAdvise, playerChoice))
+    //        Debug.Log($"Player followed {playerChoice} advice");
+    //    else
+    //        Debug.Log($"Player did not follow {playerChoice} advice");
+    //    return currentAdvise;
+    //}
     private void AdvisorShoot()
     {
         if (PassAudio != null)

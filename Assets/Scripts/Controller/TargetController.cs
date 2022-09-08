@@ -32,52 +32,6 @@ public class TargetController : NetworkSingleton<TargetController>
    
     public Material[] material;
 
-    //private  bool quickJoined { get; set; }
-    /*void UpdateTarget()
-    {
-        //Debug.Log("Start Target");
-        hostileNPCS = GameObject.FindGameObjectsWithTag(npc);
-        tiles = GameObject.FindGameObjectsWithTag(tile);
-
-        float npcPosX, npcPosZ;
-
-        foreach (GameObject npc in hostileNPCS)
-        {
-            npcPosX = npc.transform.position.x -0.5f;
-            npcPosZ = npc.transform.position.z -0.5f;
-            //Debug.Log(fx + " " + fz);
-
-            //find tiles with hostile NPCs
-            //findTiles(npcPosX, npcPosZ, tileIndex);
-            
-            //target tile
-            foreach (GameObject tile in tiles)
-            {
-                //render same color back, i can't seem to get same color from the tile
-                tile.GetComponent<Renderer>().material.color = new Color(38 / 255.0f, 38 / 255.0f, 38 / 255.0f);
-                if (tile.transform.position.x >= npcPosX && tile.transform.position.x <= npcPosX + 1f && tile.transform.position.z >= npcPosZ && tile.transform.position.z <= npcPosZ + 1f)
-                {
-                    //Debug.Log("Active");
-                    tile.GetComponent<Renderer>().material.color = Color.grey;
-                }
-            }   
-        }
-    }*/
-    /*private void Awake()
-    {
-        Debug.Log("TargetController awake was called");
-    }*/
-    /*void Start()
-    {
-        tiles = GameObject.FindGameObjectsWithTag(tile);
-        hostileNPCS = GameObject.FindGameObjectsWithTag(npc);
-        selectedNPC = hostileNPCS[Random.Range(0, hostileNPCS.Length)];
-
-        GameObject SManager = GameObject.Find("Spawn Manager");
-        spawnManager = SManager.GetComponent<SpawnManager>();
-    }*/
-    // Update is called once per frame
-
     void Update()
     {
         if (EnableTargetController == false) return;
@@ -85,7 +39,6 @@ public class TargetController : NetworkSingleton<TargetController>
         if (PlayerManager.Instance.allowQuickJoin)
         {
             updateClientRpc();
-            //quickJoined = false;
         }
             
         update += Time.deltaTime;
@@ -216,15 +169,6 @@ public class TargetController : NetworkSingleton<TargetController>
                 break;
             }
         }
-        /*
-        foreach (GameObject o in GameObject.FindGameObjectsWithTag("NonHostileNPC"))
-        {
-            if (o.transform.position.x >= npcPosX && o.transform.position.x <= npcPosX + 1.05f
-                && o.transform.position.z >= npcPosZ && o.transform.position.z <= npcPosZ + 1.05f)
-            {
-                highlightedNPCs.Add(o.gameObject);
-            }
-        }*/
     }
     IEnumerator changeTargetDelay()
     {
@@ -232,6 +176,30 @@ public class TargetController : NetworkSingleton<TargetController>
         yield return new WaitForSeconds(GameSettings.CHANGE_TARGET_TARGET_DELAY);
         Debug.Log("Processed Advise");
         AdvisorManager.Instance.changeTargetDelay = false;
+    }
+    public void recordNPCs()
+    {
+        if (hostileNPCS.Length == 0)
+            return;
+
+        foreach (GameObject npc in highlightedNPCs)
+        {
+            if (npc == null)
+                continue;
+
+            if (npc.name.Contains("GreenNonHostile") && !npc.name.Contains("Infected"))
+            {
+                Logger.Instance.GreenNPC++;
+            }
+            else if (npc.name.Contains("BlueNonHostile") && !npc.name.Contains("Infected"))
+            {
+                Logger.Instance.BlueNPC++;
+            }
+            else
+            {
+                Logger.Instance.RedNPC++;
+            }
+        }
     }
     public void destroyTarget()
     {
@@ -248,6 +216,7 @@ public class TargetController : NetworkSingleton<TargetController>
                 Logger.Instance.GreenRemove++;
                 SpawnManager.Instance.NonInfected--;
                 Logger.Instance.GreenNPC++;
+
             }
             else if(npc.name.Contains("BlueNonHostile") && !npc.name.Contains("Infected"))
             {
@@ -262,38 +231,7 @@ public class TargetController : NetworkSingleton<TargetController>
                 Logger.Instance.RedNPC++;
                 Debug.Log("Red removed: " + Logger.Instance.RedNPC);
             }
-            Logger.Instance.NPC();
-            //Debug.Log(npc.name);
             Destroy(npc.gameObject);
         }
-
-        /*float npcPosX = selectedNPC.transform.position.x - 0.5f;
-        float npcPosZ = selectedNPC.transform.position.z - 0.5f;
-
-        foreach (GameObject o in GameObject.FindGameObjectsWithTag("HostileNPC"))
-        {
-            //Debug.Log("Vector X: " + o.transform.position.x);
-            //Debug.Log("Vector Y: " + o.transform.position.y);
-            if (o.transform.position.x >= npcPosX && o.transform.position.x <= npcPosX + 1f 
-                && o.transform.position.z >= npcPosZ && o.transform.position.z <= npcPosZ + 1f)
-            {
-                o.SetActive(false);
-                Destroy(o);
-                SpawnManager.Instance.addInfected(-1);
-            }
-        }
-        foreach (GameObject o in GameObject.FindGameObjectsWithTag("NonHostileNPC"))
-        {
-            //Debug.Log("Vector X: " + o.transform.position.x);
-            //Debug.Log("Vector Y: " + o.transform.position.y);
-            if (o.transform.position.x >= npcPosX && o.transform.position.x <= npcPosX + 1f 
-                && o.transform.position.z >= npcPosZ && o.transform.position.z <= npcPosZ + 1f)
-            {
-                o.SetActive(false);
-                Destroy(o);
-                SpawnManager.Instance.addNonInfected(-1);
-            }
-        }
-        return;*/
     }
 }

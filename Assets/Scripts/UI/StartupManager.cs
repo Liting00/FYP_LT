@@ -28,6 +28,7 @@ public class StartupManager : MonoBehaviour
         yield return new WaitForSeconds(1);
         playInGameUI.gameObject.SetActive(false);
         loadingIcon.gameObject.SetActive(false);
+
         SceneManager.LoadScene(nextSceneIndex);
     }
 }
