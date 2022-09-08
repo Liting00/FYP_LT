@@ -124,10 +124,38 @@ public class Logger : NetworkSingleton<Logger>
                 //TODO
                 participantExpInfo.game5.Interrupted = false;
                 break;
+            case 6:
+                participantExpInfo.game6 = new ParticipantExpInfo.Game();
+                if (PlayerManager.Instance.PlayerInGame == 2)
+                    participantExpInfo.game6.HumanAdvisor = true;
+                else
+                    participantExpInfo.game6.HumanAdvisor = false;
+
+                //TODO
+                participantExpInfo.game6.Interrupted = false;
+                break;
+            case 7:
+                participantExpInfo.game7 = new ParticipantExpInfo.Game();
+                if (PlayerManager.Instance.PlayerInGame == 2)
+                    participantExpInfo.game7.HumanAdvisor = true;
+                else
+                    participantExpInfo.game7.HumanAdvisor = false;
+
+                //TODO
+                participantExpInfo.game7.Interrupted = false;
+                break;
+            case 8:
+                participantExpInfo.game8 = new ParticipantExpInfo.Game();
+                if (PlayerManager.Instance.PlayerInGame == 2)
+                    participantExpInfo.game8.HumanAdvisor = true;
+                else
+                    participantExpInfo.game8.HumanAdvisor = false;
+
+                //TODO
+                participantExpInfo.game8.Interrupted = false;
+                break;
+
         }
-
-
-        
     }
     public void LogGame(int game)
     {
@@ -155,6 +183,15 @@ public class Logger : NetworkSingleton<Logger>
                 break;
             case 5:
                 participantExpInfo.game5.choices.Add(choice);
+                break;
+            case 6:
+                participantExpInfo.game6.choices.Add(choice);
+                break;
+            case 7:
+                participantExpInfo.game7.choices.Add(choice);
+                break;
+            case 8:
+                participantExpInfo.game8.choices.Add(choice);
                 break;
         }
     }

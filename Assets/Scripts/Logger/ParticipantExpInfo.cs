@@ -6,11 +6,16 @@ class ParticipantExpInfo
 {
     public string ID;
     public string Advisor;
+
     public Game game1;
     public Game game2;
     public Game game3;
     public Game game4;
     public Game game5;
+    public Game game6;
+    public Game game7;
+    public Game game8;
+
     public class Game
     {
         public bool HumanAdvisor;
