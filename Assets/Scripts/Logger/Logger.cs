@@ -1,8 +1,6 @@
-﻿using CsvHelper;
-using Network.Singletons;
+﻿using Network.Singletons;
 using Newtonsoft.Json;
 using System;
-using System.Data;
 using System.IO;
 using System.Text;
 using Unity.Netcode;
@@ -25,7 +23,7 @@ public class Logger : NetworkSingleton<Logger>
     public int Infected { get; set; }
 
     public int GreenNPC { get; set; }
-    public int BlueNPC{ get; set; }
+    public int BlueNPC { get; set; }
     public int RedNPC { get; set; }
 
     public string decision { get; set; }
@@ -33,7 +31,9 @@ public class Logger : NetworkSingleton<Logger>
 
     //JSON Logger
     ParticipantExpInfo participantExpInfo = new ParticipantExpInfo();
-    
+
+    string stringjson = "";
+
     public void Awake()
     {
         Instance = this;
@@ -65,7 +65,7 @@ public class Logger : NetworkSingleton<Logger>
         participantExpInfo.HARoleplay = "nill";
 
         //Create instances of class list
-        for(int i = 0; i < GameSettings.NUMBEROFGAMES; i++)
+        for (int i = 0; i < GameSettings.NUMBEROFGAMES; i++)
         {
             participantExpInfo.game[i] = new ParticipantExpInfo.Game();
         }
@@ -86,12 +86,12 @@ public class Logger : NetworkSingleton<Logger>
     }
     public void LogInterrupt(int GameNum)
     {
-        participantExpInfo.game[GameNum-1].Interrupted = true;
+        participantExpInfo.game[GameNum - 1].Interrupted = true;
     }
     public void startGameLog(int GameNum)
     {
         Debug.Log("Game:" + GameNum);
-        
+
         participantExpInfo.game[GameNum - 1].Interrupted = false;
         if (PlayerManager.Instance.PlayerInGame == 2)
             participantExpInfo.game[GameNum - 1].HumanAdvisor = true;
@@ -109,13 +109,19 @@ public class Logger : NetworkSingleton<Logger>
         choice.RedNPC = RedRemove;
         choice.GREENNPC = GreenRemove;
 
-        participantExpInfo.game[GameNum-1].choices.Add(choice);
+        participantExpInfo.game[GameNum - 1].choices.Add(choice);
     }
     public void writeToJSON()
     {
-        string stringjson = JsonConvert.SerializeObject(participantExpInfo);
+        stringjson = JsonConvert.SerializeObject(participantExpInfo);
         Debug.Log(stringjson);
     }
+    public void writeToTextFile()
+    {
+        //string json = JsonSerializer.Serialize(stringjson);
+        File.WriteAllText("HostData.json", stringjson);
+    }
+
     public void writeToCSV()
     {
         string filePath = "HostData.csv";
@@ -138,46 +144,12 @@ public class Logger : NetworkSingleton<Logger>
         var newLine = string.Format("{0}, {1}, {2}, {3}", ID, Advisor, HARoleplay, DateTime);
         csv.AppendLine(newLine);
 
-        //for (int i = 0; i < GameSettings.NUMBEROFGAMES; i++)
-        //{
-        //    var game = participantExpInfo.game[i];
-        //    newLine = string.Format("{0}", game.ToString());
-        //    csv.AppendLine(newLine);
-        //}
-        File.AppendAllText(filePath, csv.ToString());
-    }
-    public static DataTable jsonStringToTable(string jsonContent)
-    {
-        DataTable dt = JsonConvert.DeserializeObject<DataTable>(jsonContent);
-        return dt;
-    }
-    public static string jsonToCSV(string jsonContent, string delimiter)
-    {
-        StringWriter csvString = new StringWriter();
-        using (var csv = new CsvWriter(csvString))
+        for (int i = 0; i < GameSettings.NUMBEROFGAMES; i++)
         {
-            csv.Configuration.SkipEmptyRecords = true;
-            csv.Configuration.WillThrowOnMissingField = false;
-            csv.Configuration.Delimiter = delimiter;
-
-            using (var dt = jsonStringToTable(jsonContent))
-            {
-                foreach (DataColumn column in dt.Columns)
-                {
-                    csv.WriteField(column.ColumnName);
-                }
-                csv.NextRecord();
-
-                foreach (DataRow row in dt.Rows)
-                {
-                    for (var i = 0; i < dt.Columns.Count; i++)
-                    {
-                        csv.WriteField(row[i]);
-                    }
-                    csv.NextRecord();
-                }
-            }
+            var game = participantExpInfo.game[i];
+            newLine = string.Format("{0}", game.ToString());
+            csv.AppendLine(newLine);
         }
-        return csvString.ToString();
+        File.AppendAllText(filePath, csv.ToString());
     }
 }

@@ -137,7 +137,7 @@ public class GameManager : NetworkSingleton<GameManager>
     {
         gamestart = false;
 
-        Logger.Instance.writeToCSV();
+        Logger.Instance.writeToTextFile();
 
         //Artifical Delay the End Game Scene for N sec
         StartCoroutine(LoadFinishGameSessionAsynchronously(gameState));
