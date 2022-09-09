@@ -1,17 +1,18 @@
-﻿using Network.Singletons;
+﻿using CsvHelper;
+using Network.Singletons;
 using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
 using Unity.Netcode;
 using UnityEngine;
 
 public class Logger : NetworkSingleton<Logger>
 {
     public static new Logger Instance;
-
-    //JSON Logger
-    ParticipantExpInfo participantExpInfo = null;
 
     // Total accumulate
     private NetworkVariable<int> totalGreenRemove = new NetworkVariable<int>();
@@ -32,6 +33,9 @@ public class Logger : NetworkSingleton<Logger>
     public string decision { get; set; }
     public string advice { get; set; }
 
+    //JSON Logger
+    ParticipantExpInfo participantExpInfo = new ParticipantExpInfo();
+    
     public void Awake()
     {
         Instance = this;
@@ -56,11 +60,17 @@ public class Logger : NetworkSingleton<Logger>
     }
     public void initLogging()
     {
-        participantExpInfo = new ParticipantExpInfo();
+
         participantExpInfo.Advisor = AdvisorManager.Instance.selectedAgent.ToString();
         participantExpInfo.ID = generateID();
-        participantExpInfo.DateTime = System.DateTime.Now.ToString();
+        participantExpInfo.DateTime = DateTime.Now.ToString();
         participantExpInfo.HARoleplay = "nill";
+
+        //Create instances of class list
+        for(int i = 0; i < GameSettings.NUMBEROFGAMES; i++)
+        {
+            participantExpInfo.game[i] = new ParticipantExpInfo.Game();
+        }
 
         Debug.Log("Init Log");
     }
@@ -76,118 +86,24 @@ public class Logger : NetworkSingleton<Logger>
         decision = "nill";
         advice = "nill";
     }
-    public void LogInterrupt(int game)
+    public void LogInterrupt(int GameNum)
     {
-        switch (game)
-        {
-            case 1:
-                participantExpInfo.game1.Interrupted = true;
-                break;
-            case 2:
-                participantExpInfo.game2.Interrupted = true;
-                break;
-            case 3:
-                participantExpInfo.game3.Interrupted = true;
-                break;
-            case 4:
-                participantExpInfo.game4.Interrupted = true;
-                break;
-            case 5:
-                participantExpInfo.game5.Interrupted = true;
-                break;
-            case 6:
-                participantExpInfo.game6.Interrupted = true;
-                break;
-            case 7:
-                participantExpInfo.game7.Interrupted = true;
-                break;
-            case 8:
-                participantExpInfo.game8.Interrupted = true;
-                break;
-        }
+        participantExpInfo.game[GameNum-1].Interrupted = true;
     }
-    public void startGameLog(int game)
+    public void startGameLog(int GameNum)
     {
-        Debug.Log("Game:" + game);
-        switch (game)
-        {
-            case 1:
-                participantExpInfo.game1 = new ParticipantExpInfo.Game();
-                if (PlayerManager.Instance.PlayerInGame == 2)
-                    participantExpInfo.game1.HumanAdvisor = true;
-                else
-                    participantExpInfo.game1.HumanAdvisor = false;
-
-                participantExpInfo.game1.Interrupted = false;
-                break;
-            case 2:
-                participantExpInfo.game2 = new ParticipantExpInfo.Game();
-                if (PlayerManager.Instance.PlayerInGame == 2)
-                    participantExpInfo.game2.HumanAdvisor = true;
-                else
-                    participantExpInfo.game2.HumanAdvisor = false;
-
-                participantExpInfo.game2.Interrupted = false;
-                break;
-            case 3:
-                participantExpInfo.game3 = new ParticipantExpInfo.Game();
-                if (PlayerManager.Instance.PlayerInGame == 2)
-                    participantExpInfo.game3.HumanAdvisor = true;
-                else
-                    participantExpInfo.game3.HumanAdvisor = false;
-
-                participantExpInfo.game3.Interrupted = false;
-                break;
-            case 4:
-                participantExpInfo.game4 = new ParticipantExpInfo.Game();
-                if (PlayerManager.Instance.PlayerInGame == 2)
-                    participantExpInfo.game4.HumanAdvisor = true;
-                else
-                    participantExpInfo.game4.HumanAdvisor = false;
-
-                participantExpInfo.game4.Interrupted = false;
-                break;
-            case 5:
-                participantExpInfo.game5 = new ParticipantExpInfo.Game();
-                if (PlayerManager.Instance.PlayerInGame == 2)
-                    participantExpInfo.game5.HumanAdvisor = true;
-                else
-                    participantExpInfo.game5.HumanAdvisor = false;
-
-                participantExpInfo.game5.Interrupted = false;
-                break;
-            case 6:
-                participantExpInfo.game6 = new ParticipantExpInfo.Game();
-                if (PlayerManager.Instance.PlayerInGame == 2)
-                    participantExpInfo.game6.HumanAdvisor = true;
-                else
-                    participantExpInfo.game6.HumanAdvisor = false;
-
-                participantExpInfo.game6.Interrupted = false;
-                break;
-            case 7:
-                participantExpInfo.game7 = new ParticipantExpInfo.Game();
-                if (PlayerManager.Instance.PlayerInGame == 2)
-                    participantExpInfo.game7.HumanAdvisor = true;
-                else
-                    participantExpInfo.game7.HumanAdvisor = false;
-
-                participantExpInfo.game7.Interrupted = false;
-                break;
-            case 8:
-                participantExpInfo.game8 = new ParticipantExpInfo.Game();
-                if (PlayerManager.Instance.PlayerInGame == 2)
-                    participantExpInfo.game8.HumanAdvisor = true;
-                else
-                    participantExpInfo.game8.HumanAdvisor = false;
-
-                participantExpInfo.game8.Interrupted = false;
-                break;
-
-        }
+        Debug.Log("Game:" + GameNum);
+        
+        participantExpInfo.game[GameNum - 1].Interrupted = false;
+        if (PlayerManager.Instance.PlayerInGame == 2)
+            participantExpInfo.game[GameNum - 1].HumanAdvisor = true;
+        else
+            participantExpInfo.game[GameNum - 1].HumanAdvisor = true;
     }
-    public void LogGame(int game)
+
+    public void LogGame(int GameNum)
     {
+        Debug.Log("Log Game");
         ParticipantExpInfo.Choice choice = new ParticipantExpInfo.Choice();
         choice.Decision = decision;
         choice.Advise = advice;
@@ -195,38 +111,41 @@ public class Logger : NetworkSingleton<Logger>
         choice.RedNPC = RedRemove;
         choice.GREENNPC = GreenRemove;
 
-        //add switch case
-        switch (game)
-        {
-            case 1:
-                participantExpInfo.game1.choices.Add(choice);
-                break;
-            case 2:
-                participantExpInfo.game2.choices.Add(choice);
-                break;
-            case 3:
-                participantExpInfo.game3.choices.Add(choice);
-                break;
-            case 4:
-                participantExpInfo.game4.choices.Add(choice);
-                break;
-            case 5:
-                participantExpInfo.game5.choices.Add(choice);
-                break;
-            case 6:
-                participantExpInfo.game6.choices.Add(choice);
-                break;
-            case 7:
-                participantExpInfo.game7.choices.Add(choice);
-                break;
-            case 8:
-                participantExpInfo.game8.choices.Add(choice);
-                break;
-        }
+        participantExpInfo.game[GameNum-1].choices.Add(choice);
     }
     public void writeToJSON()
     {
         string stringjson = JsonConvert.SerializeObject(participantExpInfo);
         Debug.Log(stringjson);
+    }
+    public void writeToCSV()
+    {
+        string filePath = "HostData.csv";
+
+        bool fileExist = File.Exists(filePath);
+        if (!fileExist)
+        {
+            string header = $"\"ID\",\"Advisor\",\"HARoleplay\",\"DateTime\",\"Game01\",\"Game02\",\"Game03\",\"Game04\",\"Game05\"" +
+                $",\"Game06\",\"Game07\",\"Game08\"{Environment.NewLine}";
+            File.AppendAllText(filePath, header);
+        }
+
+        var csv = new StringBuilder();
+
+        var ID = participantExpInfo.ID.ToString();
+        var Advisor = participantExpInfo.Advisor.ToString();
+        var HARoleplay = participantExpInfo.HARoleplay.ToString();
+        var DateTime = participantExpInfo.DateTime.ToString();
+
+        var newLine = string.Format("{0}, {1}, {2}, {3}", ID, Advisor, HARoleplay, DateTime);
+        csv.AppendLine(newLine);
+
+        //for (int i = 0; i < GameSettings.NUMBEROFGAMES; i++)
+        //{
+        //    var game = participantExpInfo.game[i];
+        //    newLine = string.Format("{0}", game.ToString());
+        //    csv.AppendLine(newLine);
+        //}
+        File.AppendAllText(filePath, csv.ToString());
     }
 }

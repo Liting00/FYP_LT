@@ -101,7 +101,6 @@ public class GameManager : NetworkSingleton<GameManager>
             case GameState.Interrupted:
                 Debug.Log("Interrupted");
                 GameResult(GameState.Interrupted);
-
                 break;
             default:
                 throw new System.ArgumentOutOfRangeException(nameof(newState), newState, null);
@@ -137,6 +136,8 @@ public class GameManager : NetworkSingleton<GameManager>
     private void GameResult(GameState gameState)
     {
         gamestart = false;
+
+        Logger.Instance.writeToCSV();
 
         //Artifical Delay the End Game Scene for N sec
         StartCoroutine(LoadFinishGameSessionAsynchronously(gameState));
