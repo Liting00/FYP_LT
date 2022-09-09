@@ -20,8 +20,6 @@ public class ButtonController : NetworkSingleton<ButtonController>
     [SerializeField]
     private Button advisorPassButton;
 
-    [SerializeField]
-    private Button advisorAutoButton;
 
     public AudioSource ShootAudio;
 
@@ -55,8 +53,8 @@ public class ButtonController : NetworkSingleton<ButtonController>
         playerPassButton.onClick.AddListener(() => buttonCallBack(playerPassButton));
         advisorShootButton.onClick.AddListener(() => buttonCallBack(advisorShootButton));
         advisorPassButton.onClick.AddListener(() => buttonCallBack(advisorPassButton));
-        advisorAutoButton.onClick.AddListener(() => buttonCallBack(advisorAutoButton));
     }
+
     private void buttonCallBack(Button buttonPressed)
     {
         if (buttonPressed == playerShootButton)
@@ -74,10 +72,6 @@ public class ButtonController : NetworkSingleton<ButtonController>
         if (buttonPressed == advisorPassButton)
         {
             AdvisorPass();
-        }
-        if (buttonPressed == advisorAutoButton)
-        {
-            AdvisorAuto();
         }
     }
     private void PlayerShoot()
@@ -171,15 +165,5 @@ public class ButtonController : NetworkSingleton<ButtonController>
         AdvisorManager.Instance.updateAdviseTextServerRpc(AdvisorAdvice.Pass);
         Debug.Log("Advisor Pass Button pressed");
 
-    }
-
-    private void AdvisorAuto()
-    {
-        if (PassAudio != null)
-            PassAudio.Play();
-
-        AdvisorAutoBtnPressed += 1;
-        AdvisorManager.Instance.AutoButtonPressed = true;
-        Debug.Log("Advisor Auto Button pressed" + AdvisorAutoBtnPressed);
     }
 }
