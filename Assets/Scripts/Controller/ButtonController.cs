@@ -96,9 +96,6 @@ public class ButtonController : NetworkSingleton<ButtonController>
         AdvisorManager.Instance.insertAdvise(AdvisorAdvice.NoAdvice);
         AdvisorManager.Instance.updateAdviseClientRpc(AdvisorAdvice.NoAdvice);
 
-        //FOR TESTING
-        Logger.Instance.writeToJSON();
-
         //Reset Logger
         Logger.Instance.resetLogger();
 
@@ -127,9 +124,6 @@ public class ButtonController : NetworkSingleton<ButtonController>
         //No Advice
         AdvisorManager.Instance.insertAdvise(AdvisorAdvice.NoAdvice);
         AdvisorManager.Instance.updateAdviseClientRpc(AdvisorAdvice.NoAdvice);
-
-        //FOR TESTING
-        Logger.Instance.writeToJSON();
 
         //Reset Logger
         Logger.Instance.resetLogger();

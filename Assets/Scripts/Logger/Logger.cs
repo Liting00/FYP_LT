@@ -1,6 +1,7 @@
 ﻿using Network.Singletons;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Unity.Netcode;
@@ -32,7 +33,8 @@ public class Logger : NetworkSingleton<Logger>
     //JSON Logger
     ParticipantExpInfo participantExpInfo = new ParticipantExpInfo();
 
-    string stringjson = "";
+    //JSON Filepath
+    private string filepath = GameSettings.FILEPATH;
 
     public void Awake()
     {
@@ -98,7 +100,6 @@ public class Logger : NetworkSingleton<Logger>
         else
             participantExpInfo.game[GameNum - 1].HumanAdvisor = true;
     }
-
     public void LogGame(int GameNum)
     {
         Debug.Log("Log Game");
@@ -111,45 +112,56 @@ public class Logger : NetworkSingleton<Logger>
 
         participantExpInfo.game[GameNum - 1].choices.Add(choice);
     }
-    public void writeToJSON()
-    {
-        stringjson = JsonConvert.SerializeObject(participantExpInfo);
-        Debug.Log(stringjson);
-    }
     public void writeToTextFile()
     {
-        //string json = JsonSerializer.Serialize(stringjson);
-        File.WriteAllText("HostData.json", stringjson);
-    }
+        List<ParticipantExpInfo> HostData = new List<ParticipantExpInfo>();
 
-    public void writeToCSV()
-    {
-        string filePath = "HostData.csv";
+        string jsonData;
 
-        bool fileExist = File.Exists(filePath);
-        if (!fileExist)
+        if (File.Exists(filepath)) 
         {
-            string header = $"\"ID\",\"Advisor\",\"HARoleplay\",\"DateTime\",\"Game01\",\"Game02\",\"Game03\",\"Game04\",\"Game05\"" +
-                $",\"Game06\",\"Game07\",\"Game08\"{Environment.NewLine}";
-            File.AppendAllText(filePath, header);
+            jsonData = File.ReadAllText(filepath);
+            HostData = JsonConvert.DeserializeObject<List<ParticipantExpInfo>>(jsonData)
+                      ?? new List<ParticipantExpInfo>();
+            
         }
 
-        var csv = new StringBuilder();
+        HostData.Add(participantExpInfo);
+        jsonData = JsonConvert.SerializeObject(HostData);
 
-        var ID = participantExpInfo.ID.ToString();
-        var Advisor = participantExpInfo.Advisor.ToString();
-        var HARoleplay = participantExpInfo.HARoleplay.ToString();
-        var DateTime = participantExpInfo.DateTime.ToString();
+        Debug.Log(jsonData);
 
-        var newLine = string.Format("{0}, {1}, {2}, {3}", ID, Advisor, HARoleplay, DateTime);
-        csv.AppendLine(newLine);
-
-        for (int i = 0; i < GameSettings.NUMBEROFGAMES; i++)
-        {
-            var game = participantExpInfo.game[i];
-            newLine = string.Format("{0}", game.ToString());
-            csv.AppendLine(newLine);
-        }
-        File.AppendAllText(filePath, csv.ToString());
+        File.WriteAllText(filepath, jsonData);
     }
+
+    //public void writeToCSV()
+    //{
+    //    string filePath = "HostData.csv";
+
+    //    bool fileExist = File.Exists(filePath);
+    //    if (!fileExist)
+    //    {
+    //        string header = $"\"ID\",\"Advisor\",\"HARoleplay\",\"DateTime\",\"Game01\",\"Game02\",\"Game03\",\"Game04\",\"Game05\"" +
+    //            $",\"Game06\",\"Game07\",\"Game08\"{Environment.NewLine}";
+    //        File.AppendAllText(filePath, header);
+    //    }
+
+    //    var csv = new StringBuilder();
+
+    //    var ID = participantExpInfo.ID.ToString();
+    //    var Advisor = participantExpInfo.Advisor.ToString();
+    //    var HARoleplay = participantExpInfo.HARoleplay.ToString();
+    //    var DateTime = participantExpInfo.DateTime.ToString();
+
+    //    var newLine = string.Format("{0}, {1}, {2}, {3}", ID, Advisor, HARoleplay, DateTime);
+    //    csv.AppendLine(newLine);
+
+    //    for (int i = 0; i < GameSettings.NUMBEROFGAMES; i++)
+    //    {
+    //        var game = participantExpInfo.game[i];
+    //        newLine = string.Format("{0}", game.ToString());
+    //        csv.AppendLine(newLine);
+    //    }
+    //    File.AppendAllText(filePath, csv.ToString());
+    //}
 }

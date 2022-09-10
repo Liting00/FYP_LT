@@ -409,8 +409,8 @@ public class UIManager : NetworkSingleton<UIManager>
         {
             startGameButton.gameObject.SetActive(false);
             numGameText.gameObject.SetActive(false);
+            Logger.Instance.writeToTextFile();
         }
-            
     }
     [ClientRpc]
     private void AdvisorRoundOverClientRPC(GameState gameState)
