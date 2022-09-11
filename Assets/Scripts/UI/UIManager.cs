@@ -393,7 +393,8 @@ public class UIManager : NetworkSingleton<UIManager>
         playerUI.gameObject.SetActive(false);
         adviseTextBox.gameObject.SetActive(false);
 
-        Logger.Instance.accumlateScore();
+        //Logger.Instance.accumlateScore();
+        Logger.Instance.ScoreperRound();
         Logger.Instance.resetScore();
 
         scorearray[GameNum - 1] = (GameManager.Instance.NumberOfGames);

@@ -30,6 +30,8 @@ public class Logger : NetworkSingleton<Logger>
     public string decision { get; set; }
     public string advice { get; set; }
 
+    public int[,] score = new int[10, 10];
+
     //JSON Logger
     ParticipantExpInfo participantExpInfo = new ParticipantExpInfo();
 
@@ -40,12 +42,16 @@ public class Logger : NetworkSingleton<Logger>
     {
         Instance = this;
     }
-    public void accumlateScore()
+    
+
+    public void ScoreperRound()
     {
-        totalGreenRemove.Value += GreenRemove;
-        totalBlueRemove.Value += BlueRemove;
-        totalRedRemove.Value += RedRemove;
-        totalInfected.Value += Infected;
+        score[GameManager.Instance.NumberOfGames, 0] = Logger.Instance.GreenRemove;
+        score[GameManager.Instance.NumberOfGames, 1] = Logger.Instance.BlueRemove;
+        score[GameManager.Instance.NumberOfGames, 2] = Logger.Instance.RedRemove;
+        score[GameManager.Instance.NumberOfGames, 3] = SpawnManager.Instance.Infected;
+        score[GameManager.Instance.NumberOfGames, 4] = (int)GameManager.Instance.timer;
+        score[GameManager.Instance.NumberOfGames, 5] = ButtonController.Instance.AdvisorAutoBtnPressed;
     }
     public void resetScore()
     {
@@ -133,6 +139,16 @@ public class Logger : NetworkSingleton<Logger>
 
         File.WriteAllText(filepath, jsonData);
     }
+
+    /*
+    public void accumlateScore()
+    {
+        totalGreenRemove.Value += GreenRemove;
+        totalBlueRemove.Value += BlueRemove;
+        totalRedRemove.Value += RedRemove;
+        totalInfected.Value += Infected;
+    }
+    */
 
     //public void writeToCSV()
     //{
