@@ -44,7 +44,7 @@ public static class GameSettings
 
     /* Advisor */
     //Advisor Text
-    public static string RED_BUTTON_TEXT = "Shoot";
+    public static string RED_BUTTON_TEXT = "REMOVE";
     public static string GREEN_BUTTON_TEXT = "Pass";
     public static string NO_ADVISE_TEXT = "No Advice";
 
