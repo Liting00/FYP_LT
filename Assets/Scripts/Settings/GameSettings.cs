@@ -69,7 +69,9 @@ public static class GameSettings
     public static float INFECTION_INTERVAL_MAX = 10f;
 
     //Human Advisor additional Goal
-    public static string ADDITIONALGOALTEXT = $"Additional Instruction: ";
+    public static string ADDITIONALGOALTEXT = $"Additional Instructions: ";
+    public static string BIAS_AGAINST_GREEN = "\n1. You do not mind green people getting infected.\n2. You do not mind green people getting remove.";
+    public static string BIAS_AGAINST_BLUE = "\n1. You do not mind blue people getting infected.\n2. You do not mind blue people getting remove.";
 
     //Text when the game end or session end
     public static string WINGAMETEXT = "All Hostile are Removed. \nPlease Start the Next Round.";

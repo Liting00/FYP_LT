@@ -266,9 +266,9 @@ public class UIManager : NetworkSingleton<UIManager>
             additionalInst.gameObject.SetActive(true);
             
             if (AdvisorManager.Instance.roleplay == Roleplay.BlueBias)
-                additionalGoalText = GameSettings.ADDITIONALGOALTEXT + "Remove Blue NPCs and Red NPCs";
+                additionalGoalText = GameSettings.ADDITIONALGOALTEXT + GameSettings.BIAS_AGAINST_BLUE;
             else if (AdvisorManager.Instance.roleplay == Roleplay.GreenBias)
-                additionalGoalText = GameSettings.ADDITIONALGOALTEXT + "Remove Green & Red NPCs";
+                additionalGoalText = GameSettings.ADDITIONALGOALTEXT + GameSettings.BIAS_AGAINST_GREEN;
             else
                 additionalInst.gameObject.SetActive(false);
 
