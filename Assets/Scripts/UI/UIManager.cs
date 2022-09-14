@@ -205,6 +205,7 @@ public class UIManager : NetworkSingleton<UIManager>
                     await RelayManager.Instance.JoinRelay(inputCodeText.text);
                     loadingIcon.SetActive(false);
                     additionalInstTop.text = additionalGoalText;
+                    //TODO might need remove or edit this
                     additionalInstTop.gameObject.SetActive(true);
 
                     //Send Roleplay state to Host
