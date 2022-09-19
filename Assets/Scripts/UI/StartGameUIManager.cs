@@ -3,6 +3,10 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class StartGameUIManager: MonoBehaviour
 {
@@ -16,7 +20,10 @@ public class StartGameUIManager: MonoBehaviour
     private TextMeshProUGUI tutorialMessage;
 
     [SerializeField]
-    private Sprite[] TutorialMsg;
+    private Sprite[] IsolatorTutorialMsg;
+
+    [SerializeField]
+    private Sprite[] AdvisorTutorialMsg;
 
     [SerializeField]
     private Sprite BackgroundSprite;
@@ -29,14 +36,26 @@ public class StartGameUIManager: MonoBehaviour
 
     private int nextSceneIndex;
     private int i = 0;
+    private int role = 1;
 
+    private Sprite[] TutorialMsg;
 
     private void Start()
     {
         nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
 
         //BackgroundImage.GetComponent<Image>().sprite = BackgroundSprite;
-        Image.GetComponent<Image>().sprite = TutorialMsg[i];
+        //int a = Random.Range(0, 1);
+        if(role == 0)
+        {
+            TutorialMsg = IsolatorTutorialMsg;
+            Image.GetComponent<Image>().sprite = TutorialMsg[i];
+        }
+        else
+        {
+            TutorialMsg = AdvisorTutorialMsg;
+            Image.GetComponent<Image>().sprite = TutorialMsg[i];
+        }
 
         backButton.gameObject.SetActive(false);
         Image.gameObject.SetActive(true);

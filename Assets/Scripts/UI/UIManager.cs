@@ -352,7 +352,8 @@ public class UIManager : NetworkSingleton<UIManager>
     {
         AdvisorManager.Instance.setAdvisorTextBoxState(true);
         //PlayerManager.Instance.setPlayerUIState(true);
-        playerInfoText.gameObject.SetActive(true);
+        //TODO: Keep this?
+        playerInfoText.gameObject.SetActive(false);
     }
     [ClientRpc]
     private void advisorStartGameClientRpc()

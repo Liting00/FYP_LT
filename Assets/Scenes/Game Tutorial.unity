@@ -262,15 +262,32 @@ MonoBehaviour:
   nextButton: {fileID: 1920908458}
   backButton: {fileID: 1159150463}
   tutorialMessage: {fileID: 625681918}
-  TutorialMsg:
-  - {fileID: 21300000, guid: b282c5852b0726a4d85d1a337bba60c0, type: 3}
-  - {fileID: 21300000, guid: 9d96d21d83cc4204784b24df5b7b5c0f, type: 3}
-  - {fileID: 21300000, guid: 2ce76fd3a57349f4cbfcd12e8e82ae64, type: 3}
-  - {fileID: 21300000, guid: 2e3746d5d0faa8f4b88f14289f6bd300, type: 3}
-  - {fileID: 21300000, guid: 60c1d53006c023b4db9c9795fd757565, type: 3}
-  - {fileID: 21300000, guid: a4677ed21d33cc64abc6aa7327413ed4, type: 3}
-  - {fileID: 21300000, guid: 1ce95283265a93e4ab844d5596ddcde3, type: 3}
-  - {fileID: 21300000, guid: e9a391de6ae12d645aab1d107b5b3ba1, type: 3}
+  IsolatorTutorialMsg:
+  - {fileID: 21300000, guid: 4d719ab47778cdb40a6f71a9eb95242b, type: 3}
+  - {fileID: 21300000, guid: 7cfeecf15fb8dd94aba98eb81e29c563, type: 3}
+  - {fileID: 21300000, guid: 8a6e93455b6f4d749820ef02a71634e6, type: 3}
+  - {fileID: 21300000, guid: e106b2626f101c04e9b10cefdcb512a0, type: 3}
+  - {fileID: 21300000, guid: 6c08621395a6eb24daae1b94a9600df8, type: 3}
+  - {fileID: 21300000, guid: e2bae90ed4745cc46aa862b67c05f2ea, type: 3}
+  - {fileID: 21300000, guid: 306f77b10bcd7af4c96a26e014d938f4, type: 3}
+  - {fileID: 21300000, guid: c599672932ef69d48b0987df131492a7, type: 3}
+  - {fileID: 21300000, guid: d2e355b4517139144a6837ac86a16fe8, type: 3}
+  - {fileID: 21300000, guid: 676626204e2ad67459e8c98975f4d3a1, type: 3}
+  - {fileID: 21300000, guid: 9859323152ae72a479752ef6c6b943ee, type: 3}
+  - {fileID: 21300000, guid: 6f8e2d2bd8dd52b4dbe05dd354577f58, type: 3}
+  AdvisorTutorialMsg:
+  - {fileID: 21300000, guid: b75c4b4065e8a3f4ca53f68bf36995a3, type: 3}
+  - {fileID: 21300000, guid: 808ab9617327e95498a7406c8438b040, type: 3}
+  - {fileID: 21300000, guid: 1bbe196cf3309d74cbdb9ae5351ab81e, type: 3}
+  - {fileID: 21300000, guid: f9ac19c1c3594e1498e6d1280602e44c, type: 3}
+  - {fileID: 21300000, guid: 8d95c37f9b79da947a7c3e2bc1ff970f, type: 3}
+  - {fileID: 21300000, guid: 9c521290f584bdf4699a9d997c702bb4, type: 3}
+  - {fileID: 21300000, guid: 9d16c81718b395d47887644d78f55f89, type: 3}
+  - {fileID: 21300000, guid: 02203007259be2346ae0879092ba3b0f, type: 3}
+  - {fileID: 21300000, guid: 59f7f95dc19973e4392e920facce9b95, type: 3}
+  - {fileID: 21300000, guid: 0fbe6e0915d57fa4cb5564430827acb0, type: 3}
+  - {fileID: 21300000, guid: f60a077a6a3a7ef49a43d7dbedecaef2, type: 3}
+  - {fileID: 21300000, guid: 5da9eea4181c5a445a88a57645b40026, type: 3}
   BackgroundSprite: {fileID: 21300000, guid: 43d462773aeafb9499ff8e0363ac04cd, type: 3}
   Image: {fileID: 1288951018}
   BackgroundImage: {fileID: 768517223}
@@ -846,7 +863,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -689, y: -460}
+  m_AnchoredPosition: {x: -748, y: -460}
   m_SizeDelta: {x: 348.2286, y: 119.9003}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1159150463
@@ -1614,7 +1631,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 698, y: -460}
+  m_AnchoredPosition: {x: 753, y: -460}
   m_SizeDelta: {x: 348.2286, y: 119.9003}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1920908458
