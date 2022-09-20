@@ -71,6 +71,7 @@ public class Logger : NetworkSingleton<Logger>
         participantExpInfo.ID = generateID();
         participantExpInfo.DateTime = DateTime.Now.ToString();
         participantExpInfo.HARoleplay = "nill";
+        participantExpInfo.joinCode = RelayManager.Instance.JoinCode;
 
         //Create instances of class list
         for (int i = 0; i < GameSettings.NUMBEROFGAMES; i++)
@@ -104,7 +105,7 @@ public class Logger : NetworkSingleton<Logger>
         if (PlayerManager.Instance.PlayerInGame == 2)
             participantExpInfo.game[GameNum - 1].HumanAdvisor = true;
         else
-            participantExpInfo.game[GameNum - 1].HumanAdvisor = true;
+            participantExpInfo.game[GameNum - 1].HumanAdvisor = false;
     }
     public void LogGame(int GameNum)
     {

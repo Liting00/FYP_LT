@@ -8,6 +8,7 @@ class ParticipantExpInfo
     public string Advisor;
     public string HARoleplay;
     public string DateTime;
+    public string joinCode;
 
     public Game[] game = new Game[GameSettings.NUMBEROFGAMES];
 
