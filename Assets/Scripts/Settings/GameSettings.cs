@@ -62,11 +62,11 @@ public static class GameSettings
     public static float INFECTION_RADIUS = 8f;
 
     //Max is 1f
-    public static float INFECTION_RATE = 0.20f;
+    public static float INFECTION_RATE = 0.15f;
 
     //Rate of Infection Interval Min to Max
     public static float INFECTION_INTERVAL_MIN = 5f;
-    public static float INFECTION_INTERVAL_MAX = 10f;
+    public static float INFECTION_INTERVAL_MAX = 15f;
 
     //Human Advisor additional Goal
     public static string ADDITIONALGOALTEXT = $"Additional Instructions: ";
