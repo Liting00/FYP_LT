@@ -144,7 +144,6 @@ public class ButtonController : NetworkSingleton<ButtonController>
         if (PassAudio != null)
             PassAudio.Play();
 
-        AdvisorManager.Instance.AutoButtonPressed = false;
         AdvisorManager.Instance.insertAdvise(AdvisorAdvice.Shoot);
         AdvisorManager.Instance.updateAdviseTextServerRpc(AdvisorAdvice.Shoot);
         Debug.Log("Advisor Shoot Button pressed");
@@ -154,7 +153,6 @@ public class ButtonController : NetworkSingleton<ButtonController>
         if (PassAudio != null)
             PassAudio.Play();
 
-        AdvisorManager.Instance.AutoButtonPressed = false;
         AdvisorManager.Instance.insertAdvise(AdvisorAdvice.Pass);
         AdvisorManager.Instance.updateAdviseTextServerRpc(AdvisorAdvice.Pass);
         Debug.Log("Advisor Pass Button pressed");
