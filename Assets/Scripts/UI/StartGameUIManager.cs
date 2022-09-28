@@ -36,7 +36,7 @@ public class StartGameUIManager: MonoBehaviour
 
     private int nextSceneIndex;
     private int i = 0;
-    private int role = 1;
+    private int role = 0;
 
     private Sprite[] TutorialMsg;
 
