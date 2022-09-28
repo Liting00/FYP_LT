@@ -24,7 +24,7 @@ public static class GameSettings
     public static float ENDGAME_SCENE_DELAY = 1.2f;
 
     //Number of Game per Session
-    public static int NUMBEROFGAMES = 2;
+    public static int NUMBEROFGAMES = 8;
 
 
     /* NPC */
