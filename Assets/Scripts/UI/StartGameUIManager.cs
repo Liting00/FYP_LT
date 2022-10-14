@@ -36,7 +36,7 @@ public class StartGameUIManager: MonoBehaviour
 
     private int nextSceneIndex;
     private int i = 0;
-    private int role = 0;
+    int role = 0;
 
     private Sprite[] TutorialMsg;
 
@@ -45,7 +45,12 @@ public class StartGameUIManager: MonoBehaviour
         nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
 
         //BackgroundImage.GetComponent<Image>().sprite = BackgroundSprite;
-        //int a = Random.Range(0, 1);
+        if (GameSettings.randRole)
+        {
+            role = Random.Range(0, 2);
+            Debug.Log("Role: " + role);
+        }
+       
         if(role == 0)
         {
             TutorialMsg = IsolatorTutorialMsg;

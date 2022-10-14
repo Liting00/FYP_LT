@@ -88,4 +88,7 @@ public static class GameSettings
 
     //JSON Save Path
     public static string FILEPATH = "HostData.json";
+
+    //Random Role enable
+    public static bool randRole = true;
 }
